@@ -28,35 +28,43 @@ function Register() {
     hasSpecialChar;
 
   const doPasswordsMatch = password === confirmPassword;
-
   const isFormValid =
-    isUsernameValid &&
-    isEmailValid &&
-    isPasswordValid &&
-    doPasswordsMatch;
+    isUsernameValid && isEmailValid && isPasswordValid && doPasswordsMatch;
 
-  // FORM SUBMISSION
-  const setUsername = (value) =>{
-    setUserN(value);
-  }
-  function setEmail(value){
+  // UPDATE FUNCTIONS
+  const setUsername = (value) => setUserN(value);
+  function setEmail(value) {
     setEmailState(value);
   }
-  function setPassword(value){
+  function setPassword(value) {
     setPasswordState(value);
   }
-  const handleSave = () => {
-    const data = {
-      username : username,
-      email : email,
-      password : password
-    }
-    const url = '';
-    axios.post(url,data).then((result) => {
-    }).catch((error) =>{
-      alert(error)
-    })
+
+  // FORM SUBMISSION
+  const handleSave = async (e) => {
+  e.preventDefault();
+
+  // password → base64 → backend byte[] OK
+  const base64Password = btoa(password);
+
+  const data = {
+    name: username,
+    email: email,
+    passwordHash: base64Password,
+    userType: "Player"   // Kötelező mező!
+  };
+
+  try {
+    const url = "https://localhost:7282/api/Users";
+    await axios.post(url, data);
+    alert("Registration successful!");
+    navigate("/login");
+  } catch (error) {
+    console.log("A hiba megértése:", error.response?.data);
+    alert("Registration failed.");
   }
+};
+
 
   return (
     <div className="register-page">
@@ -84,7 +92,9 @@ function Register() {
 
           <div>
             <strong>
-              <h3><u>Registration requirements:</u></h3>
+              <h3>
+                <u>Registration requirements:</u>
+              </h3>
             </strong>
           </div>
           <ul>
@@ -116,7 +126,7 @@ function Register() {
         {/* Registration form */}
         <div className="register-form">
           <h2>Create new account</h2>
-          <form >
+          <form onSubmit={handleSave}>
             <div>
               <label>Username</label>
               <input
@@ -161,14 +171,22 @@ function Register() {
               />
             </div>
 
-            <button type="submit" disabled={!isFormValid} onClick={() => handleSave()}> 
+            <button type="submit" disabled={!isFormValid}>
               Register
             </button>
           </form>
 
           <p className="login-link">
             Already have an account?{" "}
-            <a target="#" href={LoginPage} onClick={(e) => { e.preventDefault(); navigate("/login"); }} className="link-style">
+            <a
+              target="#"
+              href={LoginPage}
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/login");
+              }}
+              className="link-style"
+            >
               Log in!
             </a>
           </p>
