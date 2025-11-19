@@ -8,7 +8,7 @@ const Scoreboard = () => {
   const [, setFilter] = useState("all");
 
   useEffect(() => {
-    // Scoreboard adatok lekérése
+    // Scoreboard lekérés
     fetch("https://localhost:7282/api/Scoreboard")
       .then((response) => response.json())
       .then((data) => {
@@ -17,14 +17,14 @@ const Scoreboard = () => {
       })
       .catch((err) => console.error(err));
 
-    // Users adatok lekérése
+    // Users lekérés
     fetch("https://localhost:7282/api/Users")
       .then((res) => res.json())
       .then((userData) => setUsers(userData))
       .catch((err) => console.error(err));
   }, []);
 
-  // Visszaadja a username-t userId alapján
+  // Username keresése ID alapján
   const getUsernameById = (userId) => {
     const user = users.find((u) => u.id === userId);
     return user ? user.name : "Unknown";
@@ -32,15 +32,18 @@ const Scoreboard = () => {
 
   const applyFilter = (filterType) => {
     setFilter(filterType);
-    if (filterType === "wins") {
-      setFilteredScores([...scores].sort((a, b) => b.wins - a.wins));
-    } else if (filterType === "username") {
+
+    if (filterType === "username") {
       setFilteredScores(
         [...scores].sort((a, b) => {
-          const nameA = getUsernameById(a.userId);
-          const nameB = getUsernameById(b.userId);
+          const nameA = getUsernameById(a.id);
+          const nameB = getUsernameById(b.id);
           return nameA.localeCompare(nameB);
         })
+      );
+    } else if (filterType === "wins") {
+      setFilteredScores(
+        [...scores].sort((a, b) => b.totalScore - a.totalScore)
       );
     } else {
       setFilteredScores(scores);
@@ -52,9 +55,10 @@ const Scoreboard = () => {
       <div className="scoreboard-header mb-4">
         <h1>Top Scores</h1>
       </div>
+
       <div className="filter-buttons mb-4">
         <button className="filter-btn" onClick={() => applyFilter("wins")}>
-          Sort by Wins
+          Sort by Score
         </button>
         <button className="filter-btn" onClick={() => applyFilter("username")}>
           Sort by Username
@@ -63,6 +67,7 @@ const Scoreboard = () => {
           Show All
         </button>
       </div>
+
       <div className="searchBar">
         <input
           type="text"
@@ -78,17 +83,15 @@ const Scoreboard = () => {
             <tr className="border-b">
               <th className="p-2">#</th>
               <th className="p-2">Username</th>
-              <th className="p-2">Scores</th>
-              <th className="p-2">WINS</th>
+              <th className="p-2">Score</th>
             </tr>
           </thead>
           <tbody>
             {filteredScores.slice(0, 10).map((score, index) => (
-              <tr key={score.userId}>
+              <tr key={score.id}>
                 <td className="p-2">{index + 1}</td>
-                <td className="p-2">{getUsernameById(score.userId)}</td>
+                <td className="p-2">{getUsernameById(score.id)}</td>
                 <td className="p-2 font-bold">{score.totalScore}</td>
-                <td className="p-2">{score.wins}</td>
               </tr>
             ))}
           </tbody>

@@ -1,8 +1,18 @@
 import { Link } from "react-router-dom";
 import "../Styles/Main.css";
+//import { useEffect,useState } from "react";
 //import castlLogo from "../Img/castl-log.png" // ide tedd az elkészült logót
 
 const Homepage = () => {
+  // const [userlenght,setUserlenght] = useState([0])
+  
+  // useEffect(() => {
+  //   fetch("https://localhost:7282/api/Users")
+  //     .then((res) => res.json())
+  //     .then((userData) => setUserlenght(userData))
+  //     .catch((err) => console.error(err));
+  
+  // },[])
   return (
     <div className="homepage-container">
       <div className="homepage-card">
@@ -31,7 +41,7 @@ const Homepage = () => {
         </div>
 
         <p className="player-count">
-          Player count: <span id="playerCount">—</span>
+          Online players <span id="playerCount"></span>
         </p>
       </div>
     </div>

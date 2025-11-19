@@ -42,29 +42,25 @@ function Register() {
 
   // FORM SUBMISSION
   const handleSave = async (e) => {
-  e.preventDefault();
-
-  // password → base64 → backend byte[] OK
-  const base64Password = btoa(password);
-
-  const data = {
-    name: username,
-    email: email,
-    passwordHash: base64Password,
-    userType: "Player"   // Kötelező mező!
+    e.preventDefault();
+  
+    const data = {
+      name: username,
+      email: email,
+      passwordHash: password,   // kötelező, különben NULL → 500 hiba
+      userType: "Player"  // kötelező → nem lehet null
+    };
+  
+    try {
+      await axios.post("https://localhost:7282/api/Users", data);
+      alert("Registration successful!");
+      navigate("/login");
+    } catch (error) {
+      console.log(error.response?.data);
+      alert("Registration failed.");
+    }
   };
-
-  try {
-    const url = "https://localhost:7282/api/Users";
-    await axios.post(url, data);
-    alert("Registration successful!");
-    navigate("/login");
-  } catch (error) {
-    console.log("A hiba megértése:", error.response?.data);
-    alert("Registration failed.");
-  }
-};
-
+  
 
   return (
     <div className="register-page">
@@ -79,15 +75,6 @@ function Register() {
             Step through the door to a new world, where every decision matters!
             Our <strong>community</strong> is not just a game — it's an
             experience shaped by you.
-          </p>
-          <p>
-            Create your character, join others, and embark on your own journey
-            through a fantastic world filled with quests, competitions, and
-            challenges!
-          </p>
-          <p>
-            🌟 <strong>Register now</strong>, and be part of something big. A
-            world awaits you — you're just one click away!
           </p>
 
           <div>
@@ -120,7 +107,6 @@ function Register() {
               </ul>
             </li>
           </ul>
-          <p id="showError"></p>
         </div>
 
         {/* Registration form */}
