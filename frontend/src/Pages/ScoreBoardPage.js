@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ClipLoader from "react-spinners/ClipLoader";   // <-- SPINNER
 import "../Styles/Scoreboard.css";
 
 const Scoreboard = () => {
@@ -7,24 +8,27 @@ const Scoreboard = () => {
   const [filteredScores, setFilteredScores] = useState([]);
   const [, setFilter] = useState("all");
 
-  useEffect(() => {
-    // Scoreboard lekérés
-    fetch("https://localhost:7282/api/Scoreboard")
-      .then((response) => response.json())
-      .then((data) => {
-        setScores(data);
-        setFilteredScores(data);
-      })
-      .catch((err) => console.error(err));
+  const [loading, setLoading] = useState(true);       // <-- BETÖLTÉS
+  const [error, setError] = useState(false);          // <-- HIBA
 
-    // Users lekérés
-    fetch("https://localhost:7282/api/Users")
-      .then((res) => res.json())
-      .then((userData) => setUsers(userData))
-      .catch((err) => console.error(err));
+  useEffect(() => {
+    Promise.all([
+      fetch("https://localhost:7282/api/Scoreboard").then((res) => res.json()),
+      fetch("https://localhost:7282/api/Users").then((res) => res.json())
+    ])
+      .then(([scoreData, userData]) => {
+        setScores(scoreData);
+        setFilteredScores(scoreData);
+        setUsers(userData);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError(true);
+        setLoading(false);
+      });
   }, []);
 
-  // Username keresése ID alapján
   const getUsernameById = (userId) => {
     const user = users.find((u) => u.id === userId);
     return user ? user.name : "Unknown";
@@ -35,11 +39,9 @@ const Scoreboard = () => {
 
     if (filterType === "username") {
       setFilteredScores(
-        [...scores].sort((a, b) => {
-          const nameA = getUsernameById(a.id);
-          const nameB = getUsernameById(b.id);
-          return nameA.localeCompare(nameB);
-        })
+        [...scores].sort((a, b) =>
+          getUsernameById(a.id).localeCompare(getUsernameById(b.id))
+        )
       );
     } else if (filterType === "wins") {
       setFilteredScores(
@@ -69,11 +71,7 @@ const Scoreboard = () => {
       </div>
 
       <div className="searchBar">
-        <input
-          type="text"
-          className="search"
-          placeholder="Type player name..."
-        />
+        <input type="text" className="search" placeholder="Type player name..." />
         <button className="filter-btn mb-4">Search</button>
       </div>
 
@@ -86,14 +84,28 @@ const Scoreboard = () => {
               <th className="p-2">Score</th>
             </tr>
           </thead>
+
           <tbody>
-            {filteredScores.slice(0, 10).map((score, index) => (
-              <tr key={score.id}>
-                <td className="p-2">{index + 1}</td>
-                <td className="p-2">{getUsernameById(score.id)}</td>
-                <td className="p-2 font-bold">{score.totalScore}</td>
+            {loading || error ? (
+              <tr>
+                <td colSpan="3" className="text-center py-6">
+                  <ClipLoader size={40} />
+                  {error && (
+                    <p style={{ marginTop: "14px", color: "red" }}>
+                      The data could not be loaded.
+                    </p>
+                  )}
+                </td>
               </tr>
-            ))}
+            ) : (
+              filteredScores.slice(0, 10).map((score, index) => (
+                <tr key={score.id}>
+                  <td className="p-2">{index + 1}</td>
+                  <td className="p-2">{getUsernameById(score.id)}</td>
+                  <td className="p-2 font-bold">{score.totalScore}</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
