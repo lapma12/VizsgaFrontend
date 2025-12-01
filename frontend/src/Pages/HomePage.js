@@ -13,7 +13,6 @@ const Homepage = () => {
     .then((playerCount) => {setCount(playerCount)})
     .catch((err) => {
         console.error(err);})
-  
   }, [])
   
   

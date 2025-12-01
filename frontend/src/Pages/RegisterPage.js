@@ -4,12 +4,14 @@ import "../Styles/RegisterPage.css";
 import { useNavigate } from "react-router-dom";
 import LoginPage from "./LoginPage";
 import axios from "axios";
+import AlertModal from "../Component/AlertModal";
 
 function Register() {
   const [username, setUserN] = useState("");
   const [email, setEmailState] = useState("");
   const [password, setPasswordState] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
 
   // VALIDATION LOGIC
@@ -43,27 +45,32 @@ function Register() {
   // FORM SUBMISSION
   const handleSave = async (e) => {
     e.preventDefault();
-  
+
     const data = {
       name: username,
       email: email,
-      passwordHash: password,   // kötelező, különben NULL → 500 hiba
-      userType: "Player"  // kötelező → nem lehet null
+      passwordHash: password, // kötelező, különben NULL → 500 hiba
+      userType: "Player", // kötelező → nem lehet null
     };
-  
+
     try {
       await axios.post("https://localhost:7282/api/Users", data);
-      alert("Registration successful!");
-      navigate("/login");
+      setShowAlert(true);
     } catch (error) {
       console.log(error.response?.data);
       alert("Registration failed.");
     }
   };
-  
 
   return (
     <div className="register-page">
+      <AlertModal
+        show={showAlert}
+        onClose={() => {
+          setShowAlert(false);
+          navigate("/login");
+        }}
+      />
       <motion.div
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -142,7 +149,6 @@ function Register() {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                required
               />
             </div>
 
@@ -153,7 +159,6 @@ function Register() {
                 placeholder="Confirm Password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                required
               />
             </div>
 
@@ -168,6 +173,13 @@ function Register() {
               target="#"
               href={LoginPage}
               onClick={(e) => {
+                <AlertModal
+                  show={showAlert}
+                  onClose={() => {
+                    setShowAlert(false);
+                    navigate("/login");
+                  }}
+                />;
                 e.preventDefault();
                 navigate("/login");
               }}

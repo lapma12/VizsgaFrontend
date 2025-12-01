@@ -82,6 +82,8 @@ const Scoreboard = () => {
               <th className="p-2">#</th>
               <th className="p-2">Username</th>
               <th className="p-2">Score</th>
+              <th className="p-2">XP</th>
+              
             </tr>
           </thead>
 
@@ -103,6 +105,7 @@ const Scoreboard = () => {
                   <td className="p-2">{index + 1}</td>
                   <td className="p-2">{getUsernameById(score.id)}</td>
                   <td className="p-2 font-bold">{score.totalScore}</td>
+                  <td className="p-2 font-bold">{score.totalXp}</td>
                 </tr>
               ))
             )}
