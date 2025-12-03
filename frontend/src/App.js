@@ -10,8 +10,10 @@ import NotFound from "./Pages/NotFound";
 import Game from "./Pages/GamePage";
 import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
 import Account from "./Pages/Account";
+import { useState } from "react";
 
 function App() {
+  const [id, setId] = useState();
   return (
     <Router>
       <div className="flex flex-col min-h-screen">
@@ -19,12 +21,12 @@ function App() {
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="/login" element={<LoginPage setId={setId} />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/about" element={<About />} />
             <Route path="/scoreboard" element={<Scoreboard/>} />
             <Route path="/game" element={<Game />} />
-            <Route path="/account" element={<Account/>}/>
+            <Route path="/account" element={<Account id={id} />}/>
             <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
             <Route path="*" element={<NotFound />} />
           </Routes>

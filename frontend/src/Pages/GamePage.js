@@ -25,7 +25,7 @@ function GamePage() {
         </p>
 
         <a
-          href="/assets/your-game.zip" // this is where your game file should go (e.g., into the public/assets folder)
+          href="/assets/your-game.zip" 
           className="download-button"
           download
         >
