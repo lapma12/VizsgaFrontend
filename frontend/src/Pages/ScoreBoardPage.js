@@ -1,31 +1,26 @@
 import React, { useState, useEffect } from "react";
-import ClipLoader from "react-spinners/ClipLoader";   // <-- SPINNER
+import ClipLoader from "react-spinners/ClipLoader"; // <-- SPINNER
 import "../Styles/Scoreboard.css";
 import { useLocation } from "react-router-dom";
 
 const Scoreboard = () => {
-  //document.title = "Scoreboard";
-  const location = useLocation()
+  const location = useLocation();
   if (location.pathname === "/scoreboard") {
-    document.title = "Scoreboard"
+    document.title = "Scoreboard";
   }
   const [scores, setScores] = useState([]);
-  const [users, setUsers] = useState([]);
   const [filteredScores, setFilteredScores] = useState([]);
   const [, setFilter] = useState("all");
 
-  const [loading, setLoading] = useState(true);       // <-- BETÖLTÉS
-  const [error, setError] = useState(false);          // <-- HIBA
+  const [loading, setLoading] = useState(true); // <-- BETÖLTÉS
+  const [error, setError] = useState(false); // <-- HIBA
 
   useEffect(() => {
-    Promise.all([
-      fetch("https://localhost:7282/api/Scoreboard").then((res) => res.json()),
-      fetch("https://localhost:7282/api/Users").then((res) => res.json())
-    ])
-      .then(([scoreData, userData]) => {
+    fetch("https://localhost:7282/api/Users/playerScore")
+      .then((res) => res.json())
+      .then((scoreData) => {
         setScores(scoreData);
         setFilteredScores(scoreData);
-        setUsers(userData);
         setLoading(false);
       })
       .catch((err) => {
@@ -35,26 +30,21 @@ const Scoreboard = () => {
       });
   }, []);
 
-  const getUsernameById = (userId) => {
-    const user = users.find((u) => u.id === userId);
-    return user ? user.name : "Unknown";
-  };
-
   const applyFilter = (filterType) => {
     setFilter(filterType);
 
     if (filterType === "username") {
       setFilteredScores(
-        [...scores].sort((a, b) =>
-          getUsernameById(a.id).localeCompare(getUsernameById(b.id))
-        )
+        [...scores].sort((a, b) => a.name.localeCompare(b.name))
       );
     } else if (filterType === "wins") {
       setFilteredScores(
         [...scores].sort((a, b) => b.totalScore - a.totalScore)
       );
+    } else if (filterType === "xp") {
+      setFilteredScores([...scores].sort((a, b) => b.totalXp - a.totalXp));
     } else {
-      setFilteredScores(scores);
+      setFilteredScores();
     }
   };
 
@@ -71,13 +61,17 @@ const Scoreboard = () => {
         <button className="filter-btn" onClick={() => applyFilter("username")}>
           Sort by Username
         </button>
-        <button className="filter-btn" onClick={() => applyFilter("all")}>
-          Show All
+        <button className="filter-btn" onClick={() => applyFilter("xp")}>
+          Sort by Xp
         </button>
       </div>
 
       <div className="searchBar">
-        <input type="text" className="search" placeholder="Type player name..." />
+        <input
+          type="text"
+          className="search"
+          placeholder="Type player name..."
+        />
         <button className="filter-btn mb-4">Search</button>
       </div>
 
@@ -89,7 +83,6 @@ const Scoreboard = () => {
               <th className="p-2">Username</th>
               <th className="p-2">Score</th>
               <th className="p-2">XP</th>
-
             </tr>
           </thead>
 
@@ -109,7 +102,7 @@ const Scoreboard = () => {
               filteredScores.slice(0, 10).map((score, index) => (
                 <tr key={score.id}>
                   <td className="p-2">{index + 1}</td>
-                  <td className="p-2">{getUsernameById(score.id)}</td>
+                  <td className="p-2">{score.name}</td>
                   <td className="p-2 font-bold">{score.totalScore}</td>
                   <td className="p-2 font-bold">{score.totalXp}</td>
                 </tr>

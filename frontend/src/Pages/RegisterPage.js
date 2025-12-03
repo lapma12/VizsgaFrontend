@@ -61,7 +61,7 @@ function Register() {
     try {
       await axios.post("https://localhost:7282/api/Users", data);
       setSuccessMessage(
-        "Welcome to the CastL website<br/>Successful registration!<br/><br/>Check your email address!"
+        "Welcome to the CastL website<br/>Successful registration!<br/><br/>You have login in.<br/><br/>Check your email address!"
       );
 
       setTimeout(() => { setSuccessMessage(""); navigate("/login") }, 5000);
