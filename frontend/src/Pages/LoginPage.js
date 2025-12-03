@@ -12,7 +12,7 @@ function LoginPage() {
   }
   const [userInput, setUserInput] = useState("");
   const [getUser, setGetUser] = useState([])
-  //const [password, setPassword] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate(); // for navigation
   function handleSubmit(e) {
     e.preventDefault();
@@ -26,7 +26,9 @@ function LoginPage() {
         const matchedUser = getUser.find(u => u.name === userInput);
         const matchedEmail = getUser.find(u => u.email === userInput);
         if (matchedUser || matchedEmail) {
-          alert("Sikeres bejelentkezés");
+          setSuccessMessage(
+        "Successful login!<br/><br/>Check your email address!"
+      );
           setTimeout(() => {
             navigate("/account")
           }, 2000);
@@ -50,6 +52,14 @@ function LoginPage() {
 
   return (
     <div className="login-page">
+      {successMessage && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="success-alert"
+          dangerouslySetInnerHTML={{ __html: successMessage }}
+        />
+      )}
       <motion.div
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}

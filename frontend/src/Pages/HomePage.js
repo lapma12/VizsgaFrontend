@@ -5,7 +5,7 @@ import { useEffect,useState } from "react";
 
 const Homepage = () => {
   const location = useLocation()
-  if (location.pathname == "/") {
+  if (location.pathname === "/") {
     document.title = "Home"
   }
 

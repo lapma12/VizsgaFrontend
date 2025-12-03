@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 
 const ForgotPasswordPage = () => {
   const location = useLocation()
-  if (location.pathname == "/forgot-password") {
+  if (location.pathname === "/forgot-password") {
     document.title = "Forgot-password"
   }
 

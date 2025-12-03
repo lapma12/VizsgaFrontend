@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 
 function GamePage() {
   const location = useLocation()
-  if (location.pathname == "/game") {
+  if (location.pathname === "/game") {
     document.title = "Game"
   }
   return (

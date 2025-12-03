@@ -7,7 +7,7 @@ import axios from "axios";
 
 function Register() {
   const location = useLocation()
-  if (location.pathname == "/register") {
+  if (location.pathname === "/register") {
     document.title = "Registration"
   }
 

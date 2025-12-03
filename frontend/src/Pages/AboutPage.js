@@ -3,7 +3,7 @@ import "../Styles/About.css"
 
 const AboutPage = () => {
   const location = useLocation()
-  if (location.pathname == "/about") {
+  if (location.pathname === "/about") {
     document.title = "About"
   }
 

@@ -5,7 +5,7 @@ import { UserCircle, Settings as CogIcon, BarChart2, Trash2 } from "lucide-react
 
 const Account = () => {
   const location = useLocation()
-  if (location.pathname == "/account") {
+  if (location.pathname === "/account") {
     document.title = "Account"
   }
 

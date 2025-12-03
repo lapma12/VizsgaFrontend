@@ -3,7 +3,7 @@ import "../Styles/NotFound.css";
 
 const NotFound = () => {
   const location = useLocation()
-  if (location.pathname == "*") {
+  if (location.pathname === "*") {
     document.title = "Not found"
   }
   return (
