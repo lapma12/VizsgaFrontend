@@ -1,6 +1,12 @@
+import { useLocation } from "react-router-dom";
 import "../Styles/About.css"
 
 const AboutPage = () => {
+  const location = useLocation()
+  if (location.pathname == "/about") {
+    document.title = "About"
+  }
+
   const teamMembers = [
     {
       name: "Dongesz",

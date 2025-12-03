@@ -1,9 +1,14 @@
 import { useState } from "react";
 import "../Styles/Account.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { UserCircle, Settings as CogIcon, BarChart2, Trash2 } from "lucide-react";
 
 const Account = () => {
+  const location = useLocation()
+  if (location.pathname == "/account") {
+    document.title = "Account"
+  }
+
   const [activeTab, setActiveTab] = useState("results");
   const navigate = useNavigate();
 

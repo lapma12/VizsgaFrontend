@@ -1,9 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "../Styles/Main.css";
 import { useEffect,useState } from "react";
 //import castlLogo from "../Img/castl-log.png" // ide tedd az elkészült logót
 
 const Homepage = () => {
+  const location = useLocation()
+  if (location.pathname == "/") {
+    document.title = "Home"
+  }
 
   const [count, setCount] = useState("");
 

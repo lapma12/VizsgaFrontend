@@ -1,7 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "../Styles/NotFound.css";
 
 const NotFound = () => {
+  const location = useLocation()
+  if (location.pathname == "*") {
+    document.title = "Not found"
+  }
   return (
     <div className="not-found-container">
       <div className="error-content">

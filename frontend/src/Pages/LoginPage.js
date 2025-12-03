@@ -2,10 +2,14 @@ import { useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import "../Styles/RegisterPage.css";
-import { useNavigate } from "react-router-dom"; // for navigation
+import { useLocation, useNavigate } from "react-router-dom"; // for navigation
 import Register from "./RegisterPage";
 
 function LoginPage() {
+  const location = useLocation()
+  if (location.pathname == "/login") {
+    document.title = "Login"
+  }
   const [userInput, setUserInput] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate(); // for navigation

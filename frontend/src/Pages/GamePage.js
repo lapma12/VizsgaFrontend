@@ -1,7 +1,12 @@
 import { motion } from "framer-motion";
 import "../Styles/Game.css"; // külön CSS fájl ehhez
+import { useLocation } from "react-router-dom";
 
 function GamePage() {
+  const location = useLocation()
+  if (location.pathname == "/game") {
+    document.title = "Game"
+  }
   return (
     <div className="game-page">
       <motion.div

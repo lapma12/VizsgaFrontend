@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import "../Styles/ForgotPasswordPage.css";
+import { useLocation } from "react-router-dom";
 
 const ForgotPasswordPage = () => {
+  const location = useLocation()
+  if (location.pathname == "/forgot-password") {
+    document.title = "Forgot-password"
+  }
+
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 

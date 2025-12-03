@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
 import ClipLoader from "react-spinners/ClipLoader";   // <-- SPINNER
 import "../Styles/Scoreboard.css";
+import { useLocation } from "react-router-dom";
 
 const Scoreboard = () => {
+  //document.title = "Scoreboard";
+  const location = useLocation()
+  if (location.pathname == "/scoreboard") {
+    document.title = "Scoreboard"
+  }
+
+
   const [scores, setScores] = useState([]);
   const [users, setUsers] = useState([]);
   const [filteredScores, setFilteredScores] = useState([]);
