@@ -4,14 +4,14 @@ import "../Styles/RegisterPage.css";
 import { useNavigate } from "react-router-dom";
 import LoginPage from "./LoginPage";
 import axios from "axios";
-import AlertModal from "../Component/AlertModal";
 
 function Register() {
   const [username, setUserN] = useState("");
   const [email, setEmailState] = useState("");
   const [password, setPasswordState] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [showAlert, setShowAlert] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+
   const navigate = useNavigate();
 
   // VALIDATION LOGIC
@@ -55,7 +55,11 @@ function Register() {
 
     try {
       await axios.post("https://localhost:7282/api/Users", data);
-      setShowAlert(true);
+      setSuccessMessage(
+        "Welcome to the CastL website<br/>Successful registration!<br/><br/>Check your email address!"
+      );
+
+      setTimeout(() => { setSuccessMessage(""); navigate("/login") }, 5000);
     } catch (error) {
       console.log(error.response?.data);
       alert("Registration failed.");
@@ -64,13 +68,15 @@ function Register() {
 
   return (
     <div className="register-page">
-      <AlertModal
-        show={showAlert}
-        onClose={() => {
-          setShowAlert(false);
-          navigate("/login");
-        }}
-      />
+      {successMessage && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="success-alert"
+          dangerouslySetInnerHTML={{ __html: successMessage }}
+        />
+      )}
+
       <motion.div
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -173,13 +179,6 @@ function Register() {
               target="#"
               href={LoginPage}
               onClick={(e) => {
-                <AlertModal
-                  show={showAlert}
-                  onClose={() => {
-                    setShowAlert(false);
-                    navigate("/login");
-                  }}
-                />;
                 e.preventDefault();
                 navigate("/login");
               }}

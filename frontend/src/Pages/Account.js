@@ -84,7 +84,7 @@ const Settings = () => {
     <div className="settings-section">
       <h2>Account Settings</h2>
       <form onSubmit={handleSubmit}>
-        <label>New Username:</label>
+        <label>New Username: username</label>
         <input
           type="text"
           value={username}
@@ -92,7 +92,7 @@ const Settings = () => {
           onChange={(e) => setUsername(e.target.value)}
         />
 
-        <label>New Password:</label>
+        <label>New Password: password</label>
         <input
           type="password"
           value={password}
