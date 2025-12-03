@@ -64,7 +64,7 @@ function Register() {
         "Welcome to the CastL website<br/>Successful registration!<br/><br/>You have login in.<br/><br/>Check your email address!"
       );
 
-      setTimeout(() => { setSuccessMessage(""); navigate("/login") }, 5000);
+      setTimeout(() => { setSuccessMessage(""); navigate("/login") }, 3000);
     } catch (error) {
       console.log(error.response?.data);
       alert("Registration failed.");

@@ -1,242 +1,275 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=MedievalSharp&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=MedievalSharp&display=swap");
 
 :root {
-    --bgColor: #e8d8b4;
-    --accentDark: #4b3621;
-    --accentLight: #8c7153;
-    --highlight: #e1c373;
-    --textDark: #2d1b0f;
+  --bgColor: #e8d8b4;
+  --accentDark: #4b3621;
+  --accentLight: #8c7153;
+  --highlight: #e1c373;
+  --textDark: #2d1b0f;
 }
 
-body{
-    background-color: var(--accentLight)!important;
+body {
+  background-color: var(--accentLight) !important;
 }
 .account-page {
-    max-width: 900px;
-    margin: 3rem auto;
-    padding: 2.5rem;
-    background: linear-gradient(135deg, var(--bgColor), #d7c195);
-    border-radius: 1.5rem;
-    box-shadow: 0 10px 40px rgba(75, 54, 33, 0.4);
-    color: var(--textDark);
-    font-family: "Poppins", sans-serif;
-    animation: fadeInDown 0.6s ease-in-out;
+  max-width: 900px;
+  margin: 3rem auto;
+  padding: 2.5rem;
+  background: linear-gradient(135deg, var(--bgColor), #d7c195);
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 40px rgba(75, 54, 33, 0.4);
+  color: var(--textDark);
+  font-family: "Poppins", sans-serif;
+  animation: fadeInDown 0.6s ease-in-out;
 }
 
 /* === Header === */
 .account-header {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-    border-bottom: 2px solid rgba(75, 54, 33, 0.2);
-    padding-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid rgba(75, 54, 33, 0.2);
+  padding-bottom: 1rem;
 }
 
 .account-avatar {
-    color: var(--accentDark);
+  color: var(--accentDark);
 }
 
 .account-info h1 {
-    font-family: "MedievalSharp", cursive;
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--accentDark);
-    text-shadow: 1px 1px 0 var(--highlight);
+  font-family: "MedievalSharp", cursive;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accentDark);
+  text-shadow: 1px 1px 0 var(--highlight);
 }
 
 .account-info .username {
-    color: var(--accentLight);
+  color: var(--accentLight);
 }
 
 .account-subtitle {
-    font-size: 0.95rem;
-    opacity: 0.85;
-    color: var(--textDark);
+  font-size: 0.95rem;
+  opacity: 0.85;
+  color: var(--textDark);
 }
 
 /* === Tab Menu === */
 .account-menu {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin: 2rem 0;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 2rem 0;
+  flex-wrap: wrap;
 }
 
 .account-menu button {
-    background: var(--accentLight);
-    color: #fff;
-    border: 3px solid var(--accentDark);
-    padding: 0.7rem 1.5rem;
-    font-size: 1rem;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 600;
-    box-shadow: 0 4px 0 var(--accentDark);
+  background: var(--accentLight);
+  color: #fff;
+  border: 3px solid var(--accentDark);
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  box-shadow: 0 4px 0 var(--accentDark);
 }
 
 .account-menu button:hover {
-    background-color: #a78b68;
-    transform: translateY(-2px);
+  background-color: #a78b68;
+  transform: translateY(-2px);
 }
 
 .account-menu .active {
-    background: var(--highlight);
-    color: var(--textDark);
-    border-color: var(--accentDark);
+  background: var(--highlight);
+  color: var(--textDark);
+  border-color: var(--accentDark);
 }
 
 /* === Content === */
 .account-content {
-    background: rgba(255, 255, 255, 0.5);
-    padding: 2rem;
-    border-radius: 1rem;
-    border: 2px solid rgba(75, 54, 33, 0.2);
+  background: rgba(255, 255, 255, 0.5);
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 2px solid rgba(75, 54, 33, 0.2);
 }
 
 /* === Results === */
 .results-section h2,
 .settings-section h2 {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    color: var(--accentDark);
-    font-family: "MedievalSharp", cursive;
-    text-shadow: 1px 1px 0 var(--highlight);
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--accentDark);
+  font-family: "MedievalSharp", cursive;
+  text-shadow: 1px 1px 0 var(--highlight);
 }
 
 .account-content ul {
-    list-style: none;
-    padding-left: 0;
+  list-style: none;
+  padding-left: 0;
 }
 
 .account-content li {
-    background-color: rgba(140, 113, 83, 0.15);
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    margin-bottom: 0.75rem;
-    font-size: 1rem;
-    border-left: 4px solid var(--accentLight);
+  background-color: rgba(140, 113, 83, 0.15);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  border-left: 4px solid var(--accentLight);
 }
 
 /* === Settings Form === */
 .account-content form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    max-width: 400px;
-    margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 .account-content label {
-    font-weight: 600;
-    color: var(--accentDark);
+  font-weight: 600;
+  color: var(--accentDark);
 }
 
 .account-content input {
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    border: 2px solid var(--accentLight);
-    font-size: 1rem;
-    background-color: #fff;
-    color: var(--textDark);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 2px solid var(--accentLight);
+  font-size: 1rem;
+  background-color: #fff;
+  color: var(--textDark);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .account-content input:focus {
-    border-color: var(--highlight);
-    outline: none;
-    box-shadow: 0 0 8px rgba(225, 195, 115, 0.4);
+  border-color: var(--highlight);
+  outline: none;
+  box-shadow: 0 0 8px rgba(225, 195, 115, 0.4);
 }
 
 .account-content form button {
-    background: var(--accentLight);
-    color: #fff;
-    font-weight: bold;
-    border: 3px solid var(--accentDark);
-    border-radius: 8px;
-    padding: 0.75rem 1.5rem;
-    transition: 0.3s;
-    cursor: pointer;
-    box-shadow: 0 4px 0 var(--accentDark);
+  background: var(--accentLight);
+  color: #fff;
+  font-weight: bold;
+  border: 3px solid var(--accentDark);
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  transition: 0.3s;
+  cursor: pointer;
+  box-shadow: 0 4px 0 var(--accentDark);
 }
 
 .account-content form button:hover {
-    background-color: #a78b68;
-    transform: translateY(-2px);
+  background-color: #a78b68;
+  transform: translateY(-2px);
 }
 
 /* === Footer === */
 .account-footer {
-    margin-top: 2rem;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .logout-btn {
-    background: var(--highlight);
-    color: var(--textDark);
-    font-weight: 700;
-    border: 2px solid var(--accentDark);
-    border-radius: 50px;
-    padding: 0.7rem 1.5rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 0 var(--accentDark);
+  background: var(--highlight);
+  color: var(--textDark);
+  font-weight: 700;
+  border: 2px solid var(--accentDark);
+  border-radius: 50px;
+  padding: 0.7rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 0 var(--accentDark);
 }
 
 .logout-btn:hover {
-    background-color: #ffcc70;
-    transform: translateY(-2px);
+  background-color: #ffcc70;
+  transform: translateY(-2px);
 }
 
 .delete-btn {
-    background: #c0392b;
-    color: #fff;
-    border: 3px solid #80251b;
-    border-radius: 50px;
-    padding: 0.7rem 1.5rem;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 0 #80251b;
+  background: #c0392b;
+  color: #fff;
+  border: 3px solid #80251b;
+  border-radius: 50px;
+  padding: 0.7rem 1.5rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 0 #80251b;
 }
 
 .delete-btn:hover {
-    background-color: #e74c3c;
-    transform: translateY(-2px);
+  background-color: #e74c3c;
+  transform: translateY(-2px);
+}
+.success-alert {
+  position: absolute;
+  top: 300px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #3e7d2b, #4caf50, #6ac964);
+  color: #fff;
+  padding: 1.2rem 3rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4),
+    inset 0 0 12px rgba(255, 255, 255, 0.3);
+  text-align: center;
+  font-family: "MedievalSharp", cursive;
+  letter-spacing: 1px;
+  animation: successPop 0.5s ease-out forwards;
+  z-index: 999;
+  opacity: 0;
+}
+
+/* === Popup Animation === */
+@keyframes successPop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -20px) scale(0.9);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
 }
 
 /* === Animation === */
 @keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* === Responsive === */
 @media only screen and (max-width: 600px) {
-    .account-header {
-        flex-direction: column;
-        text-align: center;
-    }
+  .account-header {
+    flex-direction: column;
+    text-align: center;
+  }
 
-    .account-footer {
-        flex-direction: column;
-        align-items: center;
-    }
+  .account-footer {
+    flex-direction: column;
+    align-items: center;
+  }
 }

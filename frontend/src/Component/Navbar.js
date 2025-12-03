@@ -41,7 +41,6 @@ function Navbar() {
         <NavLink to="/game" onClick={closeNavbar}><span className="icon"><IoLogoGameControllerB />
         </span>Game</NavLink>
         <NavLink to="/login" onClick={closeNavbar}><span className="icon"><MdAccountCircle /></span>Sign In</NavLink>
-
         <div className="nav-search-mobile">
           <button className="search-btn"><IoSearchSharp /></button>
         </div>

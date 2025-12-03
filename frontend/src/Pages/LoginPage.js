@@ -18,28 +18,27 @@ function LoginPage({ setId }) {
   function handleSubmit(e) {
     e.preventDefault();
   }
-  const goToAccount = () => {
+  const goToAccount = (event) => {
+    event.preventDefault();
+
     fetch("https://localhost:7282/api/Users")
       .then((res) => res.json())
-      .then((users) => {
-        setGetUser(users);
-        const matchedUser = getUser.find((u) => u.name === userInput);
-        const matchedEmail = getUser.find((u) => u.email === userInput);
-        
-        if (matchedUser || matchedEmail) {
-          setSuccessMessage(
-            "Successful login!<br/><br/>Check your email address!"
-          );
-          console.log(matchedUser.id)
-          setId(matchedUser.id);
-          setTimeout(() => {
-            navigate("/account");
-          }, 2000);
-        } else {
-          alert("Nincs találat");
-        }
-      })
+      .then((users) => setGetUser(users))
       .catch((err) => console.error(err));
+    const matchedUser =
+      getUser.find((u) => u.name === userInput) ||
+      getUser.find((u) => u.email === userInput);
+    if (matchedUser) {
+      setSuccessMessage("Successful login!<br/><br/>Check your email address!");
+      setId(matchedUser.id);
+      setTimeout(() => {
+        navigate("/account");
+      }, 2000);
+    } else {
+      console.log(matchedUser.name);
+      
+      alert("Nincs találat");
+    }
   };
 
   const goToRegisterPage = (event) => {
