@@ -6,11 +6,9 @@ import { useLocation } from "react-router-dom";
 const Scoreboard = () => {
   //document.title = "Scoreboard";
   const location = useLocation()
-  if (location.pathname == "/scoreboard") {
+  if (location.pathname === "/scoreboard") {
     document.title = "Scoreboard"
   }
-
-
   const [scores, setScores] = useState([]);
   const [users, setUsers] = useState([]);
   const [filteredScores, setFilteredScores] = useState([]);
@@ -91,7 +89,7 @@ const Scoreboard = () => {
               <th className="p-2">Username</th>
               <th className="p-2">Score</th>
               <th className="p-2">XP</th>
-              
+
             </tr>
           </thead>
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+//import axios from "axios";
 import { motion } from "framer-motion";
 import "../Styles/RegisterPage.css";
 import { useLocation, useNavigate } from "react-router-dom"; // for navigation
@@ -7,24 +7,35 @@ import Register from "./RegisterPage";
 
 function LoginPage() {
   const location = useLocation()
-  if (location.pathname == "/login") {
+  if (location.pathname === "/login") {
     document.title = "Login"
   }
   const [userInput, setUserInput] = useState("");
-  const [password, setPassword] = useState("");
+  const [getUser, setGetUser] = useState([])
+  //const [password, setPassword] = useState("");
   const navigate = useNavigate(); // for navigation
-
-  function handleSubmit(event) {
-    event.preventDefault();
-
-    axios
-      .post("http://localhost:3001/login", { userInput, password })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+  function handleSubmit(e) {
+    e.preventDefault();
   }
   const goToAccount = (event) => {
     event.preventDefault();
-    navigate("/account");
+    fetch("https://localhost:7282/api/Users")
+      .then(res => res.json())
+      .then(users => {
+        setGetUser(users); // most már egy tömb
+        const matchedUser = getUser.find(u => u.name === userInput);
+        const matchedEmail = getUser.find(u => u.email === userInput);
+        if (matchedUser || matchedEmail) {
+          alert("Sikeres bejelentkezés");
+          setTimeout(() => {
+            navigate("/account")
+          }, 2000);
+          
+        } else {
+          alert("Nincs találat");
+        }
+      })
+      .catch(err => console.error(err));
   }
 
   const goToRegisterPage = (event) => {
@@ -74,7 +85,7 @@ function LoginPage() {
               <input
                 type="password"
                 placeholder="Enter password"
-                onChange={(e) => setPassword(e.target.value)}
+                //onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>
