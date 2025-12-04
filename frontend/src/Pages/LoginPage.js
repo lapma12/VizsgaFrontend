@@ -13,6 +13,8 @@ function LoginPage({ setId }) {
   const [userInput, setUserInput] = useState("");
   const [getUser, setGetUser] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, seterrorMessage] = useState("");
+  const [counterFailed, setcounterFailed] = useState(0);
   const navigate = useNavigate(); // for navigation
 
   function handleSubmit(e) {
@@ -20,7 +22,6 @@ function LoginPage({ setId }) {
   }
   const goToAccount = (event) => {
     event.preventDefault();
-
     fetch("https://localhost:7282/api/Users")
       .then((res) => res.json())
       .then((users) => setGetUser(users))
@@ -29,15 +30,20 @@ function LoginPage({ setId }) {
       getUser.find((u) => u.name === userInput) ||
       getUser.find((u) => u.email === userInput);
     if (matchedUser) {
-      setSuccessMessage("Successful login!<br/><br/>Check your email address!");
+      setSuccessMessage("[translate:Successful login!<br/><br/>Check your email address!]");
       setId(matchedUser.id);
       setTimeout(() => {
         navigate("/account");
       }, 2000);
     } else {
-      console.log(matchedUser.name);
-      
-      alert("Nincs találat");
+      setcounterFailed(counterFailed + 1);
+      if (counterFailed === 5) {
+        seterrorMessage("[translate:Wrong username or password <br/><br/> Try again later!]")
+      }
+      else {
+        seterrorMessage("Wrong username or password")
+        console.log(counterFailed);
+      }
     }
   };
 
@@ -59,6 +65,14 @@ function LoginPage({ setId }) {
           animate={{ opacity: 1, y: 0 }}
           className="success-alert"
           dangerouslySetInnerHTML={{ __html: successMessage }}
+        />
+      )}
+      {errorMessage && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="error-alert"
+          dangerouslySetInnerHTML={{ __html: errorMessage }}
         />
       )}
       <motion.div

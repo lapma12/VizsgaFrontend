@@ -211,7 +211,26 @@
   z-index: 999;
   opacity: 0;
 }
-
+.error-alert {
+  position: absolute;
+  top: 300px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #ee1b22, #ce1225, #851414);
+  color: #fff;
+  padding: 1.2rem 3rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4),
+    inset 0 0 12px rgba(255, 255, 255, 0.3);
+  text-align: center;
+  font-family: "MedievalSharp", cursive;
+  letter-spacing: 1px;
+  animation: successPop 0.5s ease-out forwards;
+  z-index: 999;
+  opacity: 0;
+}
 /* === Popup Animation === */
 @keyframes successPop {
   0% {

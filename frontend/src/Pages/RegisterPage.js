@@ -16,6 +16,7 @@ function Register() {
   const [password, setPasswordState] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, seterrorMessage] = useState("");
 
   const navigate = useNavigate();
 
@@ -54,21 +55,25 @@ function Register() {
     const data = {
       name: username,
       email: email,
-      passwordHash: password, // kötelező, különben NULL → 500 hiba
-      userType: "Player", // kötelező → nem lehet null
+      password: password, // kötelező, különben NULL → 500 hiba
     };
 
     try {
-      await axios.post("https://localhost:7282/api/Users", data);
-      setSuccessMessage(
-        "Welcome to the CastL website<br/>Successful registration!<br/><br/>You have login in.<br/><br/>Check your email address!"
-      );
-
-      setTimeout(() => { setSuccessMessage(""); navigate("/login") }, 3000);
+      if (isFormValid) {
+        await axios.post("https://localhost:7282/api/Users", data);
+        setSuccessMessage(
+          "Welcome to the CastL website<br/>Successful registration!<br/><br/>You have login in.<br/><br/>[translate:Check your email address!]"
+        );
+        setTimeout(() => { setSuccessMessage(""); navigate("/login") }, 3000);
+      }
+      else {
+        seterrorMessage("Something went wrong.<br/><br/>Please check the registration requirements and try again.")
+      }
     } catch (error) {
       console.log(error.response?.data);
-      alert("Registration failed.");
     }
+    console.log(isFormValid);
+    
   };
 
   return (
@@ -79,6 +84,14 @@ function Register() {
           animate={{ opacity: 1, y: 0 }}
           className="success-alert"
           dangerouslySetInnerHTML={{ __html: successMessage }}
+        />
+      )}
+      {errorMessage && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="error-alert"
+          dangerouslySetInnerHTML={{ __html: errorMessage }}
         />
       )}
 
