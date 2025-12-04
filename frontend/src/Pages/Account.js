@@ -8,6 +8,7 @@ import {
   BarChart2,
   Trash2,
 } from "lucide-react";
+import axios from "axios";
 
 const Account = ({ id }) => {
   const location = useLocation();
@@ -25,7 +26,7 @@ const Account = ({ id }) => {
     navigate("/");
   };
   useEffect(() => {
-    fetch("https://localhost:7282/api/Users/" + id)
+    fetch("https://localhost:7282/api/Users/playerResult?id=" + id)
       .then((res) => res.json())
       .then((data) => setaccountData(data))
       .catch((err) => console.error(err));
@@ -39,7 +40,7 @@ const Account = ({ id }) => {
       console.log("DELETE is used");
       setSuccessMessage("Successfully delete");
       setTimeout(() => {
-        navigate("/");
+        navigate("/login");
       }, 3000);
     } catch (err) {
       console.error(err);
@@ -105,8 +106,8 @@ const Results = ({ accountData }) => (
   <div className="results-section">
     <h2>My Results</h2>
     <ul>
-      <li>{accountData.userType}</li>
-      <li>{accountData.createdAt}</li>
+      <li>Total Score : {accountData.totalScore}</li>
+      <li>Total Xp: {accountData.totalXp}</li>
     </ul>
   </div>
 );
@@ -114,36 +115,80 @@ const Results = ({ accountData }) => (
 const Settings = ({ accountData }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, seterrorMessage] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Update account:", { username, password });
+
+    const updateData = {
+      email: accountData.email,
+      oldPassword: oldPassword,
+      newPassword: password
+    };
+
+    try {
+      const response = await axios.put("https://localhost:7282/api/Users/playerPasswordUpdate", updateData);
+      console.log("Response:", response);
+      console.log("Full response:", response);
+      
+      setSuccessMessage(response.data);
+      seterrorMessage("")
+      setTimeout(() => setSuccessMessage(""), 3000);
+    } catch (error) {
+      console.log("Error response:", error.response?.data);
+      seterrorMessage("Update filed");
+      setSuccessMessage("")
+    }
   };
 
   return (
     <div className="settings-section">
+      {successMessage && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="success-alert"
+          dangerouslySetInnerHTML={{ __html: successMessage }}
+        />
+      )}
+      {errorMessage && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="error-alert"
+          dangerouslySetInnerHTML={{ __html: errorMessage }}
+        />
+      )}
       <h2>Account Settings</h2>
       <form onSubmit={handleSubmit}>
-        <label>New Username: {accountData.name}</label>
+        <label>New Email: {accountData.email}</label>
         <input
           type="text"
           value={username}
           placeholder="Enter new username"
           onChange={(e) => setUsername(e.target.value)}
         />
-
-        <label>New Password: {accountData.email}</label>
+        <label>Old Password:</label>
+        <input
+          type="password"
+          value={oldPassword}
+          placeholder="Enter old password"
+          onChange={(e) => setOldPassword(e.target.value)}
+        />
+        <label>New Password:</label>
         <input
           type="password"
           value={password}
           placeholder="Enter new password"
           onChange={(e) => setPassword(e.target.value)}
         />
-
         <button type="submit">Save Changes</button>
       </form>
     </div>
   );
 };
+
 
 export default Account;

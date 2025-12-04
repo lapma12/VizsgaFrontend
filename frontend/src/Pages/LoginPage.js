@@ -17,20 +17,19 @@ function LoginPage({ setId }) {
   const [counterFailed, setcounterFailed] = useState(0);
   const navigate = useNavigate(); // for navigation
 
-  function handleSubmit(e) {
+  async function handleSubmit (e) {
     e.preventDefault();
-  }
-  const goToAccount = (event) => {
-    event.preventDefault();
-    fetch("https://localhost:7282/api/Users")
-      .then((res) => res.json())
-      .then((users) => setGetUser(users))
-      .catch((err) => console.error(err));
+    let res = await fetch("https://localhost:7282/api/Users");
+    let users = await res.json();
+    setGetUser(users)
+    console.log(users);
+
     const matchedUser =
       getUser.find((u) => u.name === userInput) ||
       getUser.find((u) => u.email === userInput);
     if (matchedUser) {
-      setSuccessMessage("[translate:Successful login!<br/><br/>Check your email address!]");
+      setSuccessMessage("Successful login!<br/><br/>Check your email address!");
+      seterrorMessage("");
       setId(matchedUser.id);
       setTimeout(() => {
         navigate("/account");
@@ -38,14 +37,15 @@ function LoginPage({ setId }) {
     } else {
       setcounterFailed(counterFailed + 1);
       if (counterFailed === 5) {
-        seterrorMessage("[translate:Wrong username or password <br/><br/> Try again later!]")
+        seterrorMessage("Wrong username or password <br/><br/> Try again later!")
+        setSuccessMessage("")
       }
       else {
         seterrorMessage("Wrong username or password")
         console.log(counterFailed);
       }
     }
-  };
+  }
 
   const goToRegisterPage = (event) => {
     event.preventDefault(); // Prevent default anchor behavior
@@ -119,7 +119,7 @@ function LoginPage({ setId }) {
                 required
               />
             </div>
-            <button type="submit" onClick={goToAccount}>
+            <button type="submit">
               Login
             </button>
           </form>
