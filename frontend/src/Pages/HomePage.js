@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import "../Styles/Main.css";
 import { useEffect,useState } from "react";
-//import castlLogo from "../Img/castl-log.png" // ide tedd az elkészült logót
+import Logo from "../Img/mainlogo.png" 
 
 const Homepage = () => {
   const location = useLocation()
@@ -23,7 +23,7 @@ const Homepage = () => {
   return (
     <div className="homepage-container">
       <div className="homepage-card">
-        <img src="" alt="CastL Logo" className="homepage-logo" />
+        <img src={Logo} alt="CastL Logo" className="homepage-logo" />
         <h1 className="homepage-title">Welcome to <span>CastL</span>!</h1>
         <p className="homepage-description">
           Explore our world, join the adventure, and become part of the CastL community.

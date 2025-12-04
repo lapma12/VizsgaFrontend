@@ -102,7 +102,6 @@ function LoginPage({ setId }) {
           <h2>Login</h2>
           <form onSubmit={handleSubmit}>
             <div>
-              <label>Username or Email</label>
               <input
                 type="text"
                 placeholder="Enter username or email"
@@ -110,8 +109,7 @@ function LoginPage({ setId }) {
                 required
               />
             </div>
-            <div>
-              <label>Password</label>
+            <div> 
               <input
                 type="password"
                 placeholder="Enter password"

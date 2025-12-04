@@ -147,7 +147,6 @@ function Register() {
           <h2>Create new account</h2>
           <form onSubmit={handleSave}>
             <div>
-              <label>Username</label>
               <input
                 type="text"
                 placeholder="Username"
@@ -158,7 +157,6 @@ function Register() {
             </div>
 
             <div>
-              <label>Email</label>
               <input
                 type="email"
                 placeholder="Email"
@@ -169,7 +167,6 @@ function Register() {
             </div>
 
             <div>
-              <label>Password</label>
               <input
                 type="password"
                 placeholder="Password"
@@ -179,7 +176,6 @@ function Register() {
             </div>
 
             <div>
-              <label>Confirm Password</label>
               <input
                 type="password"
                 placeholder="Confirm Password"

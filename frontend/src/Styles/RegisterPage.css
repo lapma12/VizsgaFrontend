@@ -15,7 +15,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 110vh;
   background: var(--accentLight);
   position: relative;
   overflow: hidden;
@@ -26,7 +26,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80vh;
+  height: 91vh;   
   background: var(--accentLight);
   position: relative;
   overflow: hidden;
@@ -50,13 +50,13 @@
   flex-direction: row;
   gap: 3rem;
   background: linear-gradient(135deg, var(--bgColor), #d7c195);
-  padding: 3rem;
+  padding: 2rem;
   border-radius: 1.5rem;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
   animation: fadeIn 0.8s ease-out;
   backdrop-filter: blur(10px);
   max-width: 1100px;
-  width: 90%;
+  width: 60%;
   position: relative;
 }
 
@@ -71,8 +71,8 @@
 
 .register-info h2 {
   font-family: "MedievalSharp", cursive;
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+  font-size: 2.6rem;
+  margin-bottom: 1.2rem;
   color: var(--accentDark);
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -80,20 +80,19 @@
 }
 
 .register-info p {
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   line-height: 1.6;
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
   color: var(--accentDark);
 }
 
 .register-info ul li {
   color: var(--accentDark);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.7rem;
 }
 
 .register-info ul li.valid {
   color: #1a7b28;
-  font-weight: bold;
 }
 
 /* === Form Section === */
@@ -101,16 +100,16 @@
   flex: 1;
   position: relative;
   background: linear-gradient(135deg, #f3e3c3, #e8d8b4);
-  padding: 2.5rem;
+  padding: 2rem;
   border-radius: 1.5rem;
   box-shadow: 0 8px 30px rgba(75, 54, 33, 0.3);
 }
 
 .register-form h2 {
   font-family: "MedievalSharp", cursive;
-  font-size: 2.8rem;
+  font-size: 2.3rem;
   font-weight: 800;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.7rem;
   color: var(--accentDark);
   text-align: center;
   text-shadow: 2px 2px 0 var(--highlight);
@@ -119,13 +118,13 @@
 /* === Inputs === */
 .register-form input {
   width: 100%;
-  padding: 1.2rem;
+  padding: 1rem;
   margin-bottom: 1.5rem;
   border-radius: 1rem;
   border: 2px solid var(--accentLight);
   background-color: #fff;
   color: var(--textDark);
-  font-size: 1.1rem;
+  font-size: 1rem;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   outline: none;
 }
@@ -138,7 +137,7 @@
 /* === Buttons === */
 .register-form button {
   width: 100%;
-  padding: 1.2rem;
+  padding: 1rem;
   background-color: var(--accentLight);
   color: #fff;
   font-weight: bold;
@@ -148,7 +147,7 @@
   transition: all 0.3s ease;
   box-shadow: 0 6px 0 var(--accentDark);
   margin-bottom: 20px;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-family: "Poppins", sans-serif;
 }
 
@@ -257,42 +256,112 @@
     transform: translateY(0);
   }
 }
+/* === Enhanced Responsive Breakpoints === */
+@media screen and (max-width: 1200px) {
+  .register-container { gap: 2rem; padding: 2.5rem; max-width: 95%; }
+  .register-form { padding: 2rem; }
+}
 
-/* === Responsive === */
-@media screen and (max-width: 768px) {
-  .register-page {
-    height: auto;
-    padding: 2rem;
+@media screen and (max-width: 992px) {
+  .register-page, .login-page { height: 100vh; padding: 1rem; }
+  .register-container { 
+    flex-direction: column; 
+    gap: 2rem; 
+    padding: 2rem; 
+    max-width: 95%; 
   }
+  .register-info h2 { font-size: 2.2rem; }
+  .register-form h2 { font-size: 2.5rem; }
+}
 
-  .register-container {
-    flex-direction: column;
-    padding: 2rem;
+@media screen and (max-width: 850px) {
+  .register-page, .login-page { 
+    height: auto; 
+    min-height: 100vh; 
+    padding: 1rem; 
   }
+  .register-container { 
+    padding: 1.5rem; 
+    gap: 1.5rem; 
+    width: 98%; 
+  }
+  .register-info h2 { font-size: 2rem; }
+  .register-info p { font-size: 1rem; }
+  .register-form { 
+    padding: 1.5rem; 
+    border-radius: 1rem; 
+  }
+  .register-form h2 { font-size: 2.2rem; }
+  .register-form input { 
+    padding: 1rem 1.1rem; 
+    font-size: 1rem; 
+    margin-bottom: 1.2rem; 
+  }
+  .register-form button { 
+    padding: 1rem; 
+    font-size: 1rem; 
+    margin-bottom: 1rem; 
+  }
+  .success-alert, .error-alert { 
+    top: 250px; 
+    padding: 1rem 2rem; 
+    font-size: 1.3rem; 
+  }
+}
 
-  .register-form h2 {
-    font-size: 2.2rem;
+@media screen and (max-width: 576px) {
+  :root {
+    --container-padding: 1rem;
+  }
+  .register-container { padding: 1.2rem; }
+  .register-info h2 { font-size: 1.8rem; letter-spacing: 0.5px; }
+  .register-info p { font-size: 0.95rem; }
+  .register-form h2 { font-size: 1.9rem; }
+  .register-form { padding: 1.2rem; }
+  .register-form input { 
+    padding: 0.9rem; 
+    font-size: 0.95rem; 
+    border-radius: 0.8rem; 
+  }
+  .register-form button { 
+    padding: 0.95rem; 
+    font-size: 0.95rem; 
+    border-width: 2px; 
+  }
+  .register-form p { font-size: 0.9rem; }
+  .success-alert, .error-alert { 
+    top: 220px; 
+    padding: 0.9rem 1.5rem; 
+    font-size: 1.2rem; 
+    max-width: 90%; 
   }
 }
 
 @media screen and (max-width: 480px) {
-  .register-form {
-    padding: 1.5rem;
+  .register-container { padding: 1rem; border-radius: 1rem; }
+  .register-info h2 { font-size: 1.6rem; }
+  .register-form h2 { font-size: 1.7rem; }
+  .register-form input { 
+    padding: 0.85rem; 
+    margin-bottom: 1rem; 
+    font-size: 0.9rem; 
   }
+  .register-form button { 
+    padding: 0.85rem; 
+    font-size: 0.9rem; 
+  }
+  .success-alert, .error-alert { 
+    font-size: 1.1rem; 
+    padding: 0.8rem 1.2rem; 
+    top: 200px; 
+  }
+}
 
-  .register-form h2 {
-    font-size: 2rem;
+@media screen and (max-width: 360px) {
+  .register-form input, .register-form button { 
+    padding: 0.75rem; 
+    font-size: 0.85rem; 
   }
-
-  .register-form input {
-    padding: 0.9rem;
-  }
-
-  .register-form button {
-    padding: 1rem;
-  }
-
-  .register-form p {
-    font-size: 0.9rem;
-  }
+  .register-form h2 { font-size: 1.5rem; }
+  .success-alert, .error-alert { font-size: 1rem; }
 }
