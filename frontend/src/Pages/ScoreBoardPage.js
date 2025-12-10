@@ -88,7 +88,7 @@ const Scoreboard = () => {
           <tbody>
             {loading || error ? (
               <tr>
-                <td colSpan="3" className="text-center py-6">
+                <td colSpan="4" className="text-center py-6">
                   <ClipLoader size={40} />
                   {error && (
                     <p style={{ marginTop: "14px", color: "red" }}>
