@@ -12,23 +12,28 @@ import axios from "axios";
 
 const Account = ({ id }) => {
   const location = useLocation();
+  
   if (location.pathname === "/account") {
     document.title = "Account";
   }
 
   const [activeTab, setActiveTab] = useState("results");
   const navigate = useNavigate();
-  const [accountData, setaccountData] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
+  const [successResult, setSuccesssResult] = useState(false);
+  const [resultData, setresultData] = useState([])
 
   const goToHome = (event) => {
     event.preventDefault();
     navigate("/");
   };
   useEffect(() => {
-    fetch("https://localhost:7282/api/Users/playerResult?id=" + id)
+    fetch("https://localhost:7282/api/Users/playerResult/" + id)
       .then((res) => res.json())
-      .then((data) => setaccountData(data))
+      .then((data) => {
+        setSuccesssResult(data.success);
+        setresultData(data.result);
+      })
       .catch((err) => console.error(err));
   }, []);
 
@@ -62,7 +67,7 @@ const Account = ({ id }) => {
         <UserCircle className="account-avatar" size={80} />
         <div className="account-info">
           <h1 className="account-title">
-            Welcome, <span className="username">{accountData.name}</span>
+            Welcome, <span className="username">{successResult ? resultData.name : ""}</span>
           </h1>
           <p className="account-subtitle">
             Your personal account settings and results
@@ -86,8 +91,8 @@ const Account = ({ id }) => {
       </div>
 
       <div className="account-content">
-        {activeTab === "results" && <Results accountData={accountData} />}
-        {activeTab === "settings" && <Settings accountData={accountData} />}
+        {activeTab === "results" && <Results resultData={resultData} />}
+        {activeTab === "settings" && <Settings resultData={resultData} />}
       </div>
 
       <div className="account-footer">
@@ -102,17 +107,17 @@ const Account = ({ id }) => {
   );
 };
 
-const Results = ({ accountData }) => (
+const Results = ({ resultData }) => (
   <div className="results-section">
     <h2>My Results</h2>
     <ul>
-      <li>Total Score : {accountData.totalScore}</li>
-      <li>Total Xp: {accountData.totalXp}</li>
+      <li>Total Score : {resultData.totalScore}</li>
+      <li>Total Xp: {resultData.totalXp}</li>
     </ul>
   </div>
 );
 
-const Settings = ({ accountData }) => {
+const Settings = ({ resultData }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [oldPassword, setOldPassword] = useState("");
@@ -123,17 +128,20 @@ const Settings = ({ accountData }) => {
     e.preventDefault();
 
     const updateData = {
-      email: accountData.email,
+      email: resultData.email,
       oldPassword: oldPassword,
       newPassword: password
     };
 
     try {
       const response = await axios.put("https://localhost:7282/api/Users/playerPasswordUpdate", updateData);
-      console.log("Response:", response);
       console.log("Full response:", response);
-      
-      setSuccessMessage(response.data);
+      if(response.data.success){
+        setSuccessMessage(response.data.message);
+      }
+      else{
+        seterrorMessage(response.data.message);
+      }
       seterrorMessage("")
       setTimeout(() => setSuccessMessage(""), 3000);
     } catch (error) {
@@ -163,7 +171,7 @@ const Settings = ({ accountData }) => {
       )}
       <h2>Account Settings</h2>
       <form onSubmit={handleSubmit}>
-        <label>New Email: {accountData.email}</label>
+        <label>New Email: {resultData.email}</label>
         <input
           type="text"
           value={username}

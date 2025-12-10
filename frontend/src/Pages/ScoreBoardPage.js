@@ -8,9 +8,9 @@ const Scoreboard = () => {
   if (location.pathname === "/scoreboard") {
     document.title = "Scoreboard";
   }
+
   const [scores, setScores] = useState([]);
   const [filteredScores, setFilteredScores] = useState([]);
-  const [, setFilter] = useState("all");
 
   const [loading, setLoading] = useState(true); // <-- BETÖLTÉS
   const [error, setError] = useState(false); // <-- HIBA
@@ -19,8 +19,8 @@ const Scoreboard = () => {
     fetch("https://localhost:7282/api/Users/playerScore")
       .then((res) => res.json())
       .then((scoreData) => {
-        setScores(scoreData);
-        setFilteredScores(scoreData);
+        setScores(scoreData.result);
+        setFilteredScores(scoreData.result);
         setLoading(false);
       })
       .catch((err) => {
@@ -31,7 +31,6 @@ const Scoreboard = () => {
   }, []);
 
   const applyFilter = (filterType) => {
-    setFilter(filterType);
 
     if (filterType === "username") {
       setFilteredScores(

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import "../Styles/RegisterPage.css";
 import { useLocation, useNavigate } from "react-router-dom"; // for navigation
 import Register from "./RegisterPage";
+import axios from "axios";
 
 function LoginPage({ setId }) {
   const location = useLocation();
@@ -11,7 +12,8 @@ function LoginPage({ setId }) {
     document.title = "Login";
   }
   const [userInput, setUserInput] = useState("");
-  const [getUser, setGetUser] = useState([]);
+  const [password, setPassword] = useState("")
+
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, seterrorMessage] = useState("");
   const [counterFailed, setcounterFailed] = useState(0);
@@ -19,18 +21,19 @@ function LoginPage({ setId }) {
 
   async function handleSubmit (e) {
     e.preventDefault();
-    let res = await fetch("https://localhost:7282/api/Users");
-    let users = await res.json();
-    setGetUser(users)
-    console.log(users);
+    const data = {
+      name: userInput,
+      email: userInput,
+      password: password, 
+    };
 
-    const matchedUser =
-      getUser.find((u) => u.name === userInput) ||
-      getUser.find((u) => u.email === userInput);
-    if (matchedUser) {
+    let userResult = await axios.post("https://localhost:7282/api/Users/playerLogin", data);
+    
+    if (userResult.data.success) {
       setSuccessMessage("Successful login!<br/><br/>Check your email address!");
       seterrorMessage("");
-      setId(matchedUser.id);
+      setId(userResult.data.result.id);
+      console.log(userResult.data.result.id);
       setTimeout(() => {
         navigate("/account");
       }, 2000);
@@ -113,7 +116,7 @@ function LoginPage({ setId }) {
               <input
                 type="password"
                 placeholder="Enter password"
-                //onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>

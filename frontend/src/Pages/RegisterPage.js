@@ -11,10 +11,12 @@ function Register() {
     document.title = "Registration"
   }
 
+  //form adatok
   const [username, setUserN] = useState("");
   const [email, setEmailState] = useState("");
   const [password, setPasswordState] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  //alertek
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, seterrorMessage] = useState("");
 
@@ -48,19 +50,17 @@ function Register() {
     setPasswordState(value);
   }
 
-  // FORM SUBMISSION
   const handleSave = async (e) => {
     e.preventDefault();
 
     const data = {
       name: username,
       email: email,
-      password: password, // kötelező, különben NULL → 500 hiba
+      password: password,
     };
-
+    let registerResutData = await axios.post("https://localhost:7282/api/Users/playerRegister", data);
     try {
-      if (isFormValid) {
-        await axios.post("https://localhost:7282/api/Users", data);
+      if (isFormValid && registerResutData.data.success) {
         setSuccessMessage(
           "Welcome to the CastL website<br/>Successful registration!<br/><br/>You have login in.<br/><br/>Check your email address!"
         );
@@ -74,8 +74,6 @@ function Register() {
     } catch (error) {
       console.log(error.response?.data);
     }
-    console.log(isFormValid);
-    
   };
 
   return (

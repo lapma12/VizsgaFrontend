@@ -14,11 +14,10 @@ const Homepage = () => {
   useEffect(() => {
     fetch("https://localhost:7282/api/Users/playerCount")
     .then((res) => res.json())
-    .then((playerCount) => {setCount(playerCount)})
-    .catch((err) => {
-        console.error(err);})
+    .then((data) => {setCount(data)})
+    .catch(console.error())
   }, [])
-  
+  console.log(count);
   
   return (
     <div className="homepage-container">
@@ -48,7 +47,7 @@ const Homepage = () => {
         </div>
 
         <p className="player-count">
-          Online players: <span id="playerCount">{count.playerCount}</span>
+          Online players: <span id="playerCount">{count.success ? count.result.playerCount : ""}</span>
         </p>
       </div>
     </div>
