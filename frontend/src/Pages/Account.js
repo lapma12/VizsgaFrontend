@@ -12,7 +12,7 @@ import axios from "axios";
 
 const Account = ({ id }) => {
   const location = useLocation();
-  
+
   if (location.pathname === "/account") {
     document.title = "Account";
   }
@@ -20,6 +20,7 @@ const Account = ({ id }) => {
   const [activeTab, setActiveTab] = useState("results");
   const navigate = useNavigate();
   const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); 
   const [successResult, setSuccesssResult] = useState(false);
   const [resultData, setresultData] = useState([])
 
@@ -39,11 +40,15 @@ const Account = ({ id }) => {
 
   const deleteAccount = async () => {
     try {
-      await fetch("https://localhost:7282/api/Users/" + id, {
-        method: "DELETE",
-      });
-      console.log("DELETE is used");
-      setSuccessMessage("Successfully delete");
+      let deleteDataResult = await axios.delete("https://localhost:7282/api/Users/" + id)
+      if (deleteDataResult.data.success) {
+        setSuccessMessage(deleteDataResult.data.message);
+        setErrorMessage("")
+      }
+      else {
+        setErrorMessage(deleteDataResult.data.message);
+        setSuccessMessage("");
+      }
       setTimeout(() => {
         navigate("/login");
       }, 3000);
@@ -61,6 +66,14 @@ const Account = ({ id }) => {
           animate={{ opacity: 1, y: 0 }}
           className="success-alert"
           dangerouslySetInnerHTML={{ __html: successMessage }}
+        />
+      )}
+      {errorMessage && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="error-alert"
+          dangerouslySetInnerHTML={{ __html: errorMessage }}
         />
       )}
       <div className="account-header">
@@ -122,7 +135,7 @@ const Settings = ({ resultData }) => {
   const [password, setPassword] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, seterrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -136,17 +149,17 @@ const Settings = ({ resultData }) => {
     try {
       const response = await axios.put("https://localhost:7282/api/Users/playerPasswordUpdate", updateData);
       console.log("Full response:", response);
-      if(response.data.success){
+      if (response.data.success) {
         setSuccessMessage(response.data.message);
       }
-      else{
-        seterrorMessage(response.data.message);
+      else {
+        setErrorMessage(response.data.message);
       }
-      seterrorMessage("")
+
       setTimeout(() => setSuccessMessage(""), 3000);
     } catch (error) {
       console.log("Error response:", error.response?.data);
-      seterrorMessage("Update filed");
+      setErrorMessage("Update filed");
       setSuccessMessage("")
     }
   };
