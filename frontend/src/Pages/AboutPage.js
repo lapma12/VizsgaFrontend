@@ -18,7 +18,7 @@ const AboutPage = () => {
       name: "Lapma",
       role: "Website Developer",
       bio: "Responsible for the animations of the game characters. Brings movements and characters to life.",
-      image: 'https://scontent-vie1-1.xx.fbcdn.net/v/t39.30808-1/455037356_1227391901621943_2585659180847469402_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=105&ccb=1-7&_nc_sid=e99d92&_nc_ohc=k6Z-Si2nGqQQ7kNvwGlgoF3&_nc_oc=Adns4iJpYGfU-zL4RlfznBOs1HYzUOjxlSaJkp49IPlP49InHVmEZ5mciV2Q8Ajf9zM0_VqwNMD8MVTuSRpJ3yzr&_nc_zt=24&_nc_ht=scontent-vie1-1.xx&_nc_gid=0umAl1PnOfAB6qrBJaPiLA&oh=00_AfiEPfe6bi_a3vFTdobrQInqANEJeSkkPR4zpnBK5MoS0Q&oe=69128EBD'
+      image: "https://avatars.githubusercontent.com/u/112930985?v=4&size=64"
     }
   ];
 

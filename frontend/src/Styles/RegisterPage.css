@@ -15,7 +15,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 110vh;
+  height: 90vh;
   background: var(--accentLight);
   position: relative;
   overflow: hidden;
@@ -26,7 +26,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 85vh;   
+  height: 80vh;   
   background: var(--accentLight);
   position: relative;
   overflow: hidden;
