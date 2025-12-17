@@ -138,7 +138,7 @@ body {
 }
 
 .account-content input {
-  padding: 0.75rem 1rem;
+  padding: 0.65rem 1rem;
   border-radius: 8px;
   border: 2px solid var(--accentLight);
   font-size: 1rem;
@@ -147,6 +147,24 @@ body {
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+.textBoxforDetils {
+  padding: 0.65rem 1rem;
+  border-radius: 8px;
+  border: 2px solid var(--accentLight);
+  font-size: 1rem;
+  width: 20rem;       /* alap szélesség */
+  height: 6rem;      /* alap magasság */
+  background-color: #fff;
+  color: var(--textDark);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  resize: both;       /* lehet átméretezni szélességben és magasságban */
+}
+
+.textBoxforDetils:focus {
+  border-color: var(--highlight);
+  outline: none;
+  box-shadow: 0 0 8px rgba(225, 195, 115, 0.4);
+}
 .account-content input:focus {
   border-color: var(--highlight);
   outline: none;
@@ -287,7 +305,6 @@ body {
 .settings-column {
   background: rgba(255, 255, 255, 0.45);
   padding: 1.5rem;
-  border-radius: 12px;
   border: 2px solid rgba(75, 54, 33, 0.25);
 }
 

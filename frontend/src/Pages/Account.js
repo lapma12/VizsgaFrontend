@@ -90,9 +90,7 @@ const Account = ({ id, setloginIn }) => {
               {successResult ? resultData.name : ""}
             </span>
           </h1>
-          <p className="account-subtitle">
-            Your personal account settings and results
-          </p>
+          <p className="account-subtitle">Details :</p>
         </div>
       </div>
 
@@ -207,6 +205,8 @@ const Settings = ({ resultData }) => {
               placeholder="Enter new username"
               onChange={(e) => setUsername(e.target.value)}
             />
+            <label>Chane your details:</label>
+            <textarea className="textBoxforDetils" />
           </div>
 
           {/* RIGHT COLUMN – PASSWORDS */}
