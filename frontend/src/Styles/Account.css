@@ -128,7 +128,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  max-width: 400px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
@@ -235,19 +235,6 @@ body {
   z-index: 999;
   opacity: 0;
 }
-
-/* === Popup Animation === */
-@keyframes successPop {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -20px) scale(0.9);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translate(-50%, 0) scale(1);
-  }
-}
 .error-alert {
   position: absolute;
   top: 300px;
@@ -267,6 +254,51 @@ body {
   animation: successPop 0.5s ease-out forwards;
   z-index: 999;
   opacity: 0;
+}
+/* === Popup Animation === */
+@keyframes successPop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -20px) scale(0.9);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+.settings-form {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.settings-columns {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.settings-column {
+  background: rgba(255, 255, 255, 0.45);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 2px solid rgba(75, 54, 33, 0.25);
+}
+
+/* GOMB KÖZÉPEN */
+.settings-form button {
+  align-self: center;
+  min-width: 200px;
+}
+.settings-column label {
+  display: block;     /* ⬅️ EZ A KULCS */
+  margin-top: 0.75rem;
 }
 
 /* === Popup Animation === */
@@ -300,9 +332,17 @@ body {
     flex-direction: column;
     text-align: center;
   }
+  .account-page {
+    margin: 40px;
+  }
 
   .account-footer {
     flex-direction: column;
     align-items: center;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .settings-columns {
+    grid-template-columns: 1fr;
   }
 }

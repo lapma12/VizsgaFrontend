@@ -32,7 +32,6 @@ header.navbar {
 
 /* --- LEFT SOCIAL ICONS --- */
 .navbar-left {
-  
   display: flex;
   gap: 0.8rem;
 }
@@ -100,19 +99,22 @@ header.navbar {
 }
 
 /* SEARCH BUTTON */
-.search-btn {
-  font-size: 1.9rem;
+.loginIn-btn {
+  font-size: 0.8rem;
   border: 2px solid var(--textDark);
   background: #8c7153;
   color: var(--textDark);
-  height: 40px;
-  width: 40px;
+  height: 30px;
+  width: 60px;
+  font-weight: bold;
   border-radius: 6px;
   cursor: pointer;
   transition: all var(--transition);
+  text-align: center;
+  padding-top: 0.3rem;
 }
 
-.search-btn:hover {
+.loginIn-btn:hover {
   background: #a78b68;
   color: #fff;
 }
@@ -132,7 +134,6 @@ header.navbar {
   color: #fff;
 }
 
-/* Hide mobile-only elements by default */
 .nav-search-mobile {
   display: none;
 }
@@ -144,56 +145,65 @@ header.navbar {
 
 /* --- RESPONSIVE --- */
 @media (max-width: 1000px) {
+  /* === MOBILE NAV CONTAINER === */
   .navbar-center {
     position: fixed;
     top: 0;
     right: -100%;
+    width: 100%;                /* ⬅️ TELJES SZÉLESSÉG */
+    height: 100vh;
+
+    display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    width: 70%;
-    height: 100vh;
+    align-items: center;        /* ⬅️ VALÓDI KÖZÉP */
+
     background: rgba(186, 170, 128, 0.97);
     backdrop-filter: blur(10px);
     transition: right 0.3s ease;
     gap: 2rem;
+    z-index: 999;
   }
 
   .navbar-center.responsive_nav {
     right: 0;
   }
 
-  .navbar-center a {
+  /* === NAV LINKS & BUTTONS === */
+  .navbar-center a,
+  .nav-search-mobile .loginIn-btn {
+    width: 90%;                 /* ⬅️ EGYFORMA SZÉLESSÉG */
+    max-width: 360px;
     font-size: 1.3rem;
-    width: 70%;
     justify-content: center;
   }
 
+  /* === TOGGLE BUTTON === */
   .nav-toggle-btn {
     display: block;
   }
 
-  /* Hide top search button */
+  /* === HIDE DESKTOP ELEMENTS === */
   .desktop-only {
     display: none;
   }
 
-  /* Show search button inside nav */
+  /* === MOBILE LOGIN BUTTON WRAPPER === */
   .nav-search-mobile {
+    width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 1rem;
+  }
+  .navbar-right .loginIn-btn{
+    display: none;
   }
 
-  .nav-search-mobile .search-btn {
-    font-size: 1.9rem;
-  border: 2px solid var(--textDark);
-  background: #8c7153;
-  color: var(--textDark);
-  height: 40px;
-  width: 40px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all var(--transition);
+  .loginIn-btn {
+    height: 44px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all var(--transition);
   }
+
 }

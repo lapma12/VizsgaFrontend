@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import axios from "axios";
 
-const Account = ({ id }) => {
+const Account = ({ id, setloginIn }) => {
   const location = useLocation();
 
   if (location.pathname === "/account") {
@@ -20,12 +20,16 @@ const Account = ({ id }) => {
   const [activeTab, setActiveTab] = useState("results");
   const navigate = useNavigate();
   const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState(""); 
+  const [errorMessage, setErrorMessage] = useState("");
   const [successResult, setSuccesssResult] = useState(false);
-  const [resultData, setresultData] = useState([])
+  const [resultData, setresultData] = useState([]);
 
-  const goToHome = (event) => {
-    event.preventDefault();
+  //ture or false
+  useEffect(() => {
+    setloginIn(true);
+  }, [setloginIn]);
+
+  const goToHome = () => {
     navigate("/");
   };
   useEffect(() => {
@@ -40,12 +44,13 @@ const Account = ({ id }) => {
 
   const deleteAccount = async () => {
     try {
-      let deleteDataResult = await axios.delete("https://localhost:7282/api/Users/" + id)
+      let deleteDataResult = await axios.delete(
+        "https://localhost:7282/api/Users/" + id
+      );
       if (deleteDataResult.data.success) {
         setSuccessMessage(deleteDataResult.data.message);
-        setErrorMessage("")
-      }
-      else {
+        setErrorMessage("");
+      } else {
         setErrorMessage(deleteDataResult.data.message);
         setSuccessMessage("");
       }
@@ -80,7 +85,10 @@ const Account = ({ id }) => {
         <UserCircle className="account-avatar" size={80} />
         <div className="account-info">
           <h1 className="account-title">
-            Welcome, <span className="username">{successResult ? resultData.name : ""}</span>
+            Welcome,{" "}
+            <span className="username">
+              {successResult ? resultData.name : ""}
+            </span>
           </h1>
           <p className="account-subtitle">
             Your personal account settings and results
@@ -143,16 +151,18 @@ const Settings = ({ resultData }) => {
     const updateData = {
       email: resultData.email,
       oldPassword: oldPassword,
-      newPassword: password
+      newPassword: password,
     };
 
     try {
-      const response = await axios.put("https://localhost:7282/api/Users/playerPasswordUpdate", updateData);
+      const response = await axios.put(
+        "https://localhost:7282/api/Users/playerPasswordUpdate",
+        updateData
+      );
       console.log("Full response:", response);
       if (response.data.success) {
         setSuccessMessage(response.data.message);
-      }
-      else {
+      } else {
         setErrorMessage(response.data.message);
       }
 
@@ -160,7 +170,7 @@ const Settings = ({ resultData }) => {
     } catch (error) {
       console.log("Error response:", error.response?.data);
       setErrorMessage("Update filed");
-      setSuccessMessage("")
+      setSuccessMessage("");
     }
   };
 
@@ -183,33 +193,47 @@ const Settings = ({ resultData }) => {
         />
       )}
       <h2>Account Settings</h2>
-      <form onSubmit={handleSubmit}>
-        <label>New Email: {resultData.email}</label>
-        <input
-          type="text"
-          value={username}
-          placeholder="Enter new username"
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <label>Old Password:</label>
-        <input
-          type="password"
-          value={oldPassword}
-          placeholder="Enter old password"
-          onChange={(e) => setOldPassword(e.target.value)}
-        />
-        <label>New Password:</label>
-        <input
-          type="password"
-          value={password}
-          placeholder="Enter new password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
+      <form onSubmit={handleSubmit} className="settings-form">
+        <div className="settings-columns">
+          {/* LEFT COLUMN – USERNAME */}
+          <div className="settings-column">
+            <h3>Username</h3>
+            <label>Current username:</label>
+            <p className="current-username">{resultData.name}</p>
+
+            <input
+              type="text"
+              value={username}
+              placeholder="Enter new username"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+
+          {/* RIGHT COLUMN – PASSWORDS */}
+          <div className="settings-column">
+            <h3>Password</h3>
+
+            <label>Old Password:</label>
+            <input
+              type="password"
+              value={oldPassword}
+              placeholder="Enter old password"
+              onChange={(e) => setOldPassword(e.target.value)}
+            />
+
+            <label>New Password:</label>
+            <input
+              type="password"
+              value={password}
+              placeholder="Enter new password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+        </div>
         <button type="submit">Save Changes</button>
       </form>
     </div>
   );
 };
-
 
 export default Account;

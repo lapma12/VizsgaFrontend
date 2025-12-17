@@ -14,10 +14,12 @@ import { useState } from "react";
 
 function App() {
   const [id, setId] = useState();
+  const [loginIn, setloginIn] = useState(false);
+  
   return (
     <Router>
       <div className="flex flex-col min-h-screen">
-        <Navbar/>
+        <Navbar loginIn={loginIn} setloginIn={setloginIn} />
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -26,7 +28,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/scoreboard" element={<Scoreboard/>} />
             <Route path="/game" element={<Game />} />
-            <Route path="/account" element={<Account id={id} />}/>
+            <Route path="/account" element={<Account id={id} setloginIn={setloginIn}/>}/>
             <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
             <Route path="*" element={<NotFound />} />
           </Routes>
