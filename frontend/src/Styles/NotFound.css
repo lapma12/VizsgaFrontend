@@ -1,0 +1,119 @@
+:root {
+  --bgColor: #e8d8b4;
+  --accentDark: #4b3621;
+  --accentLight: #8c7153;
+  --highlight: #e1c373;
+  --textDark: #2d1b0f;
+}
+
+/* === Alapstílusok a háttérhez és központozáshoz === */
+.not-found-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  background: linear-gradient(135deg, var(--bgColor), #d7c195);
+  color: var(--textDark);
+  text-align: center;
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* === A hiba tartalom === */
+.error-content {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(6px);
+  padding: 40px 60px;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 25px rgba(75, 54, 33, 0.3);
+  max-width: 500px;
+  width: 100%;
+  border: 2px solid rgba(75, 54, 33, 0.2);
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+/* === 404 kód === */
+.error-code {
+  font-size: 120px;
+  font-weight: bold;
+  color: var(--accentDark);
+  font-family: "MedievalSharp", cursive;
+  text-shadow: 2px 2px 0 var(--highlight);
+  margin-bottom: 20px;
+}
+
+/* === Cím === */
+.error-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accentLight);
+  margin-bottom: 15px;
+  text-shadow: 1px 1px 0 var(--highlight);
+}
+
+/* === Üzenet === */
+.error-message {
+  font-size: 18px;
+  color: var(--textDark);
+  margin-bottom: 30px;
+  opacity: 0.9;
+}
+
+/* === Gomb === */
+.home-button {
+  background-color: var(--accentLight);
+  color: #fff;
+  font-size: 18px;
+  padding: 12px 30px;
+  border: 3px solid var(--accentDark);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 700;
+  box-shadow: 0 4px 0 var(--accentDark);
+}
+
+.home-button:hover {
+  background-color: #a78b68;
+  transform: translateY(-3px);
+}
+
+.home-button:active {
+  transform: translateY(1px);
+}
+
+/* === Reszponzív === */
+@media only screen and (max-width: 768px) {
+  .error-content {
+    padding: 30px 40px;
+  }
+
+  .error-code {
+    font-size: 90px;
+  }
+
+  .error-title {
+    font-size: 24px;
+  }
+
+  .error-message {
+    font-size: 16px;
+  }
+
+  .home-button {
+    font-size: 16px;
+    padding: 10px 24px;
+  }
+}
+
+/* === Animáció === */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,199 @@
+@import url("https://fonts.googleapis.com/css2?family=MedievalSharp&family=Poppins:wght@400;600&display=swap");
+
+:root {
+  --bgColor: #bbaa80;
+  --textDark: #2e1f13;
+  --accent: #796f57;
+  --accentHover: #a99566;
+  --iconSize: 1.6rem;
+  --transition: 0.25s ease;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+header.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  background: var(--bgColor);
+  color: var(--textDark);
+  padding: 0 1.5rem;
+  border-bottom: 5px solid var(--accent);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.25);
+  position: relative;
+  z-index: 100;
+}
+
+/* --- LEFT SOCIAL ICONS --- */
+.navbar-left {
+  
+  display: flex;
+  gap: 0.8rem;
+}
+
+.navbar-left button {
+  background: none;
+  border: none;
+  color: var(--textDark);
+  font-size: var(--iconSize);
+  cursor: pointer;
+  transition: transform var(--transition), color var(--transition);
+}
+
+.navbar-left button:hover {
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* --- CENTER NAV LINKS --- */
+.navbar-center {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navbar-center a {
+  text-decoration: none;
+  color: var(--textDark);
+  font-weight: 700;
+  font-family: "MedievalSharp", cursive;
+  padding: 6px 14px;
+  border: 2px solid #5f5f5f;
+  background: #8c7153;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--transition);
+  box-shadow: 0 4px 0 var(--accentDark);
+}
+
+.navbar-center a:hover {
+  color: #fff;
+  background: #a78b68;
+  transform: translateY(-2px);
+}
+
+.navbar-center .icon {
+  font-size: 1.5rem;
+  color: #000;
+  display: flex;
+  align-items: center;
+}
+
+.active {
+  background: var(--accentHover);
+  color: #fff;
+}
+
+/* --- RIGHT SIDE --- */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+/* SEARCH BUTTON */
+.search-btn {
+  font-size: 1.9rem;
+  border: 2px solid var(--textDark);
+  background: #8c7153;
+  color: var(--textDark);
+  height: 40px;
+  width: 40px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.search-btn:hover {
+  background: #a78b68;
+  color: #fff;
+}
+
+/* --- TOGGLE (hamburger) --- */
+.nav-toggle-btn {
+  background: none;
+  border: none;
+  font-size: 1.9rem;
+  cursor: pointer;
+  color: var(--textDark);
+  display: none;
+  transition: color var(--transition);
+}
+
+.nav-toggle-btn:hover {
+  color: #fff;
+}
+
+/* Hide mobile-only elements by default */
+.nav-search-mobile {
+  display: none;
+}
+
+/* Hide desktop-only search on small screens */
+.desktop-only {
+  display: block;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 1000px) {
+  .navbar-center {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    height: 100vh;
+    background: rgba(186, 170, 128, 0.97);
+    backdrop-filter: blur(10px);
+    transition: right 0.3s ease;
+    gap: 2rem;
+  }
+
+  .navbar-center.responsive_nav {
+    right: 0;
+  }
+
+  .navbar-center a {
+    font-size: 1.3rem;
+    width: 70%;
+    justify-content: center;
+  }
+
+  .nav-toggle-btn {
+    display: block;
+  }
+
+  /* Hide top search button */
+  .desktop-only {
+    display: none;
+  }
+
+  /* Show search button inside nav */
+  .nav-search-mobile {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .nav-search-mobile .search-btn {
+    font-size: 1.9rem;
+  border: 2px solid var(--textDark);
+  background: #8c7153;
+  color: var(--textDark);
+  height: 40px;
+  width: 40px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all var(--transition);
+  }
+}

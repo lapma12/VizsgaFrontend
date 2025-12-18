@@ -1,0 +1,85 @@
+
+.game-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  width: 100%;
+  padding: 2rem;
+  overflow: hidden;
+  background:url("../Img/GameBackground.png") ;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.game-container {
+  background: linear-gradient(
+  135deg,
+  rgba(232, 216, 180, 0.6),
+  rgba(215, 193, 149, 0.6)
+);
+  padding: 3rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  max-width: 700px;
+  width: 90%;
+  text-align: center;
+  color: #fff;
+  backdrop-filter: blur(5px); /* finom elmosódás a háttérképen */
+  border: 2px solid rgba(255, 255, 255, 0.2); /* kis “üveg” hatás */
+}
+
+
+.game-title {
+  font-family: "MedievalSharp", cursive;
+  font-size: 4rem;  
+  color: var(--accentDark);
+  text-shadow: 2px 2px 0 var(--highlight);
+  margin-bottom: 1rem;
+}
+
+.game-description {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: #fff;
+  line-height: 1.6;
+}
+
+.download-button {
+  background-color: var(--accentLight);
+  border: 3px solid var(--accentDark);
+  color: #fff;
+  padding: 12px 24px;
+  font-size: 18px;
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 0 var(--accentDark);
+  cursor: pointer;
+}
+
+.download-button:hover {
+  background-color: #a78b68;
+  transform: translateY(-2px);
+}
+.download-button:active{
+  background-color: #705a3a;
+  transform: translateY(0);
+}
+@media (max-width: 600px) {
+  .game-title {
+    font-size: 2.5rem;
+  }
+
+  .download-button {
+    padding: 10px 12px;
+  font-size: 1rem;
+  }
+
+  .game-description {
+    font-size: 1rem;
+  }
+}
