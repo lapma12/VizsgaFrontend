@@ -33,13 +33,18 @@ const Account = ({ id, setloginIn }) => {
     navigate("/");
   };
   useEffect(() => {
-    fetch("https://localhost:7282/api/Users/playerResult/" + id)
-      .then((res) => res.json())
-      .then((data) => {
-        setSuccesssResult(data.success);
-        setresultData(data.result);
-      })
-      .catch((err) => console.error(err));
+    const fetchAccountPlayerData = async () => {
+      try{
+        const response = await axios.get(
+          "https://dongesz.com/api/Users/playerResult/" + id
+        );
+        setSuccesssResult(response.data.success);
+        setresultData(response.data.result)
+      }
+      catch (error) {
+        console.error(error);
+      }
+    }
   }, []);
 
   const deleteAccount = async () => {
