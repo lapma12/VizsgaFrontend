@@ -1,1 +1,1 @@
-# react
+# Vizsgának a Frontend része
