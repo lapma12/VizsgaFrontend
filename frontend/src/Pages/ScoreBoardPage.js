@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ClipLoader from "react-spinners/ClipLoader"; // <-- SPINNER
+import ClipLoader from "react-spinners/ClipLoader";
 import "../Styles/Scoreboard.css";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
@@ -13,42 +13,50 @@ const Scoreboard = () => {
   const [scores, setScores] = useState([]);
   const [filteredScores, setFilteredScores] = useState([]);
 
-  const [loading, setLoading] = useState(false); // <-- BETÖLTÉS
-  const [error, setError] = useState(false); // <-- HIBA
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchScoreboardPlayer = async () => {
-      try{
+      try {
         const response = await axios.get(
           "https://dongesz.com/api/Users/playerScore"
         );
+
         setScores(response.data.result);
-        setFilteredScores(response.data.result)
-        setLoading(response.data.success);
-        setError(response.data.success);
-      }
-      catch(error){
-        console.log(error)
+        setFilteredScores(response.data.result);
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+        setError(true);
+        setLoading(false);
       }
     };
+
     fetchScoreboardPlayer();
   }, []);
 
+  const handleSearch = () => {
+    const filtered = scores.filter((score) =>
+      score.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredScores(filtered);
+  };
+
   const applyFilter = (filterType) => {
+    let sorted = [...filteredScores];
 
     if (filterType === "username") {
-      setFilteredScores(
-        [...scores].sort((a, b) => a.name.localeCompare(b.name))
-      );
+      sorted.sort((a, b) => a.name.localeCompare(b.name));
     } else if (filterType === "wins") {
-      setFilteredScores(
-        [...scores].sort((a, b) => b.totalScore - a.totalScore)
-      );
+      sorted.sort((a, b) => b.totalScore - a.totalScore);
     } else if (filterType === "xp") {
-      setFilteredScores([...scores].sort((a, b) => b.totalXp - a.totalXp));
-    } else {
-      setFilteredScores();
+      sorted.sort((a, b) => b.totalXp - a.totalXp);
     }
+
+    setFilteredScores(sorted);
   };
 
   return (
@@ -65,7 +73,7 @@ const Scoreboard = () => {
           Sort by Username
         </button>
         <button className="filter-btn" onClick={() => applyFilter("xp")}>
-          Sort by Xp
+          Sort by XP
         </button>
       </div>
 
@@ -74,8 +82,12 @@ const Scoreboard = () => {
           type="text"
           className="search"
           placeholder="Type player name..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button className="filter-btn mb-4">Search</button>
+        <button className="filter-btn mb-4" onClick={handleSearch}>
+          Search
+        </button>
       </div>
 
       <div className="table">
@@ -90,20 +102,27 @@ const Scoreboard = () => {
           </thead>
 
           <tbody>
-            {!loading || !error ? (
+            {loading ? (
               <tr>
                 <td colSpan="4" className="text-center py-6">
                   <ClipLoader size={40} />
-                  {error && (
-                    <p style={{ marginTop: "14px", color: "red" }}>
-                      The data could not be loaded.
-                    </p>
-                  )}
+                </td>
+              </tr>
+            ) : error ? (
+              <tr>
+                <td colSpan="4" className="text-center py-6 text-red-500">
+                  The data could not be loaded.
+                </td>
+              </tr>
+            ) : filteredScores.length === 0 ? (
+              <tr>
+                <td colSpan="4" className="text-center py-6">
+                  No players found.
                 </td>
               </tr>
             ) : (
               filteredScores.slice(0, 10).map((score, index) => (
-                <tr key={score.id}>
+                <tr key={score.id || score.name}>
                   <td className="p-2">{index + 1}</td>
                   <td className="p-2">{score.name}</td>
                   <td className="p-2 font-bold">{score.totalScore}</td>

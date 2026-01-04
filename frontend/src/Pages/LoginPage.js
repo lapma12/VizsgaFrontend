@@ -27,20 +27,20 @@ function LoginPage({ setId }) {
       password: password, 
     };
 
-    let userResult = await axios.post("https://localhost:7282/api/Users/playerLogin", data);
+    let userResult = await axios.post("https://dongesz.com/api/Users/playerLogin", data);
     
     if (userResult.data.success) {
-      setSuccessMessage("Successful login!<br/><br/>Check your email address!");
+      setSuccessMessage(userResult.data.message);
       seterrorMessage("");
       setId(userResult.data.result.id);
-      console.log(userResult.data.result.id);
+      console.log(userResult.data.result);
       setTimeout(() => {
         navigate("/account");
       }, 2000);
     } else {
       setcounterFailed(counterFailed + 1);
       if (counterFailed === 5) {
-        seterrorMessage("Wrong username or password <br/><br/> Try again later!")
+        seterrorMessage(userResult.data.message)
         setSuccessMessage("")
       }
       else {

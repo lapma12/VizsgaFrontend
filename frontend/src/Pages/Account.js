@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import axios from "axios";
 
-const Account = ({ id, setloginIn }) => {
+const Account = ({ id, setloginIn  }) => {
   const location = useLocation();
 
   if (location.pathname === "/account") {
@@ -19,8 +19,10 @@ const Account = ({ id, setloginIn }) => {
 
   const [activeTab, setActiveTab] = useState("results");
   const navigate = useNavigate();
+  
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
   const [successResult, setSuccesssResult] = useState(false);
   const [resultData, setresultData] = useState([]);
 
@@ -44,7 +46,8 @@ const Account = ({ id, setloginIn }) => {
       catch (error) {
         console.error(error);
       }
-    }
+    };
+    fetchAccountPlayerData();
   }, []);
 
   const deleteAccount = async () => {

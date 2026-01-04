@@ -58,7 +58,7 @@ function Register() {
       email: email,
       password: password,
     };
-    let registerResutData = await axios.post("https://localhost:7282/api/Users/playerRegister", data);
+    let registerResutData = await axios.post("https://dongesz.com/api/Users/playerRegister", data);
     try {
       if (isFormValid && registerResutData.data.success) {
         setSuccessMessage(
