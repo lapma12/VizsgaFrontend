@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ClipLoader from "react-spinners/ClipLoader"; // <-- SPINNER
 import "../Styles/Scoreboard.css";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 const Scoreboard = () => {
   const location = useLocation();
@@ -12,22 +13,25 @@ const Scoreboard = () => {
   const [scores, setScores] = useState([]);
   const [filteredScores, setFilteredScores] = useState([]);
 
-  const [loading, setLoading] = useState(true); // <-- BETÖLTÉS
+  const [loading, setLoading] = useState(false); // <-- BETÖLTÉS
   const [error, setError] = useState(false); // <-- HIBA
 
   useEffect(() => {
-    fetch("https://localhost:7282/api/Users/playerScore")
-      .then((res) => res.json())
-      .then((scoreData) => {
-        setScores(scoreData.result);
-        setFilteredScores(scoreData.result);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setError(true);
-        setLoading(false);
-      });
+    const fetchScoreboardPlayer = async () => {
+      try{
+        const response = await axios.get(
+          "https://dongesz.com/api/Users/playerScore"
+        );
+        setScores(response.data.result);
+        setFilteredScores(response.data.result)
+        setLoading(response.data.success);
+        setError(response.data.success);
+      }
+      catch(error){
+        console.log(error)
+      }
+    };
+    fetchScoreboardPlayer();
   }, []);
 
   const applyFilter = (filterType) => {
@@ -86,7 +90,7 @@ const Scoreboard = () => {
           </thead>
 
           <tbody>
-            {loading || error ? (
+            {!loading || !error ? (
               <tr>
                 <td colSpan="4" className="text-center py-6">
                   <ClipLoader size={40} />
