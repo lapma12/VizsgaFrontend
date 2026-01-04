@@ -23,6 +23,7 @@ const Homepage = () => {
       } catch (error) {
         console.error(error);
       }
+      
     };
     fetchPlayerCount();
   }, []);
