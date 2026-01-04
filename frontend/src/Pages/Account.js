@@ -205,7 +205,7 @@ const Settings = ({ resultData }) => {
               placeholder="Enter new username"
               onChange={(e) => setUsername(e.target.value)}
             />
-            <label>Chane your details:</label>
+            <label>Change your details:</label>
             <textarea className="textBoxforDetils" />
           </div>
 
