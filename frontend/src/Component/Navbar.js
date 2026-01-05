@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { AiOutlineFacebook } from "react-icons/ai";
@@ -11,10 +11,12 @@ import { IoLogoGameControllerB } from "react-icons/io";
 //import { IoSearchSharp } from "react-icons/io5";
 import { RiTwitterXFill } from "react-icons/ri";
 import "../Styles/Navbar.css";
+import axios from "axios";
 
-function Navbar({ loginIn, setloginIn }) {
+function Navbar({ loginIn, setloginIn ,id }) {
   const navRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [getname , setGetName] = useState("");
 
   const toggleNavbar = () => {
     navRef.current.classList.toggle("responsive_nav");
@@ -30,6 +32,19 @@ function Navbar({ loginIn, setloginIn }) {
     setloginIn(false);
     closeNavbar();
   };
+
+  useEffect(() => {
+    const GetNameById = async () => {
+      try{
+        const repsonse = await axios.get("https://dongesz.com/api/Users/" + id)   
+        setGetName(repsonse.data)   
+      }
+      catch(error){
+        console.error(error);
+      }
+    }
+    GetNameById();
+  }, []);
 
   return (
     <header className="navbar">
@@ -84,8 +99,8 @@ function Navbar({ loginIn, setloginIn }) {
           {loginIn ? (
             <button className="loginIn-btn" onClick={handleLogout}>Log out</button>
           ) : (
-            <NavLink to="/login" className="loginIn-btn" onClick={closeNavbar}>
-              Log in
+            <NavLink to={`/account/${id}`} className="loginIn-btn" onClick={closeNavbar}>
+              Account : {getname.success ? getname.result.name : ""}
             </NavLink>
           )}
         </div>
@@ -95,8 +110,8 @@ function Navbar({ loginIn, setloginIn }) {
         {loginIn ? (
           <button className="loginIn-btn" onClick={handleLogout}>Log out</button>
         ) : (
-          <NavLink to="/login" className="loginIn-btn">
-            Log in
+          <NavLink to={`/account/${id}`} className="loginIn-btn">
+            Account : {getname.success ? getname.result.name : ""}
           </NavLink>
         )}
 

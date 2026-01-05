@@ -48,12 +48,12 @@ const Account = ({ id, setloginIn  }) => {
       }
     };
     fetchAccountPlayerData();
-  }, []);
+  }, [id]);
 
   const deleteAccount = async () => {
     try {
       let deleteDataResult = await axios.delete(
-        "https://localhost:7282/api/Users/" + id
+        "https://dongesz.com/api/Users/" + id
       );
       if (deleteDataResult.data.success) {
         setSuccessMessage(deleteDataResult.data.message);
