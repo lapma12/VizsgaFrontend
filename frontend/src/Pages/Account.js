@@ -47,7 +47,7 @@ const Account = ({ id, setloginIn }) => {
       }
     };
     fetchAccountPlayerData();
-  }, []);
+  }, [id]);
 
   const deleteAccount = async () => {
     try {

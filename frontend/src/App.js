@@ -19,7 +19,7 @@ function App() {
   return (
     <Router>
       <div className="flex flex-col min-h-screen">
-        <Navbar loginIn={loginIn} setloginIn={setloginIn} />
+        <Navbar loginIn={loginIn} setloginIn={setloginIn} id={id} />
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
