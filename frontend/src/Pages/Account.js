@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import axios from "axios";
 
-const Account = ({ id, setloginIn  }) => {
+const Account = ({ id, setloginIn }) => {
   const location = useLocation();
 
   if (location.pathname === "/account") {
@@ -19,7 +19,7 @@ const Account = ({ id, setloginIn  }) => {
 
   const [activeTab, setActiveTab] = useState("results");
   const navigate = useNavigate();
-  
+
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -36,14 +36,13 @@ const Account = ({ id, setloginIn  }) => {
   };
   useEffect(() => {
     const fetchAccountPlayerData = async () => {
-      try{
+      try {
         const response = await axios.get(
           "https://dongesz.com/api/Users/playerResult/" + id
         );
         setSuccesssResult(response.data.success);
-        setresultData(response.data.result)
-      }
-      catch (error) {
+        setresultData(response.data.result);
+      } catch (error) {
         console.error(error);
       }
     };
@@ -53,7 +52,7 @@ const Account = ({ id, setloginIn  }) => {
   const deleteAccount = async () => {
     try {
       let deleteDataResult = await axios.delete(
-        "https://localhost:7282/api/Users/" + id
+        "https://dongesz.com/api/Users/" + id
       );
       if (deleteDataResult.data.success) {
         setSuccessMessage(deleteDataResult.data.message);
