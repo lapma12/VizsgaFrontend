@@ -12,41 +12,60 @@ function LoginPage({ setId }) {
     document.title = "Login";
   }
   const [userInput, setUserInput] = useState("");
-  const [password, setPassword] = useState("")
+  const [password, setPassword] = useState("");
 
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, seterrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleConfirm = () => {
+    setSuccessMessage("");
+  };
+
   const [counterFailed, setcounterFailed] = useState(0);
   const navigate = useNavigate(); // for navigation
 
-  async function handleSubmit (e) {
-    e.preventDefault();
+  async function handleSubmit(e) {
     const data = {
       name: userInput,
       email: userInput,
-      password: password, 
+      password: password,
     };
 
-    let userResult = await axios.post("https://dongesz.com/api/Users/playerLogin", data);
-    
-    if (userResult.data.success) {
-      setSuccessMessage(userResult.data.message);
-      seterrorMessage("");
-      setId(userResult.data.result.id);
-      console.log(userResult.data.result);
-      setTimeout(() => {
-        navigate("/account");
-      }, 2000);
-    } else {
-      setcounterFailed(counterFailed + 1);
-      if (counterFailed === 5) {
-        seterrorMessage(userResult.data.message)
-        setSuccessMessage("")
+    let userResult = await axios.post(
+      "https://dongesz.com/api/Users/playerLogin",
+      data
+    );
+    console.log(userResult);
+    try {
+      if (userResult.data.success) {
+        //setId(userResult.data.result.id);
+        //console.log(userResult.data.result);
+
+        setLoading(true);
+        setTimeout(() => {
+          setSuccessMessage(userResult.data.message);
+          setLoading(false);
+          seterrorMessage("");
+        }, 3000);
+      } else {
+        setcounterFailed(counterFailed + 1);
+        if (counterFailed === 5) {
+          setTimeout(() => {
+            seterrorMessage(userResult.date.message);
+            setSuccessMessage("");
+            navigate("/home")
+          }, 3000);
+        } else {
+          setTimeout(() => {
+            seterrorMessage("Wrong username or password");
+            setSuccessMessage("");
+          }, 3000);
+          e.preventDefault();
+        }
       }
-      else {
-        seterrorMessage("Wrong username or password")
-        console.log(counterFailed);
-      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -64,19 +83,44 @@ function LoginPage({ setId }) {
     <div className="login-page">
       {successMessage && (
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.8, y: -20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.8 }}
           className="success-alert"
-          dangerouslySetInnerHTML={{ __html: successMessage }}
-        />
+        >
+          {loading ? (
+            <div className="spinner" />
+          ) : (
+            <>
+              <div
+                className="message"
+                dangerouslySetInnerHTML={{ __html: successMessage }}
+              />
+              <button className="confirm-btn" onClick={handleConfirm}>
+                OK
+              </button>
+            </>
+          )}
+        </motion.div>
       )}
       {errorMessage && (
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.8, y: -20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.8 }}
           className="error-alert"
-          dangerouslySetInnerHTML={{ __html: errorMessage }}
-        />
+        >
+          <div
+            className="message"
+            dangerouslySetInnerHTML={{ __html: errorMessage }}
+          />
+          <button
+            className="error-confirm-btn"
+            onClick={() => seterrorMessage("")}
+          >
+            OK
+          </button>
+        </motion.div>
       )}
       <motion.div
         initial={{ opacity: 0, y: -50 }}
@@ -112,7 +156,7 @@ function LoginPage({ setId }) {
                 required
               />
             </div>
-            <div> 
+            <div>
               <input
                 type="password"
                 placeholder="Enter password"
@@ -120,9 +164,7 @@ function LoginPage({ setId }) {
                 required
               />
             </div>
-            <button type="submit">
-              Login
-            </button>
+            <button type="submit">Login</button>
           </form>
           <div className="links">
             <p className="dontHaveAccount">

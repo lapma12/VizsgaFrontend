@@ -36,7 +36,7 @@ function Navbar({ loginIn, setloginIn ,id }) {
   useEffect(() => {
     const GetNameById = async () => {
       try{
-        const repsonse = await axios.get("https://dongesz.com/api/Users/" + id)   
+        const repsonse = await axios.get(`https://dongesz.com/api/Users/${id}`)   
         setGetName(repsonse.data)   
       }
       catch(error){

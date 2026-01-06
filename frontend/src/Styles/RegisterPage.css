@@ -26,7 +26,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80vh;   
+  height: 80vh;
   background: var(--accentLight);
   position: relative;
   overflow: hidden;
@@ -191,44 +191,99 @@
   font-size: 1rem;
 }
 .success-alert {
-  position: absolute;
-  top: 300px;
+  position: fixed;
+  top: 30%;
   left: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(135deg, #3e7d2b, #4caf50, #6ac964);
+  background: linear-gradient(135deg, #2e7d32, #4caf50);
   color: #fff;
-  padding: 1.2rem 3rem;
-  font-size: 1.5rem;
-  font-weight: 500;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4),
-    inset 0 0 12px rgba(255, 255, 255, 0.3);
+  padding: 2rem 3rem;
+  font-size: 1.4rem;
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
   text-align: center;
   font-family: "MedievalSharp", cursive;
-  letter-spacing: 1px;
-  animation: successPop 0.5s ease-out forwards;
   z-index: 999;
-  opacity: 0;
+  min-width: 320px;
+}
+
+/* Spinner */
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  border-top: 5px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Message */
+.message {
+  margin-bottom: 1.5rem;
+}
+
+/* Confirm button */
+.confirm-btn {
+  background: #fff;
+  color: #2e7d32;
+  border: none;
+  padding: 0.6rem 2rem;
+  font-size: 1.1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.confirm-btn:hover {
+  background: #e8f5e9;
+  transform: scale(1.05);
 }
 .error-alert {
-  position: absolute;
-  top: 300px;
+  position: fixed;
+  top: 30%;
   left: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(135deg, #ee1b22, #ce1225, #851414);
+  background: linear-gradient(135deg, #b71c1c, #e53935, #7f0000);
   color: #fff;
-  padding: 1.2rem 3rem;
-  font-size: 1.5rem;
-  font-weight: 500;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4),
-    inset 0 0 12px rgba(255, 255, 255, 0.3);
+  padding: 2rem 3rem;
+  font-size: 1.4rem;
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
   text-align: center;
   font-family: "MedievalSharp", cursive;
-  letter-spacing: 1px;
-  animation: successPop 0.5s ease-out forwards;
-  z-index: 999;
-  opacity: 0;
+  z-index: 1000;
+  min-width: 320px;
+}
+
+/* üzenet */
+.error-alert .message {
+  margin-bottom: 1.5rem;
+}
+
+/* gomb */
+.error-confirm-btn {
+  background: #fff;
+  color: #b71c1c;
+  border: none;
+  padding: 0.6rem 2rem;
+  font-size: 1.1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.error-confirm-btn:hover {
+  background: #ffebee;
+  transform: scale(1.05);
 }
 /* === Popup Animation === */
 @keyframes successPop {
@@ -242,7 +297,6 @@
     transform: translate(-50%, 0) scale(1);
   }
 }
-
 
 /* === Animation === */
 @keyframes fadeIn {
@@ -258,54 +312,76 @@
 }
 /* === Enhanced Responsive Breakpoints === */
 @media screen and (max-width: 1200px) {
-  .register-container { gap: 2rem; padding: 2.5rem; max-width: 95%; }
-  .register-form { padding: 2rem; }
+  .register-container {
+    gap: 2rem;
+    padding: 2.5rem;
+    max-width: 95%;
+  }
+  .register-form {
+    padding: 2rem;
+  }
 }
 
 @media screen and (max-width: 992px) {
-  .register-page, .login-page { height: 100vh; padding: 1rem; }
-  .register-container { 
-    flex-direction: column; 
-    gap: 2rem; 
-    padding: 2rem; 
-    max-width: 95%; 
+  .register-page,
+  .login-page {
+    height: 100vh;
+    padding: 1rem;
   }
-  .register-info h2 { font-size: 2.2rem; }
-  .register-form h2 { font-size: 2.5rem; }
+  .register-container {
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 95%;
+  }
+  .register-info h2 {
+    font-size: 2.2rem;
+  }
+  .register-form h2 {
+    font-size: 2.5rem;
+  }
 }
 
 @media screen and (max-width: 850px) {
-  .register-page, .login-page { 
-    height: auto; 
-    min-height: 100vh; 
-    padding: 1rem; 
+  .register-page,
+  .login-page {
+    height: auto;
+    min-height: 100vh;
+    padding: 1rem;
   }
-  .register-container { 
-    padding: 1.5rem; 
-    gap: 1.5rem; 
-    width: 98%; 
+  .register-container {
+    padding: 1.5rem;
+    gap: 1.5rem;
+    width: 98%;
   }
-  .register-info h2 { font-size: 2rem; }
-  .register-info p { font-size: 1rem; }
-  .register-form { 
-    padding: 1.5rem; 
-    border-radius: 1rem; 
+  .register-info h2 {
+    font-size: 2rem;
   }
-  .register-form h2 { font-size: 2.2rem; }
-  .register-form input { 
-    padding: 1rem 1.1rem; 
-    font-size: 1rem; 
-    margin-bottom: 1.2rem; 
+  .register-info p {
+    font-size: 1rem;
   }
-  .register-form button { 
-    padding: 1rem; 
-    font-size: 1rem; 
-    margin-bottom: 1rem; 
+  .register-form {
+    padding: 1.5rem;
+    border-radius: 1rem;
   }
-  .success-alert, .error-alert { 
-    top: 250px; 
-    padding: 1rem 2rem; 
-    font-size: 1.3rem; 
+  .register-form h2 {
+    font-size: 2.2rem;
+  }
+  .register-form input {
+    padding: 1rem 1.1rem;
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+  }
+  .register-form button {
+    padding: 1rem;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  .success-alert,
+  .error-alert {
+    top: 250px;
+    padding: 1rem 2rem;
+    font-size: 1.3rem;
   }
 }
 
@@ -313,55 +389,83 @@
   :root {
     --container-padding: 1rem;
   }
-  .register-container { padding: 1.2rem; }
-  .register-info h2 { font-size: 1.8rem; letter-spacing: 0.5px; }
-  .register-info p { font-size: 0.95rem; }
-  .register-form h2 { font-size: 1.9rem; }
-  .register-form { padding: 1.2rem; }
-  .register-form input { 
-    padding: 0.9rem; 
-    font-size: 0.95rem; 
-    border-radius: 0.8rem; 
+  .register-container {
+    padding: 1.2rem;
   }
-  .register-form button { 
-    padding: 0.95rem; 
-    font-size: 0.95rem; 
-    border-width: 2px; 
+  .register-info h2 {
+    font-size: 1.8rem;
+    letter-spacing: 0.5px;
   }
-  .register-form p { font-size: 0.9rem; }
-  .success-alert, .error-alert { 
-    top: 220px; 
-    padding: 0.9rem 1.5rem; 
-    font-size: 1.2rem; 
-    max-width: 90%; 
+  .register-info p {
+    font-size: 0.95rem;
+  }
+  .register-form h2 {
+    font-size: 1.9rem;
+  }
+  .register-form {
+    padding: 1.2rem;
+  }
+  .register-form input {
+    padding: 0.9rem;
+    font-size: 0.95rem;
+    border-radius: 0.8rem;
+  }
+  .register-form button {
+    padding: 0.95rem;
+    font-size: 0.95rem;
+    border-width: 2px;
+  }
+  .register-form p {
+    font-size: 0.9rem;
+  }
+  .success-alert,
+  .error-alert {
+    top: 220px;
+    padding: 0.9rem 1.5rem;
+    font-size: 1.2rem;
+    max-width: 90%;
   }
 }
 
 @media screen and (max-width: 480px) {
-  .register-container { padding: 1rem; border-radius: 1rem; }
-  .register-info h2 { font-size: 1.6rem; }
-  .register-form h2 { font-size: 1.7rem; }
-  .register-form input { 
-    padding: 0.85rem; 
-    margin-bottom: 1rem; 
-    font-size: 0.9rem; 
+  .register-container {
+    padding: 1rem;
+    border-radius: 1rem;
   }
-  .register-form button { 
-    padding: 0.85rem; 
-    font-size: 0.9rem; 
+  .register-info h2 {
+    font-size: 1.6rem;
   }
-  .success-alert, .error-alert { 
-    font-size: 1.1rem; 
-    padding: 0.8rem 1.2rem; 
-    top: 200px; 
+  .register-form h2 {
+    font-size: 1.7rem;
+  }
+  .register-form input {
+    padding: 0.85rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+  .register-form button {
+    padding: 0.85rem;
+    font-size: 0.9rem;
+  }
+  .success-alert,
+  .error-alert {
+    font-size: 1.1rem;
+    padding: 0.8rem 1.2rem;
+    top: 200px;
   }
 }
 
 @media screen and (max-width: 360px) {
-  .register-form input, .register-form button { 
-    padding: 0.75rem; 
-    font-size: 0.85rem; 
+  .register-form input,
+  .register-form button {
+    padding: 0.75rem;
+    font-size: 0.85rem;
   }
-  .register-form h2 { font-size: 1.5rem; }
-  .success-alert, .error-alert { font-size: 1rem; }
+  .register-form h2 {
+    font-size: 1.5rem;
+  }
+  .success-alert,
+  .error-alert {
+    font-size: 1rem;
+  }
 }

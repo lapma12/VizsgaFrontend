@@ -98,14 +98,13 @@ header.navbar {
   gap: 0.8rem;
 }
 
-/* SEARCH BUTTON */
 .loginIn-btn {
   font-size: 0.8rem;
   border: 2px solid var(--textDark);
   background: #8c7153;
   color: var(--textDark);
   height: 30px;
-  width: 60px;
+  width: 100px;
   font-weight: bold;
   border-radius: 6px;
   cursor: pointer;

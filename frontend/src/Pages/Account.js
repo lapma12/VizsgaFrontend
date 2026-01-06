@@ -31,6 +31,7 @@ const Account = ({ id, setloginIn }) => {
     setloginIn(true);
   }, [setloginIn]);
 
+ 
   const goToHome = () => {
     navigate("/");
   };
@@ -38,7 +39,7 @@ const Account = ({ id, setloginIn }) => {
     const fetchAccountPlayerData = async () => {
       try {
         const response = await axios.get(
-          "https://dongesz.com/api/Users/playerResult/" + id
+          `https://dongesz.com/api/Users/playerResult/${id}`
         );
         setSuccesssResult(response.data.success);
         setresultData(response.data.result);
@@ -61,9 +62,7 @@ const Account = ({ id, setloginIn }) => {
         setErrorMessage(deleteDataResult.data.message);
         setSuccessMessage("");
       }
-      setTimeout(() => {
-        navigate("/login");
-      }, 3000);
+      
     } catch (err) {
       console.error(err);
       alert("Account deletion failed.");
