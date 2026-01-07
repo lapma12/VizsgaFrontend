@@ -8,7 +8,6 @@ import { IoMdHome } from "react-icons/io";
 import { BsTable } from "react-icons/bs";
 import { MdAccountCircle } from "react-icons/md";
 import { IoLogoGameControllerB } from "react-icons/io";
-//import { IoSearchSharp } from "react-icons/io5";
 import { RiTwitterXFill } from "react-icons/ri";
 import "../Styles/Navbar.css";
 import axios from "axios";
@@ -16,7 +15,7 @@ import axios from "axios";
 function Navbar({ loginIn, setloginIn, id }) {
   const navRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [getname, setGetName] = useState("");
+  const [getname, setGetName] = useState(null); // null kezdetnek
 
   const toggleNavbar = () => {
     navRef.current.classList.toggle("responsive_nav");
@@ -33,30 +32,28 @@ function Navbar({ loginIn, setloginIn, id }) {
     closeNavbar();
   };
 
+  // 🔹 API hívás id alapján
   useEffect(() => {
-    const GetNameById = async () => {
-      try {
-        const repsonse = await axios.get(`https://dongesz.com/api/Users/${id}`)
-        setGetName(repsonse.data)
-      }
-      catch (error) {
-        console.error(error);
-      }
+    if (id !== undefined && id !== null) {
+      const GetNameById = async () => {
+        try {
+          const response = await axios.get(`https://dongesz.com/api/Users/${id}`);
+          setGetName(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      GetNameById();
     }
-    GetNameById();
-  }, []);
+  }, [id]); // id változásakor újrahívódik
 
   return (
     <header className="navbar">
       <div className="navbar-left">
-        <button
-          onClick={() => window.open("https://www.instagram.com", "_blank")}
-        >
+        <button onClick={() => window.open("https://www.instagram.com", "_blank")}>
           <FaInstagram />
         </button>
-        <button
-          onClick={() => window.open("https://www.facebook.com", "_blank")}
-        >
+        <button onClick={() => window.open("https://www.facebook.com", "_blank")}>
           <AiOutlineFacebook />
         </button>
         <button onClick={() => window.open("https://twitter.com", "_blank")}>
@@ -95,28 +92,37 @@ function Navbar({ loginIn, setloginIn, id }) {
           </span>
           Sign In
         </NavLink>
+
         <div className="nav-search-mobile">
-          {loginIn ? (
-            <button className="loginIn-btn" onClick={handleLogout}>Log out</button>
-          ) : (
-            <NavLink to={`/account/${id}`} className="loginIn-btn" onClick={closeNavbar}>
-              Account : {getname.success ? getname.result.name : ""}
+          {loginIn && id ? (
+            <NavLink
+              to={`/account/${id}`}
+              className="loginIn-btn"
+              onClick={closeNavbar}
+            >
+              Account: {getname?.success ? getname.result.name : ""}
             </NavLink>
+          ) : (
+            <button className="loginIn-btn" onClick={handleLogout}>
+              Log out
+            </button>
           )}
-          
         </div>
+
         <button className="nav-toggle-btn" onClick={toggleNavbar}>
-            {menuOpen ? <FaTimes /> : <FaBars />}
-          </button>
+          {menuOpen ? <FaTimes /> : <FaBars />}
+        </button>
       </nav>
 
       <div className="navbar-right">
-        {loginIn ? (
-          <button className="loginIn-btn" onClick={handleLogout}>Log out</button>
-        ) : (
+        {loginIn && id ? (
           <NavLink to={`/account/${id}`} className="loginIn-btn">
-            Account : {getname.success ? getname.result.name : ""}
+            Account: {getname?.success ? getname.result.name : ""}
           </NavLink>
+        ) : (
+          <button className="loginIn-btn" onClick={handleLogout}>
+            Log out
+          </button>
         )}
 
         <button className="nav-toggle-btn" onClick={toggleNavbar}>

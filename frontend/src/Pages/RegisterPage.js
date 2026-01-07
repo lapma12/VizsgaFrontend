@@ -49,6 +49,9 @@ function Register() {
   function setPassword(value) {
     setPasswordState(value);
   }
+  const handleConfirm = () => {
+    setSuccessMessage("");
+  };
 
   const handleSave = async (e) => {
     e.preventDefault();
@@ -80,19 +83,40 @@ function Register() {
     <div className="register-page">
       {successMessage && (
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.8, y: -20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.8 }}
           className="success-alert"
-          dangerouslySetInnerHTML={{ __html: successMessage }}
-        />
+        >
+            <>
+              <div
+                className="message"
+                dangerouslySetInnerHTML={{ __html: successMessage }}
+              />
+              <button className="confirm-btn" onClick={handleConfirm}>
+                OK
+              </button>
+            </>
+        </motion.div>
       )}
       {errorMessage && (
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.8, y: -20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.8 }}
           className="error-alert"
-          dangerouslySetInnerHTML={{ __html: errorMessage }}
-        />
+        >
+          <div
+            className="message"
+            dangerouslySetInnerHTML={{ __html: errorMessage }}
+          />
+          <button
+            className="error-confirm-btn"
+            onClick={() => seterrorMessage("")}
+          >
+            OK
+          </button>
+        </motion.div>
       )}
 
       <motion.div

@@ -28,7 +28,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/scoreboard" element={<Scoreboard/>} />
             <Route path="/game" element={<Game />} />
-            <Route path="/account" element={<Account id={id} setloginIn={setloginIn}/>}/>
+            <Route path="/account/:id" element={<Account setloginIn={setloginIn} />} />
             <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
             <Route path="*" element={<NotFound />} />
           </Routes>

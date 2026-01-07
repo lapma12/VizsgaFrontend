@@ -16,10 +16,11 @@
   justify-content: center;
   align-items: center;
   height: 90vh;
-  background: var(--accentLight);
+  background:var(--accentLight) ;
   position: relative;
   overflow: hidden;
   font-family: "Poppins", sans-serif;
+
 }
 
 .login-page {
