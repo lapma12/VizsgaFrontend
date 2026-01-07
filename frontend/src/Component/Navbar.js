@@ -13,10 +13,10 @@ import { RiTwitterXFill } from "react-icons/ri";
 import "../Styles/Navbar.css";
 import axios from "axios";
 
-function Navbar({ loginIn, setloginIn ,id }) {
+function Navbar({ loginIn, setloginIn, id }) {
   const navRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [getname , setGetName] = useState("");
+  const [getname, setGetName] = useState("");
 
   const toggleNavbar = () => {
     navRef.current.classList.toggle("responsive_nav");
@@ -35,11 +35,11 @@ function Navbar({ loginIn, setloginIn ,id }) {
 
   useEffect(() => {
     const GetNameById = async () => {
-      try{
-        const repsonse = await axios.get(`https://dongesz.com/api/Users/${id}`)   
-        setGetName(repsonse.data)   
+      try {
+        const repsonse = await axios.get(`https://dongesz.com/api/Users/${id}`)
+        setGetName(repsonse.data)
       }
-      catch(error){
+      catch (error) {
         console.error(error);
       }
     }
@@ -103,7 +103,11 @@ function Navbar({ loginIn, setloginIn ,id }) {
               Account : {getname.success ? getname.result.name : ""}
             </NavLink>
           )}
+          
         </div>
+        <button className="nav-toggle-btn" onClick={toggleNavbar}>
+            {menuOpen ? <FaTimes /> : <FaBars />}
+          </button>
       </nav>
 
       <div className="navbar-right">
