@@ -38,14 +38,13 @@ function LoginPage({ setId }) {
     console.log(userResult);
     try {
       if (userResult.data.success) {
-        setId(userResult.data.result);
-        console.log(userResult.data.result);
-
+        const userId = userResult.data.result;
+        setId(userId); 
         setSuccessMessage(userResult.data.message);
         seterrorMessage("");
         setTimeout(() => {
           setSuccessMessage("")
-          navigate("/account")
+          navigate(`/account/${userId}`); 
         }, 2000);
       } else {
         setcounterFailed(counterFailed + 1);
@@ -81,15 +80,15 @@ function LoginPage({ setId }) {
           exit={{ opacity: 0, scale: 0.8 }}
           className="success-alert"
         >
-            <>
-              <div
-                className="message"
-                dangerouslySetInnerHTML={{ __html: successMessage }}
-              />
-              <button className="confirm-btn" onClick={handleConfirm}>
-                OK
-              </button>
-            </>
+          <>
+            <div
+              className="message"
+              dangerouslySetInnerHTML={{ __html: successMessage }}
+            />
+            <button className="confirm-btn" onClick={handleConfirm}>
+              OK
+            </button>
+          </>
         </motion.div>
       )}
       {errorMessage && (

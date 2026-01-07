@@ -12,7 +12,7 @@ import { RiTwitterXFill } from "react-icons/ri";
 import "../Styles/Navbar.css";
 import axios from "axios";
 
-function Navbar({ loginIn, setloginIn, id }) {
+function Navbar({ loginIn, id }) {
   const navRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
   const [getname, setGetName] = useState(null); // null kezdetnek
@@ -27,10 +27,6 @@ function Navbar({ loginIn, setloginIn, id }) {
     setMenuOpen(false);
   };
 
-  const handleLogout = () => {
-    setloginIn(false);
-    closeNavbar();
-  };
 
   // 🔹 API hívás id alapján
   useEffect(() => {
@@ -103,9 +99,11 @@ function Navbar({ loginIn, setloginIn, id }) {
               Account: {getname?.success ? getname.result.name : ""}
             </NavLink>
           ) : (
-            <button className="loginIn-btn" onClick={handleLogout}>
-              Log out
-            </button>
+            <NavLink to="/login">
+              <button className="loginIn-btn">
+                Log In
+              </button>
+            </NavLink>
           )}
         </div>
 
@@ -120,9 +118,11 @@ function Navbar({ loginIn, setloginIn, id }) {
             Account: {getname?.success ? getname.result.name : ""}
           </NavLink>
         ) : (
-          <button className="loginIn-btn" onClick={handleLogout}>
-            Log out
-          </button>
+          <NavLink to="/login">
+            <button className="loginIn-btn">
+              Log In
+            </button>
+          </NavLink>
         )}
 
         <button className="nav-toggle-btn" onClick={toggleNavbar}>
