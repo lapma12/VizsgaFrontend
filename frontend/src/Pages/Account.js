@@ -42,17 +42,17 @@ const Account = ({ setloginIn }) => {
   const handlePicChange = async (event) => {
     const files = event.target.files[0];
     let fromdata = new FormData()
-    fromdata.append("file",files)
-    if(!id) return
-    try{
-      let response = await axios.post(`https://dongesz.com/api/Users/playerProfilePictureSet/${id}`,fromdata);
+    fromdata.append("file", files)
+    if (!id) return
+    try {
+      let response = await axios.post(`https://dongesz.com/api/Users/playerProfilePictureSet/${id}`, fromdata);
       console.log(files);
       console.log(response.data.result);
       event.preventDefault();
-    }catch(error){
+    } catch (error) {
       console.log(error);
     }
-    
+
   }
 
   const { id } = useParams();
@@ -161,10 +161,9 @@ const Account = ({ setloginIn }) => {
           </h1>
           <p className="account-subtitle">Details : {successResult ? resultData.bio : ""}</p>
           <label>Profil pic:  </label>
-        
-          <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" onChange={handlePicChange}  />
+          <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" onChange={handlePicChange} />
         </div>
-        
+
       </div>
 
       <div className="account-menu">
@@ -184,7 +183,7 @@ const Account = ({ setloginIn }) => {
 
       <div className="account-content">
         {activeTab === "results" && <Results resultData={resultData} />}
-        {activeTab === "settings" && <Settings resultData={resultData} />}
+        {activeTab === "settings" && <Settings resultData={resultData} id={id} />}
       </div>
 
       <div className="account-footer">
@@ -209,7 +208,7 @@ const Results = ({ resultData }) => (
   </div>
 );
 
-const Settings = ({ resultData }) => {
+const Settings = ({ resultData, id }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [oldPassword, setOldPassword] = useState("");
@@ -218,19 +217,38 @@ const Settings = ({ resultData }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // const updateData = {
+    //   email: resultData.email,
+    //   oldPassword: oldPassword,
+    //   newPassword: password,
+    // };
 
-    const updateData = {
-      email: resultData.email,
-      oldPassword: oldPassword,
-      newPassword: password,
-    };
+    // try {
+    //   const response = await axios.put(
+    //     "https://localhost:7282/api/Users/playerPasswordUpdate",
+    //     updateData
+    //   );
+    //   if (response.data.success) {
+    //     setSuccessMessage(response.data.message);
+    //   } else {
+    //     setErrorMessage(response.data.message);
+    //   }
 
+    //   setTimeout(() => setSuccessMessage(""), 3000);
+    // } catch (error) {
+    //   console.log("Error response:", error.response?.data);
+    //   setErrorMessage("Update filed");
+    //   setSuccessMessage("");
+    // }
+
+    let textBoxforDetils = document.getElementById("textBoxforDetils").value;
+    console.log(textBoxforDetils);
     try {
       const response = await axios.put(
-        "https://localhost:7282/api/Users/playerPasswordUpdate",
-        updateData
+        `https://dongesz.com/api/Users/playerBioUpdate/${id}`,
+        { bio: textBoxforDetils }
       );
-      console.log("Full response:", response);
+      console.log(response.data);
       if (response.data.success) {
         setSuccessMessage(response.data.message);
       } else {
@@ -243,69 +261,70 @@ const Settings = ({ resultData }) => {
       setErrorMessage("Update filed");
       setSuccessMessage("");
     }
-  };
+    
+};
 
-  return (
-    <div className="settings-section">
-      {successMessage && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="success-alert"
-          dangerouslySetInnerHTML={{ __html: successMessage }}
-        />
-      )}
-      {errorMessage && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="error-alert"
-          dangerouslySetInnerHTML={{ __html: errorMessage }}
-        />
-      )}
-      <h2>Account Settings</h2>
-      <form onSubmit={handleSubmit} className="settings-form">
-        <div className="settings-columns">
-          {/* LEFT COLUMN – USERNAME */}
-          <div className="settings-column">
-            <h3>Username</h3>
-            <label>Current username:</label>
-            <p className="current-username">{resultData.name}</p>
+return (
+  <div className="settings-section">
+    {successMessage && (
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="success-alert"
+        dangerouslySetInnerHTML={{ __html: successMessage }}
+      />
+    )}
+    {errorMessage && (
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="error-alert"
+        dangerouslySetInnerHTML={{ __html: errorMessage }}
+      />
+    )}
+    <h2>Account Settings</h2>
+    <form onSubmit={handleSubmit} className="settings-form">
+      <div className="settings-columns">
+        {/* LEFT COLUMN – USERNAME */}
+        <div className="settings-column">
+          <h3>Username</h3>
+          <label>Current username:</label>
+          <p className="current-username">{resultData.name}</p>
 
-            <input
-              type="text"
-              value={username}
-              placeholder="Enter new username"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <label>Change your details:</label>
-            <textarea className="textBoxforDetils" value={resultData.bio} />
-          </div>
-
-          {/* RIGHT COLUMN – PASSWORDS */}
-          <div className="settings-column">
-            <h3>Password</h3>
-
-            <label>Old Password:</label>
-            <input
-              type="password"
-              value={oldPassword}
-              placeholder="Enter old password"
-              onChange={(e) => setOldPassword(e.target.value)}
-            />
-
-            <label>New Password:</label>
-            <input
-              type="password"
-              value={password}
-              placeholder="Enter new password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
+          <input
+            type="text"
+            value={username}
+            placeholder="Enter new username"
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <label>Change your details:</label>
+          <textarea className="textBoxforDetils" id="textBoxforDetils" />
         </div>
-        <button type="submit">Save Changes</button>
-      </form>
-    </div>
-  );
+
+        {/* RIGHT COLUMN – PASSWORDS */}
+        <div className="settings-column">
+          <h3>Password</h3>
+
+          <label>Old Password:</label>
+          <input
+            type="password"
+            value={oldPassword}
+            placeholder="Enter old password"
+            onChange={(e) => setOldPassword(e.target.value)}
+          />
+
+          <label>New Password:</label>
+          <input
+            type="password"
+            value={password}
+            placeholder="Enter new password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+      </div>
+      <button type="submit">Save Changes</button>
+    </form>
+  </div>
+);
 };
 export default Account;
