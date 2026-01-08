@@ -37,6 +37,7 @@ const Account = ({ setloginIn }) => {
 
   const goToHome = () => {
     navigate("/");
+    setloginIn(false)
   };
 
   const handlePicChange = async (event) => {
@@ -212,8 +213,13 @@ const Settings = ({ resultData, id }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [oldPassword, setOldPassword] = useState("");
+
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+  const handleConfirm = () => {
+    setSuccessMessage("");
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -267,21 +273,42 @@ const Settings = ({ resultData, id }) => {
 return (
   <div className="settings-section">
     {successMessage && (
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="success-alert"
-        dangerouslySetInnerHTML={{ __html: successMessage }}
-      />
-    )}
-    {errorMessage && (
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="error-alert"
-        dangerouslySetInnerHTML={{ __html: errorMessage }}
-      />
-    )}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8, y: -20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          className="success-alert"
+        >
+          <>
+            <div
+              className="message"
+              dangerouslySetInnerHTML={{ __html: successMessage }}
+            />
+            <button className="confirm-btn" onClick={handleConfirm}>
+              OK
+            </button>
+          </>
+        </motion.div>
+      )}
+      {errorMessage && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8, y: -20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          className="error-alert"
+        >
+          <div
+            className="message"
+            dangerouslySetInnerHTML={{ __html: errorMessage }}
+          />
+          <button
+            className="error-confirm-btn"
+            onClick={() => setErrorMessage("")}
+          >
+            OK
+          </button>
+        </motion.div>
+      )}
     <h2>Account Settings</h2>
     <form onSubmit={handleSubmit} className="settings-form">
       <div className="settings-columns">

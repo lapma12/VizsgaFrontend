@@ -111,6 +111,7 @@ header.navbar {
   transition: all var(--transition);
   text-align: center;
   padding-top: 0.3rem;
+  text-decoration: none;
 }
 
 .loginIn-btn:hover {
