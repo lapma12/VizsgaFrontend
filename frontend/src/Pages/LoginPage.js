@@ -40,6 +40,7 @@ function LoginPage({ setId }) {
       if (userResult.data.success) {
         const userId = userResult.data.result;
         setId(userId); 
+        localStorage.setItem("USERID",userId)
         setSuccessMessage(userResult.data.message);
         seterrorMessage("");
         setTimeout(() => {

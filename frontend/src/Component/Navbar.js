@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AiOutlineFacebook } from "react-icons/ai";
 import { FaInstagram } from "react-icons/fa";
 import { FaRegMessage } from "react-icons/fa6";
@@ -12,10 +12,28 @@ import { RiTwitterXFill } from "react-icons/ri";
 import "../Styles/Navbar.css";
 import axios from "axios";
 
-function Navbar({ loginIn, id }) {
+function Navbar({ loginIn,  onLogout }) {
   const navRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
   const [getname, setGetName] = useState(null); // null kezdetnek
+
+  const [picture, setPicture] = useState("")
+
+  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
+
+  let id = localStorage.getItem("USERID");
+
+  const toggleMenu = () => setIsOpen(!isOpen);
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    if (onLogout) onLogout();
+    setIsOpen(false);
+    navigate('/login');
+  };
+
 
   const toggleNavbar = () => {
     navRef.current.classList.toggle("responsive_nav");
@@ -42,6 +60,19 @@ function Navbar({ loginIn, id }) {
       GetNameById();
     }
   }, [id]); // id változásakor újrahívódik
+
+  useEffect(() => {
+    const fetchAccontPic = async () => {
+      if (!id) return;
+      try {
+        const response = await axios.get(`https://dongesz.com/api/Users/playerProfilePicture/${id}`)
+        setPicture(response.data.result)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchAccontPic();
+  }, [id])
 
   return (
     <header className="navbar">
@@ -113,17 +144,31 @@ function Navbar({ loginIn, id }) {
       </nav>
 
       <div className="navbar-right">
-        {loginIn && id ? (
-          <NavLink to={`/account/${id}`} className="loginIn-btn">
-            Account: {getname?.success ? getname.result.name : ""}
-          </NavLink>
-        ) : (
-          <NavLink to="/login">
-            <button className="loginIn-btn">
-              Log In
-            </button>
-          </NavLink>
-        )}
+        <>
+          {loginIn && id ? (
+            <div className="relative">
+              <img src={picture} alt="Avatar" title="avatar" className="img_button" onClick={toggleMenu} />
+              {isOpen && (
+                <div className="dropdownmenu">
+                  <div >
+                    <NavLink to={`/account/${id}`} className="myaccountMenu">
+                      My account
+                    </NavLink>
+                  </div>
+                  <div className="singoutMenu">
+                    <button className="singout" onClick={handleLogout}>Sing out</button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <NavLink to="/login">
+              <button className="loginIn-btn">
+                Bejelentkezés
+              </button>
+            </NavLink>
+          )}
+        </>
 
         <button className="nav-toggle-btn" onClick={toggleNavbar}>
           {menuOpen ? <FaTimes /> : <FaBars />}

@@ -99,7 +99,6 @@ header.navbar {
 }
 
 .loginIn-btn {
-  font-size: 0.8rem;
   border: 2px solid var(--textDark);
   background: #8c7153;
   color: var(--textDark);
@@ -110,9 +109,85 @@ header.navbar {
   cursor: pointer;
   transition: all var(--transition);
   text-align: center;
-  padding-top: 0.3rem;
+  padding-top: 0.1rem;
   text-decoration: none;
 }
+.img_button{
+  border: 2px solid var(--textDark);
+  height: 50px;
+  width: 50px;
+  border-radius: 30px;
+  cursor: pointer;
+  padding-top: 0.3rem;
+  text-decoration: none;
+  margin-right: 30px;
+}
+.relative {
+  position: relative;
+  display: inline-block;
+}
+.dropdownmenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 160px;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.2s ease-out;
+}
+
+.relative:hover .dropdownmenu,
+.relative:focus-within .dropdownmenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdownmenu > div {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.dropdownmenu > div:last-child {
+  border-bottom: none;
+}
+
+.myaccountMenu,
+.singoutMenu button {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-decoration: none;
+}
+
+.myaccountMenu:hover,
+.singoutMenu button:hover {
+  background-color: #f5f5f5;
+  color: #000;
+}
+
+.singout {
+  color: #dc3545 !important;
+}
+
+.singout:hover {
+  background-color: #f8d7da !important;
+  color: #721c24 !important;
+}
+
 
 .loginIn-btn:hover {
   background: #a78b68;
