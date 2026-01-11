@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import "../Styles/Account.css";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Settings as CogIcon,
   BarChart2,
@@ -39,10 +39,8 @@ const Account = ({ setloginIn }) => {
     navigate("/");
     setloginIn(false)
   };
-<<<<<<< HEAD
-  let id = localStorage.getItem("USERID");
-=======
 
+  let id = localStorage.getItem("USERID");
   const handlePicChange = async (event) => {
     const files = event.target.files[0];
     let fromdata = new FormData()
@@ -59,9 +57,6 @@ const Account = ({ setloginIn }) => {
 
   }
 
-  const { id } = useParams();
-
->>>>>>> 29826853decbb73a0a4c69ffbb0835d00f9b3df1
   useEffect(() => {
     const fetchAccountPlayerData = async () => {
       if (!id) return; // id ellenőrzés
@@ -85,8 +80,6 @@ const Account = ({ setloginIn }) => {
     fetchAccountPlayerData();
     fetchAccontPic();
   }, [id]);
-
-
 
   const deleteAccount = async () => {
     if (!id) return;

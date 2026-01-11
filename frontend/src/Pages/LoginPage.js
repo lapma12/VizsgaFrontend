@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom"; // for navigation
 import Register from "./RegisterPage";
 import axios from "axios";
 
-function LoginPage({ setId }) {
+function LoginPage() {
   const location = useLocation();
   if (location.pathname === "/login") {
     document.title = "Login";
@@ -38,19 +38,11 @@ function LoginPage({ setId }) {
     console.log(userResult);
     try {
       if (userResult.data.success) {
-<<<<<<< HEAD
-        localStorage.setItem("USERID",userResult.data.result)
-        localStorage.getItem("USERID")
-        //setId(userResult.data.result);
 
-        setLoading(true);
-=======
-        const userId = userResult.data.result;
-        setId(userId); 
+        const userId = userResult.data.result; 
         localStorage.setItem("USERID",userId)
         setSuccessMessage(userResult.data.message);
         seterrorMessage("");
->>>>>>> 29826853decbb73a0a4c69ffbb0835d00f9b3df1
         setTimeout(() => {
           setSuccessMessage("")
           navigate(`/account/${userId}`); 

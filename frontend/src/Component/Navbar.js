@@ -12,11 +12,8 @@ import { RiTwitterXFill } from "react-icons/ri";
 import "../Styles/Navbar.css";
 import axios from "axios";
 
-<<<<<<< HEAD
-function Navbar({ loginIn, setloginIn }) {
-=======
+
 function Navbar({ loginIn,  onLogout }) {
->>>>>>> 29826853decbb73a0a4c69ffbb0835d00f9b3df1
   const navRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
   const [getname, setGetName] = useState(null); // null kezdetnek
@@ -38,7 +35,6 @@ function Navbar({ loginIn,  onLogout }) {
     navigate('/login');
   };
 
-
   const toggleNavbar = () => {
     navRef.current.classList.toggle("responsive_nav");
     setMenuOpen((prev) => !prev);
@@ -48,13 +44,6 @@ function Navbar({ loginIn,  onLogout }) {
     navRef.current.classList.remove("responsive_nav");
     setMenuOpen(false);
   };
-
-<<<<<<< HEAD
-  const handleLogout = () => {
-    setloginIn(false);
-    closeNavbar();
-  };
-  let id = localStorage.getItem("USERID");
 
   useEffect(() => {
     const GetNameById = async () => {
@@ -68,7 +57,7 @@ function Navbar({ loginIn,  onLogout }) {
     }
     GetNameById();
   }, [id]);
-=======
+
 
   // 🔹 API hívás id alapján
   useEffect(() => {
@@ -97,7 +86,7 @@ function Navbar({ loginIn,  onLogout }) {
     }
     fetchAccontPic();
   }, [id])
->>>>>>> 29826853decbb73a0a4c69ffbb0835d00f9b3df1
+
 
   return (
     <header className="navbar">
