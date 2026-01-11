@@ -13,7 +13,7 @@ import "../Styles/Navbar.css";
 import axios from "axios";
 
 
-function Navbar({ loginIn,  onLogout }) {
+function Navbar({ loginIn, setloginIn }) {
   const navRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
   const [getname, setGetName] = useState(null); // null kezdetnek
@@ -27,10 +27,11 @@ function Navbar({ loginIn,  onLogout }) {
   let id = localStorage.getItem("USERID");
 
   const toggleMenu = () => setIsOpen(!isOpen);
-
+  console.log("navbar: status" ,loginIn);
+  
   const handleLogout = (e) => {
     e.preventDefault();
-    if (onLogout) onLogout();
+    setloginIn(false)
     setIsOpen(false);
     navigate('/login');
   };

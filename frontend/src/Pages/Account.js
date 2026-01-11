@@ -41,6 +41,7 @@ const Account = ({ setloginIn }) => {
   };
 
   let id = localStorage.getItem("USERID");
+  
   const handlePicChange = async (event) => {
     const files = event.target.files[0];
     let fromdata = new FormData()
