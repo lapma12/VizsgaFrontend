@@ -1,5 +1,4 @@
 import { useState } from "react";
-//import axios from "axios";
 import { motion } from "framer-motion";
 import "../Styles/RegisterPage.css";
 import { useLocation, useNavigate } from "react-router-dom"; // for navigation
@@ -16,7 +15,6 @@ function LoginPage({ setId }) {
 
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, seterrorMessage] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const handleConfirm = () => {
     setSuccessMessage("");
@@ -26,6 +24,7 @@ function LoginPage({ setId }) {
   const navigate = useNavigate(); // for navigation
 
   async function handleSubmit(e) {
+    e.preventDefault();
     const data = {
       name: userInput,
       email: userInput,
@@ -39,30 +38,31 @@ function LoginPage({ setId }) {
     console.log(userResult);
     try {
       if (userResult.data.success) {
+<<<<<<< HEAD
         localStorage.setItem("USERID",userResult.data.result)
         localStorage.getItem("USERID")
         //setId(userResult.data.result);
 
         setLoading(true);
+=======
+        const userId = userResult.data.result;
+        setId(userId); 
+        localStorage.setItem("USERID",userId)
+        setSuccessMessage(userResult.data.message);
+        seterrorMessage("");
+>>>>>>> 29826853decbb73a0a4c69ffbb0835d00f9b3df1
         setTimeout(() => {
-          setSuccessMessage(userResult.data.message);
-          setLoading(false);
-          seterrorMessage("");
-        }, 3000);
+          setSuccessMessage("")
+          navigate(`/account/${userId}`); 
+        }, 2000);
       } else {
         setcounterFailed(counterFailed + 1);
         if (counterFailed === 5) {
-          setTimeout(() => {
-            seterrorMessage(userResult.date.message);
-            setSuccessMessage("");
-            navigate("/home")
-          }, 3000);
+          seterrorMessage(userResult.date.message);
+          setSuccessMessage("");
         } else {
-          setTimeout(() => {
-            seterrorMessage("Wrong username or password");
-            setSuccessMessage("");
-          }, 3000);
-          e.preventDefault();
+          seterrorMessage("Wrong username or password");
+          setSuccessMessage("");
         }
       }
     } catch (error) {
@@ -89,19 +89,15 @@ function LoginPage({ setId }) {
           exit={{ opacity: 0, scale: 0.8 }}
           className="success-alert"
         >
-          {loading ? (
-            <div className="spinner" />
-          ) : (
-            <>
-              <div
-                className="message"
-                dangerouslySetInnerHTML={{ __html: successMessage }}
-              />
-              <button className="confirm-btn" onClick={handleConfirm}>
-                OK
-              </button>
-            </>
-          )}
+          <>
+            <div
+              className="message"
+              dangerouslySetInnerHTML={{ __html: successMessage }}
+            />
+            <button className="confirm-btn" onClick={handleConfirm}>
+              OK
+            </button>
+          </>
         </motion.div>
       )}
       {errorMessage && (

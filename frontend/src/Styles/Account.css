@@ -32,9 +32,11 @@ body {
   border-bottom: 2px solid rgba(75, 54, 33, 0.2);
   padding-bottom: 1rem;
 }
-
-.account-avatar {
-  color: var(--accentDark);
+.avatarPic{
+  border-radius: 50px ;
+  border: 4px solid var(--accentDark);
+  width: 130px;
+  height: 130px;
 }
 
 .account-info h1 {
@@ -234,44 +236,98 @@ body {
   transform: translateY(-2px);
 }
 .success-alert {
-  position: absolute;
-  top: 300px;
+  position: fixed;
+  top: 30%;
   left: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(135deg, #3e7d2b, #4caf50, #6ac964);
+  background: linear-gradient(135deg, #2e7d32, #4caf50);
   color: #fff;
-  padding: 1.2rem 3rem;
-  font-size: 1.5rem;
-  font-weight: 500;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4),
-    inset 0 0 12px rgba(255, 255, 255, 0.3);
+  padding: 2rem 3rem;
+  font-size: 1.4rem;
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
   text-align: center;
   font-family: "MedievalSharp", cursive;
-  letter-spacing: 1px;
-  animation: successPop 0.5s ease-out forwards;
   z-index: 999;
-  opacity: 0;
+  min-width: 320px;
+}
+
+/* Spinner */
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  border-top: 5px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Message */
+.message {
+  margin-bottom: 1.5rem;
+}
+
+.confirm-btn {
+  background: #fff;
+  color: #2e7d32;
+  border: none;
+  padding: 0.6rem 2rem;
+  font-size: 1.1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.confirm-btn:hover {
+  background: #e8f5e9;
+  transform: scale(1.05);
 }
 .error-alert {
-  position: absolute;
-  top: 300px;
+  position: fixed;
+  top: 30%;
   left: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(135deg, #ee1b22, #ce1225, #851414);
+  background: linear-gradient(135deg, #b71c1c, #e53935, #7f0000);
   color: #fff;
-  padding: 1.2rem 3rem;
-  font-size: 1.5rem;
-  font-weight: 500;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4),
-    inset 0 0 12px rgba(255, 255, 255, 0.3);
+  padding: 2rem 3rem;
+  font-size: 1.4rem;
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
   text-align: center;
   font-family: "MedievalSharp", cursive;
-  letter-spacing: 1px;
-  animation: successPop 0.5s ease-out forwards;
-  z-index: 999;
-  opacity: 0;
+  z-index: 1000;
+  min-width: 320px;
+}
+
+/* üzenet */
+.error-alert .message {
+  margin-bottom: 1.5rem;
+}
+
+/* gomb */
+.error-confirm-btn {
+  background: #fff;
+  color: #b71c1c;
+  border: none;
+  padding: 0.6rem 2rem;
+  font-size: 1.1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.error-confirm-btn:hover {
+  background: #ffebee;
+  transform: scale(1.05);
 }
 /* === Popup Animation === */
 @keyframes successPop {

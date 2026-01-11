@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AiOutlineFacebook } from "react-icons/ai";
 import { FaInstagram } from "react-icons/fa";
 import { FaRegMessage } from "react-icons/fa6";
@@ -8,15 +8,36 @@ import { IoMdHome } from "react-icons/io";
 import { BsTable } from "react-icons/bs";
 import { MdAccountCircle } from "react-icons/md";
 import { IoLogoGameControllerB } from "react-icons/io";
-//import { IoSearchSharp } from "react-icons/io5";
 import { RiTwitterXFill } from "react-icons/ri";
 import "../Styles/Navbar.css";
 import axios from "axios";
 
+<<<<<<< HEAD
 function Navbar({ loginIn, setloginIn }) {
+=======
+function Navbar({ loginIn,  onLogout }) {
+>>>>>>> 29826853decbb73a0a4c69ffbb0835d00f9b3df1
   const navRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [getname , setGetName] = useState("");
+  const [getname, setGetName] = useState(null); // null kezdetnek
+
+  const [picture, setPicture] = useState("")
+
+  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
+
+  let id = localStorage.getItem("USERID");
+
+  const toggleMenu = () => setIsOpen(!isOpen);
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    if (onLogout) onLogout();
+    setIsOpen(false);
+    navigate('/login');
+  };
+
 
   const toggleNavbar = () => {
     navRef.current.classList.toggle("responsive_nav");
@@ -28,6 +49,7 @@ function Navbar({ loginIn, setloginIn }) {
     setMenuOpen(false);
   };
 
+<<<<<<< HEAD
   const handleLogout = () => {
     setloginIn(false);
     closeNavbar();
@@ -46,18 +68,44 @@ function Navbar({ loginIn, setloginIn }) {
     }
     GetNameById();
   }, [id]);
+=======
+
+  // 🔹 API hívás id alapján
+  useEffect(() => {
+    if (id !== undefined && id !== null) {
+      const GetNameById = async () => {
+        try {
+          const response = await axios.get(`https://dongesz.com/api/Users/${id}`);
+          setGetName(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      GetNameById();
+    }
+  }, [id]); // id változásakor újrahívódik
+
+  useEffect(() => {
+    const fetchAccontPic = async () => {
+      if (!id) return;
+      try {
+        const response = await axios.get(`https://dongesz.com/api/Users/playerProfilePicture/${id}`)
+        setPicture(response.data.result)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchAccontPic();
+  }, [id])
+>>>>>>> 29826853decbb73a0a4c69ffbb0835d00f9b3df1
 
   return (
     <header className="navbar">
       <div className="navbar-left">
-        <button
-          onClick={() => window.open("https://www.instagram.com", "_blank")}
-        >
+        <button onClick={() => window.open("https://www.instagram.com", "_blank")}>
           <FaInstagram />
         </button>
-        <button
-          onClick={() => window.open("https://www.facebook.com", "_blank")}
-        >
+        <button onClick={() => window.open("https://www.facebook.com", "_blank")}>
           <AiOutlineFacebook />
         </button>
         <button onClick={() => window.open("https://twitter.com", "_blank")}>
@@ -96,25 +144,56 @@ function Navbar({ loginIn, setloginIn }) {
           </span>
           Sign In
         </NavLink>
+
         <div className="nav-search-mobile">
-          {loginIn ? (
-            <button className="loginIn-btn" onClick={handleLogout}>Log out</button>
+          {loginIn && id ? (
+            <NavLink
+              to={`/account/${id}`}
+              className="loginIn-btn"
+              onClick={closeNavbar}
+            >
+              Account: {getname?.success ? getname.result.name : ""}
+            </NavLink>
           ) : (
-            <NavLink to={`/account/${id}`} className="loginIn-btn" onClick={closeNavbar}>
-              Account : {getname.success ? getname.result.name : ""}
+            <NavLink to="/login">
+              <button className="loginIn-btn">
+                Log In
+              </button>
             </NavLink>
           )}
         </div>
+
+        <button className="nav-toggle-btn" onClick={toggleNavbar}>
+          {menuOpen ? <FaTimes /> : <FaBars />}
+        </button>
       </nav>
 
       <div className="navbar-right">
-        {loginIn ? (
-          <button className="loginIn-btn" onClick={handleLogout}>Log out</button>
-        ) : (
-          <NavLink to={`/account/${id}`} className="loginIn-btn">
-            Account : {getname.success ? getname.result.name : ""}
-          </NavLink>
-        )}
+        <>
+          {loginIn && id ? (
+            <div className="relative">
+              <img src={picture} alt="Avatar" title="avatar" className="img_button" onClick={toggleMenu} />
+              {isOpen && (
+                <div className="dropdownmenu">
+                  <div >
+                    <NavLink to={`/account/${id}`} className="myaccountMenu">
+                      My account
+                    </NavLink>
+                  </div>
+                  <div className="singoutMenu">
+                    <button className="singout" onClick={handleLogout}>Sing out</button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <NavLink to="/login">
+              <button className="loginIn-btn">
+                Bejelentkezés
+              </button>
+            </NavLink>
+          )}
+        </>
 
         <button className="nav-toggle-btn" onClick={toggleNavbar}>
           {menuOpen ? <FaTimes /> : <FaBars />}
