@@ -13,22 +13,22 @@ import Account from "./Pages/Account";
 import { useState } from "react";
 
 function App() {
-  const [id, setId] = useState();
+  //const [id, setId] = useState();
   const [loginIn, setloginIn] = useState(false);
   
   return (
     <Router>
       <div className="flex flex-col min-h-screen">
-        <Navbar loginIn={loginIn} setloginIn={setloginIn} id={id} />
+        <Navbar loginIn={loginIn} setloginIn={setloginIn}/>
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/login" element={<LoginPage setId={setId} />} />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/about" element={<About />} />
             <Route path="/scoreboard" element={<Scoreboard/>} />
             <Route path="/game" element={<Game />} />
-            <Route path="/account" element={<Account id={id} setloginIn={setloginIn}/>}/>
+            <Route path="/account" element={<Account setloginIn={setloginIn}/>}/>
             <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
             <Route path="*" element={<NotFound />} />
           </Routes>

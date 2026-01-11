@@ -13,7 +13,7 @@ import { RiTwitterXFill } from "react-icons/ri";
 import "../Styles/Navbar.css";
 import axios from "axios";
 
-function Navbar({ loginIn, setloginIn ,id }) {
+function Navbar({ loginIn, setloginIn }) {
   const navRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
   const [getname , setGetName] = useState("");
@@ -32,19 +32,20 @@ function Navbar({ loginIn, setloginIn ,id }) {
     setloginIn(false);
     closeNavbar();
   };
+  let id = localStorage.getItem("USERID");
 
   useEffect(() => {
     const GetNameById = async () => {
       try{
         const repsonse = await axios.get(`https://dongesz.com/api/Users/${id}`)   
-        setGetName(repsonse.data)   
+        setGetName(repsonse.data);   
       }
       catch(error){
         console.error(error);
       }
     }
     GetNameById();
-  }, []);
+  }, [id]);
 
   return (
     <header className="navbar">

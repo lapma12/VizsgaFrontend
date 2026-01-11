@@ -24,7 +24,6 @@ const Scoreboard = () => {
         const response = await axios.get(
           "https://dongesz.com/api/Users/playerScore"
         );
-
         setScores(response.data.result);
         setFilteredScores(response.data.result);
         setLoading(false);

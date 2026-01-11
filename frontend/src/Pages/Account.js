@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import axios from "axios";
 
-const Account = ({ id, setloginIn }) => {
+const Account = ({ setloginIn }) => {
   const location = useLocation();
 
   if (location.pathname === "/account") {
@@ -35,6 +35,7 @@ const Account = ({ id, setloginIn }) => {
   const goToHome = () => {
     navigate("/");
   };
+  let id = localStorage.getItem("USERID");
   useEffect(() => {
     const fetchAccountPlayerData = async () => {
       try {

@@ -39,8 +39,9 @@ function LoginPage({ setId }) {
     console.log(userResult);
     try {
       if (userResult.data.success) {
-        //setId(userResult.data.result.id);
-        //console.log(userResult.data.result);
+        localStorage.setItem("USERID",userResult.data.result)
+        localStorage.getItem("USERID")
+        //setId(userResult.data.result);
 
         setLoading(true);
         setTimeout(() => {
