@@ -24,7 +24,6 @@ const Account = ({ setloginIn }) => {
 
   const [successResult, setSuccesssResult] = useState(false);
   const [resultData, setresultData] = useState([]);
-  const [picture, setPicture] = useState("")
 
   //ture or false
   useEffect(() => {
@@ -69,17 +68,7 @@ const Account = ({ setloginIn }) => {
         console.error(error);
       }
     };
-    const fetchAccontPic = async () => {
-      if (!id) return;
-      try {
-        const response = await axios.get(`https://dongesz.com/api/Users/playerProfilePicture/${id}`)
-        setPicture(response.data.result)
-      } catch (error) {
-        console.log(error);
-      }
-    }
     fetchAccountPlayerData();
-    fetchAccontPic();
   }, [id]);
 
   const deleteAccount = async () => {
@@ -143,9 +132,9 @@ const Account = ({ setloginIn }) => {
         </motion.div>
       )}
       <div className="account-header">
-        {picture && (
+        {successResult && (
           <img
-            src={picture}
+            src={resultData.profilePictureUrl}
             alt="Avatar"
             title="Avatar"
             className="avatarPic"

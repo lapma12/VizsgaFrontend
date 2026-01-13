@@ -102,8 +102,9 @@ header.navbar {
   border: 2px solid var(--textDark);
   background: #8c7153;
   color: var(--textDark);
-  height: 30px;
-  width: 150px;
+  height: 40px;
+  width: 40px;  
+  font-size: 30px;
   font-weight: bold;
   border-radius: 6px;
   cursor: pointer;

@@ -9,6 +9,8 @@ import { BsTable } from "react-icons/bs";
 import { MdAccountCircle } from "react-icons/md";
 import { IoLogoGameControllerB } from "react-icons/io";
 import { RiTwitterXFill } from "react-icons/ri";
+import { IoIosLogIn } from "react-icons/io";
+
 import "../Styles/Navbar.css";
 import axios from "axios";
 
@@ -16,11 +18,10 @@ import axios from "axios";
 function Navbar({ loginIn, setloginIn }) {
   const navRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [getname, setGetName] = useState(null); // null kezdetnek
-
-  const [picture, setPicture] = useState("")
+  const [getname, setGetName] = useState(null);
 
   const [isOpen, setIsOpen] = useState(false);
+  const [picture, setPicture] = useState("")
   const navigate = useNavigate();
 
 
@@ -46,47 +47,20 @@ function Navbar({ loginIn, setloginIn }) {
   };
 
   useEffect(() => {
-    const GetNameById = async () => {
-      try{
-        const repsonse = await axios.get(`https://dongesz.com/api/Users/${id}`)   
-        setGetName(repsonse.data);   
-      }
-      catch(error){
-        console.error(error);
-      }
-    }
-    GetNameById();
-  }, [id]);
-
-
-  // 🔹 API hívás id alapján
-  useEffect(() => {
     if (id !== undefined && id !== null) {
       const GetNameById = async () => {
         try {
           const response = await axios.get(`https://dongesz.com/api/Users/${id}`);
           setGetName(response.data);
+          setPicture(response.data.result.profilePictureUrl);
+          
         } catch (error) {
           console.error(error);
         }
       };
       GetNameById();
     }
-  }, [id]); // id változásakor újrahívódik
-
-  useEffect(() => {
-    const fetchAccontPic = async () => {
-      if (!id) return;
-      try {
-        const response = await axios.get(`https://dongesz.com/api/Users/playerProfilePicture/${id}`)
-        setPicture(response.data.result)
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchAccontPic();
-  }, [id])
-
+  }, [id]);
 
   return (
     <header className="navbar">
@@ -178,7 +152,7 @@ function Navbar({ loginIn, setloginIn }) {
           ) : (
             <NavLink to="/login">
               <button className="loginIn-btn">
-                Bejelentkezés
+                <IoIosLogIn />
               </button>
             </NavLink>
           )}
