@@ -94,6 +94,7 @@ const Scoreboard = () => {
           <thead>
             <tr className="border-b">
               <th className="p-2">#</th>
+              <th className="p-2">ProfilePic</th>
               <th className="p-2">Username</th>
               <th className="p-2">Score</th>
               <th className="p-2">XP</th>
@@ -123,6 +124,7 @@ const Scoreboard = () => {
               filteredScores.slice(0, 10).map((score, index) => (
                 <tr key={score.id || score.name}>
                   <td className="p-2">{index + 1}</td>
+                  <td className="p-2"><img src={score.profilePictureUrl} alt="Avatar" title="Avatar"/></td>
                   <td className="p-2">{score.name}</td>
                   <td className="p-2 font-bold">{score.totalScore}</td>
                   <td className="p-2 font-bold">{score.totalXp}</td>

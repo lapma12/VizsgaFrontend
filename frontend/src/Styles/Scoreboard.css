@@ -80,16 +80,16 @@
 
 /* ===== Táblázat ===== */
 .scoreboard-table {
-  width: 100vh; /* folyamatosan igazodik az ablak szélességéhez */
+  width: 100vh; 
   max-width: 1500px;
-  min-width: 320px; /* legkisebb érték, hogy ne essen szét */
+  min-width: 320px; 
   background: #bbaa80;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   border-left: 10px solid #8c7153;
   border-right: 10px solid #8c7153;
   border-collapse: separate;
   border-spacing: 0;
-  transition: width 0.3s ease; /* animált zsugorodás */
+  transition: width 0.3s ease; 
 }
 
 .table {
@@ -108,7 +108,7 @@
 
 .scoreboard-table td {
   color: #000000;
-  padding: 1rem;
+  padding: 0.5rem;
   text-align: center;
   font-weight: 500;
 }
@@ -129,7 +129,10 @@
   transition: all 0.2s ease-in-out;
   cursor: pointer;
 }
-
+.scoreboard-table tbody td img{
+    width: 40px;
+    height: 40px;
+}
 
 @media screen and (max-width: 700px) {
   .scoreboard-table {

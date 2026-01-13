@@ -27,7 +27,6 @@ function Navbar({ loginIn, setloginIn }) {
   let id = localStorage.getItem("USERID");
 
   const toggleMenu = () => setIsOpen(!isOpen);
-  console.log("navbar: status" ,loginIn);
   
   const handleLogout = (e) => {
     e.preventDefault();
