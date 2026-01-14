@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import "../Styles/Main.css";
 import { useEffect, useState } from "react";
-import Logo from "../Img/mainlogo.png";
+import Logo from "../Img/CastLLogo.png";
 import axios from "axios";
 
 const Homepage = () => {

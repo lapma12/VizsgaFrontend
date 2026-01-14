@@ -103,14 +103,17 @@ header.navbar {
   background: #8c7153;
   color: var(--textDark);
   height: 40px;
-  width: 40px;  
-  font-size: 30px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;        
   font-weight: bold;
   border-radius: 6px;
   cursor: pointer;
   transition: all var(--transition);
-  text-align: center;
-  padding-top: 0.1rem;
+  padding: 0;             
+  line-height: 1;         
   text-decoration: none;
 }
 .img_button{
