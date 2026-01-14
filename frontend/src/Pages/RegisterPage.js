@@ -4,7 +4,8 @@ import "../Styles/RegisterPage.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import LoginPage from "./LoginPage";
 import axios from "axios";
-
+import ReCAPTHA from "react-google-recaptcha";
+//6LfwHUosAAAAAFShgVz8Fxo-xctMsRUzRZbva2tg
 function Register() {
   const location = useLocation()
   if (location.pathname === "/register") {
@@ -19,6 +20,8 @@ function Register() {
   //alertek
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, seterrorMessage] = useState("");
+  //recap
+  const [recap, setRecap] = useState(null)
 
   const navigate = useNavigate();
 
@@ -205,8 +208,10 @@ function Register() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </div>
-
-            <button type="submit" disabled={!isFormValid}>
+            <div class="recapStyle">
+              <ReCAPTHA sitekey="6LfwHUosAAAAAFShgVz8Fxo-xctMsRUzRZbva2tg" onChange={val => setRecap(val)}/>
+            </div>
+            <button type="submit" disabled={!(isFormValid && recap)} >
               Register
             </button>
           </form>

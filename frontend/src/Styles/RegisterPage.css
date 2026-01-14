@@ -286,6 +286,12 @@
   background: #ffebee;
   transform: scale(1.05);
 }
+.recapStyle {
+  display: flex;
+  justify-content: center;
+  align-items: center;     
+  margin: 5px 5px;
+}
 /* === Popup Animation === */
 @keyframes successPop {
   0% {
