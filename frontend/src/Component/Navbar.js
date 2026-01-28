@@ -28,7 +28,7 @@ function Navbar({ loginIn, setloginIn }) {
   let id = localStorage.getItem("USERID");
 
   const toggleMenu = () => setIsOpen(!isOpen);
-  
+
   const handleLogout = (e) => {
     e.preventDefault();
     setloginIn(false)
@@ -53,7 +53,7 @@ function Navbar({ loginIn, setloginIn }) {
           const response = await axios.get(`https://dongesz.com/api/Users/${id}`);
           setGetName(response.data);
           setPicture(response.data.result.profilePictureUrl);
-          
+
         } catch (error) {
           console.error(error);
         }
@@ -101,12 +101,18 @@ function Navbar({ loginIn, setloginIn }) {
           </span>
           Game
         </NavLink>
-        <NavLink to="/login" onClick={closeNavbar}>
-          <span className="icon">
-            <MdAccountCircle />
-          </span>
-          Sign In
-        </NavLink>
+        {loginIn && id ? (
+          ""
+        ) : (
+          <NavLink to="/login" onClick={closeNavbar}>
+            <span className="icon">
+              <MdAccountCircle />
+            </span>
+            Sign In
+          </NavLink>
+        )
+        }
+
 
         <div className="nav-search-mobile">
           {loginIn && id ? (
