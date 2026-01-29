@@ -96,6 +96,7 @@ header.navbar {
   display: flex;
   align-items: center;
   gap: 0.8rem;
+  
 }
 
 .loginIn-btn {
@@ -125,6 +126,7 @@ header.navbar {
   padding-top: 0.3rem;
   text-decoration: none;
   margin-right: 30px;
+  background-color: #fff;
 }
 .relative {
   position: relative;

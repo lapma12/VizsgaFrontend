@@ -280,8 +280,7 @@ return (
         {/* LEFT COLUMN – USERNAME */}
         <div className="settings-column">
           <h3>Username</h3>
-          <label>Current username:</label>
-          <p className="current-username">{resultData.name}</p>
+          <label className="current-username">Current username:   {resultData.name}</label>
 
           <input
             type="text"
