@@ -1,1 +1,0 @@
-# Vizsgának a Frontend része
