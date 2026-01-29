@@ -88,7 +88,7 @@
 
 /* ===== Táblázat ===== */
 .scoreboard-table {
-  width: 100vh; 
+  width: 120vh; 
   max-width: 1500px;
   min-width: 320px; 
   background: #bbaa80;

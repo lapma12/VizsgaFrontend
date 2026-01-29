@@ -198,7 +198,8 @@ const Results = ({ resultData }) => (
 
 const Settings = ({ resultData, id }) => {
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [newpassword, setNewPassword] = useState("");
+  const [confirmpassword, setConfirmPassword] = useState("");
   const [oldPassword, setOldPassword] = useState("");
 
   const [successMessage, setSuccessMessage] = useState("");
@@ -210,29 +211,6 @@ const Settings = ({ resultData, id }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const updateData = {
-    //   email: resultData.email,
-    //   oldPassword: oldPassword,
-    //   newPassword: password,
-    // };
-
-    // try {
-    //   const response = await axios.put(
-    //     "https://localhost:7282/api/Users/playerPasswordUpdate",
-    //     updateData
-    //   );
-    //   if (response.data.success) {
-    //     setSuccessMessage(response.data.message);
-    //   } else {
-    //     setErrorMessage(response.data.message);
-    //   }
-
-    //   setTimeout(() => setSuccessMessage(""), 3000);
-    // } catch (error) {
-    //   console.log("Error response:", error.response?.data);
-    //   setErrorMessage("Update filed");
-    //   setSuccessMessage("");
-    // }
 
     let textBoxforDetils = document.getElementById("textBoxforDetils").value;
     console.log(textBoxforDetils);
@@ -330,9 +308,16 @@ return (
           <label>New Password:</label>
           <input
             type="password"
-            value={password}
+            value={newpassword}
             placeholder="Enter new password"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setNewPassword(e.target.value)}
+          />
+          <label>Confirm Password:</label>
+          <input
+            type="password"
+            value={confirmpassword}
+            placeholder="Enter new password"
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
       </div>
