@@ -25,7 +25,7 @@ export default function PasswordInput({ value, onChange }) {
         style={{
           position: "absolute",
           right: "1rem",
-          top: "37%",
+          top: "40%",
           transform: "translateY(-50%)",
           cursor: "pointer",
           color: "#4b3621",

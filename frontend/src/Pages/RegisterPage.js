@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import "../Styles/RegisterPage.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import LoginPage from "./LoginPage";
 import axios from "axios";

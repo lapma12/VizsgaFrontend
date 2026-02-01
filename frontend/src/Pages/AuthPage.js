@@ -291,7 +291,6 @@ export default function AuthPage() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
-
                 <div className="recapStyle">
                   <ReCAPTCHA
                     sitekey="6LfwHUosAAAAAFShgVz8Fxo-xctMsRUzRZbva2tg"
