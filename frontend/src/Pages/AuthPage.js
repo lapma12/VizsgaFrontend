@@ -5,6 +5,8 @@ import ReCAPTCHA from "react-google-recaptcha";
 import "../Styles/AuthRegisterLogin.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import Register from "./RegisterPage";
+import PasswordInput from "../Component/PasswordInput"
+
 
 export default function AuthPage() {
   const navigate = useNavigate();
@@ -29,7 +31,6 @@ export default function AuthPage() {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  // REGISTER VALIDATION
   const isUsernameValid = username.length >= 5 && username.length <= 16;
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const hasUppercase = /[A-Z]/.test(password);
@@ -51,7 +52,6 @@ export default function AuthPage() {
     doPasswordsMatch &&
     recap;
 
-  // LOGIN SUBMIT
   async function handleLogin(e) {
     e.preventDefault();
 
@@ -84,7 +84,6 @@ export default function AuthPage() {
     }
   }
 
-  // REGISTER SUBMIT
   async function handleRegister(e) {
     e.preventDefault();
 
@@ -184,7 +183,6 @@ export default function AuthPage() {
             </div>
           )}
 
-          {/* REGISTER INFO */}
           {mode === "register" && (
             <div className="register-info">
               <h2>WELCOME!!!</h2>
@@ -201,7 +199,6 @@ export default function AuthPage() {
             </div>
           )}
 
-          {/* SWITCH BUTTON */}
           <button
             className="left-switch"
             onClick={() => setMode(mode === "login" ? "register" : "login")}
@@ -209,10 +206,7 @@ export default function AuthPage() {
             {mode === "login" ? "Create Account" : "Already a member? Login"}
           </button>
         </div>
-
-        {/* RIGHT PANEL */}
         <div className="auth-right">
-          {/* TOP SWITCH */}
           <div className="auth-header">
             <div className={`auth-slider ${mode}`} />
             <button
@@ -244,11 +238,9 @@ export default function AuthPage() {
                   onChange={(e) => setUserInput(e.target.value)}
                   required
                 />
-                <input
-                  type="password"
-                  placeholder="Password"
+                <PasswordInput
+                  value={loginPassword}
                   onChange={(e) => setLoginPassword(e.target.value)}
-                  required
                 />
                 <div className="links">
                   <p className="dontHaveAccount">
@@ -291,14 +283,12 @@ export default function AuthPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
-                <input
-                  type="password"
-                  placeholder="Password"
+                <PasswordInput
+                  value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <input
-                  type="password"
-                  placeholder="Confirm Password"
+                <PasswordInput
+                  value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
 
