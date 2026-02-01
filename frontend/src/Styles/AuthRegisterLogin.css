@@ -1,0 +1,390 @@
+@import url("https://fonts.googleapis.com/css2?family=MedievalSharp&family=Poppins:wght@300;400;600;700&display=swap");
+
+:root {
+  --bgColor: #e8d8b4;
+  --accentDark: #4b3621;
+  --accentLight: #8c7153;
+  --highlight: #e1c373;
+  --textDark: #2d1b0f;
+}
+
+/* === PAGE LAYOUT === */
+.register-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  background: var(--accentLight);
+  position: relative;
+  overflow: hidden;
+  font-family: "Poppins", sans-serif;
+}
+
+.register-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(75, 54, 33, 0.5);
+}
+
+/* === CONTAINER === */
+.register-container {
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+  background: linear-gradient(135deg, var(--bgColor), #d7c195);
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  max-width: 1100px;
+  width: 60%;
+  position: relative;
+  animation: fadeIn 0.8s ease-out;
+}
+
+/* === INFO SIDE === */
+.register-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--textDark);
+}
+
+.register-info h2 {
+  font-family: "MedievalSharp", cursive;
+  font-size: 2.6rem;
+  margin-bottom: 1.2rem;
+  color: var(--accentDark);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 0 var(--highlight);
+}
+
+.register-info p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+  color: var(--accentDark);
+}
+
+/* === FORM PANEL === */
+.register-form {
+  flex: 1;
+  background: linear-gradient(135deg, #f3e3c3, #e8d8b4);
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 30px rgba(75, 54, 33, 0.3);
+  position: relative;
+}
+
+.register-form h2 {
+  font-family: "MedievalSharp", cursive;
+  font-size: 2.3rem;
+  margin-bottom: 1.5rem;
+  color: var(--accentDark);
+  text-align: center;
+  text-shadow: 2px 2px 0 var(--highlight);
+}
+
+/* =============================== */
+/* ===== LOGIN / REGISTER TAB ==== */
+/* =============================== */
+
+.auth-header {
+  position: relative;
+  display: flex;
+  width: 100%;
+  background: #e8d8b4;
+  border-radius: 999px;
+  padding: 5px;
+  border: 3px solid #4b3621;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.25);
+  overflow: hidden;
+}
+
+.auth-header button {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 12px 0;
+  font-family: "MedievalSharp", cursive;
+  font-size: 1.1rem;
+  color: #4b3621;
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.2s ease;
+}
+
+.auth-header button.active {
+  color: #fff;
+}
+
+
+.auth-slider {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  width: 50%;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #8c7153, #6d543c);
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.25),
+              0 2px 6px rgba(0,0,0,0.3);
+  transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+  z-index: 1;
+}
+
+.auth-slider.login {
+  transform: translateX(0%);
+}
+
+.auth-slider.register {
+  transform: translateX(100%);
+}
+
+/* === INPUTS === */
+.register-form input {
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 1.2rem;
+  border-radius: 1rem;
+  border: 2px solid var(--accentLight);
+  background-color: #fff;
+  color: var(--textDark);
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  outline: none;
+}
+
+.register-form input:focus {
+  border-color: var(--highlight);
+  box-shadow: 0 0 10px rgba(225, 195, 115, 0.6);
+}
+
+/* === BUTTON === */
+.register-form button {
+  width: 100%;
+  padding: 1rem;
+  background-color: var(--accentLight);
+  color: #fff;
+  font-weight: bold;
+  border-radius: 1rem;
+  cursor: pointer;
+  border: 3px solid var(--accentDark);
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 0 var(--accentDark);
+  margin-top: 10px;
+  font-size: 1rem;
+}
+
+.register-form button:hover {
+  background-color: #a78b68;
+  transform: translateY(-2px);
+}
+
+.register-form button:active {
+  background-color: #705a3a;
+  transform: translateY(0);
+}
+
+/* === CAPTCHA === */
+.recapStyle {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+/* === ALERTS === */
+.success-alert,
+.error-alert {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 2rem 3rem;
+  font-size: 1.3rem;
+  border-radius: 16px;
+  text-align: center;
+  font-family: "MedievalSharp", cursive;
+  z-index: 999;
+  min-width: 320px;
+}
+
+.success-alert {
+  background: linear-gradient(135deg, #2e7d32, #4caf50);
+  color: #fff;
+}
+
+.error-alert {
+  background: linear-gradient(135deg, #b71c1c, #e53935);
+  color: #fff;
+}
+
+.confirm-btn,
+.error-confirm-btn {
+  background: #fff;
+  border: none;
+  padding: 0.6rem 2rem;
+  font-size: 1.1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 12px;
+}
+/* SPLIT AUTH CARD (KEEP THEME) */
+.auth-card {
+  display: flex;
+  width: 1100px;
+  min-height: 540px;
+  background: linear-gradient(100deg, var(--bgColor), var(--accentDark));
+  border-radius: 1.6rem;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+}
+
+/* LEFT PANEL */
+.auth-left {
+  flex: 1;
+  background: linear-gradient(100deg, var(--accentDark), var(--bgColor));
+  padding: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-left .register-info h2 {
+  color: #fff;
+  font-family: "MedievalSharp", cursive;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+}
+
+.auth-left .register-info p {
+  color: #fff;
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.95;
+  margin-bottom: 1.5rem;
+}
+
+.left-switch {
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.4);
+  padding: 0.7rem 1.8rem;
+  border-radius: 999px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.left-switch:hover {
+  background: rgba(255,255,255,0.22);
+  transform: translateY(-1px);
+}
+
+/* RIGHT PANEL */
+.auth-right {
+  flex: 1;
+  padding: 2.8rem;
+}
+
+/* SWITCH BAR KEEP STYLE */
+.auth-header {
+  position: relative;
+  display: flex;
+  background: linear-gradient(135deg, #f3e3c3, #e8d8b4);
+  border-radius: 999px;
+  padding: 6px;
+  border: 2px solid var(--accentDark);
+  margin-bottom: 18px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
+.auth-header button {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 10px;
+  font-family: "MedievalSharp", cursive;
+  font-size: 1.1rem;
+  color: var(--accentDark);
+  cursor: pointer;
+  z-index: 2;
+}
+
+.auth-header button.active {
+  color: white;
+}
+
+/* SLIDER */
+.auth-slider {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  width: 50%;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accentDark), var(--accentLight));
+  transition: transform 0.35s ease;
+  z-index: 1;
+}
+
+.auth-slider.login { transform: translateX(0%); }
+.auth-slider.register { transform: translateX(100%); }
+
+.login-link .link-style {
+  margin-left: 10px;
+  text-decoration: none;
+  color: var(--accentLight);
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.login-link .link-style:hover {
+  text-decoration: underline;
+}
+/* === MOBILE & TABLET === */
+@media (max-width: 992px) {
+  .auth-card {
+    flex-direction: column;
+    width: 95%;
+    margin: 1.5rem auto;
+  }
+
+  .auth-left, .auth-right {
+    padding: 2rem;
+  }
+
+  .auth-left {
+    text-align: center;
+  }
+
+  .auth-right input,
+  .auth-right button {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .auth-left .register-info h2 {
+    font-size: clamp(1.5rem, 6vw, 2.2rem);
+  }
+
+  .auth-left .register-info p {
+    font-size: clamp(0.8rem, 4vw, 1rem);
+  }
+
+  .auth-right input,
+  .auth-right button {
+    font-size: clamp(0.8rem, 3.5vw, 1rem);
+    padding: 0.7rem 0.8rem;
+  }
+}
+
+/* === ANIMATION === */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

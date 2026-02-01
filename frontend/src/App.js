@@ -2,8 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./Component/Navbar";
 import Footer from "./Component/Footer";
 import Home from "./Pages/HomePage";
-import RegisterPage from "./Pages/RegisterPage";
-import LoginPage from "./Pages/LoginPage";
 import About from "./Pages/AboutPage";
 import Scoreboard from "./Pages/ScoreBoardPage";
 import NotFound from "./Pages/NotFound";
@@ -14,6 +12,7 @@ import { useState } from "react";
 import PrivacyPolicy from "./Pages/Services/Privacypolicy";
 import Terms from "./Pages/Services/Terms";
 import FAQ from "./Pages/Services/FAQ";
+import AuthPage from "./Pages/AuthPage";
 
 function App() {
   //const [id, setId] = useState();
@@ -26,8 +25,7 @@ function App() {
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/login" element={<AuthPage />} />
             <Route path="/about" element={<About />} />
             <Route path="/scoreboard" element={<Scoreboard/>} />
             <Route path="/game" element={<Game />} />

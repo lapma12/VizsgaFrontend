@@ -67,14 +67,13 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: var(--textDark);
+  color: #fff;
 }
 
 .register-info h2 {
   font-family: "MedievalSharp", cursive;
   font-size: 2.6rem;
   margin-bottom: 1.2rem;
-  color: var(--accentDark);
   text-transform: uppercase;
   letter-spacing: 1px;
   text-shadow: 1px 1px 0 var(--highlight);

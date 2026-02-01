@@ -51,7 +51,7 @@ const Homepage = () => {
             🎮 Download the Game
           </a>
 
-          <Link to="/register">
+          <Link to="/login">
             <button className="homepage-btn start-btn">🏰 Get Started</button>
           </Link>
         </div>
