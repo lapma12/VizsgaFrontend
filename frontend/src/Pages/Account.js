@@ -42,6 +42,7 @@ const Account = ({ setloginIn }) => {
   let id = localStorage.getItem("USERID");
   
   const handlePicChange = async (event) => {
+    event.preventDefault();
     const files = event.target.files[0];
     let fromdata = new FormData()
     fromdata.append("file", files)
@@ -50,7 +51,6 @@ const Account = ({ setloginIn }) => {
       let response = await axios.post(`https://dongesz.com/api/Users/playerProfilePictureSet/${id}`, fromdata);
       console.log(files);
       console.log(response.data.result);
-      event.preventDefault();
     } catch (error) {
       console.log(error);
     }
@@ -76,7 +76,8 @@ const Account = ({ setloginIn }) => {
     try {
       const deleteDataResult = await axios.delete(`https://dongesz.com/api/Users/${id}`);
       if (deleteDataResult.data.success) {
-        setSuccessMessage(deleteDataResult.data.message);
+        window.confirm(setSuccessMessage(deleteDataResult.data.message));
+        localStorage.clear();
         setErrorMessage("");
         setTimeout(() => {
           navigate("/")
