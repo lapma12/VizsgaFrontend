@@ -16,7 +16,7 @@ const Homepage = () => {
     const fetchPlayerCount = async () => {
       try {
         const response = await axios.get(
-          "https://dongesz.com/api/Users/playerCount"
+          "https://dongesz.com/api/Users/count"
         );
         setCount(response.data);
         console.log(response.data);

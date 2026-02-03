@@ -22,7 +22,7 @@ const Scoreboard = () => {
     const fetchScoreboardPlayer = async () => {
       try {
         const response = await axios.get(
-          "https://dongesz.com/api/Users/playerScore"
+          "https://dongesz.com/api/Users/scoreboard"
         );
         setScores(response.data.result);
         setFilteredScores(response.data.result);
@@ -104,19 +104,19 @@ const Scoreboard = () => {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan="4" className="text-center py-6">
+                <td colSpan="5" className="text-center py-6">
                   <ClipLoader size={40} />
                 </td>
               </tr>
             ) : error ? (
               <tr>
-                <td colSpan="4" className="text-center py-6 text-red-500">
+                <td colSpan="5" className="text-center py-6 text-red-500">
                   The data could not be loaded.
                 </td>
               </tr>
             ) : filteredScores.length === 0 ? (
               <tr>
-                <td colSpan="4" className="text-center py-6">
+                <td colSpan="5" className="text-center py-6">
                   No players found.
                 </td>
               </tr>

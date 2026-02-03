@@ -25,7 +25,7 @@ const AdminPage = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("https://dongesz.com/api/Users/playerScore");
+      const response = await axios.get("https://dongesz.com/api/Users/scoreboard");
       setUsers(response.data.result);
       setFilteredUsers(response.data.result);
       setLoading(false);

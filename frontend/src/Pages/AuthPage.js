@@ -55,31 +55,27 @@ export default function AuthPage() {
     e.preventDefault();
 
     const data = {
-      name: userInput,
-      email: userInput,
+      userName: userInput,
       password: loginPassword,
     };
-
+    console.log(data);
+    
     try {
-      const res = await axios.post(
-        "https://dongesz.com/api/Users/playerLogin",
-        data
-      );
+      const res = await axios.post("https://localhost:7224/api/Auth/login", data);
 
-      if (res.data.success) {
-        const userId = res.data.result;
-        localStorage.setItem("USERID", userId);
-        setSuccessMessage(res.data.message);
+      // Swagger szerinti struktúra
+      const JWT_TOKEN = res.data.token || res.data.result?.token;
+
+      if (JWT_TOKEN) {
+        localStorage.setItem("TOKEN ->", JWT_TOKEN);
+        setSuccessMessage(res.data.message || "Login successful");
         setErrorMessage("");
-
-        setTimeout(() => {
-          navigate(`/account/${userId}`);
-        }, 2000);
       } else {
-        setErrorMessage("Wrong username or password");
+        throw new Error("No token received");
       }
-    } catch {
-      setErrorMessage("Server error");
+    } catch (error) {
+      console.error(error.response?.data || error.message);
+      setErrorMessage(error.response?.data?.message || "Login failed");
     }
   }
 
