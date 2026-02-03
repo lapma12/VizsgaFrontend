@@ -7,7 +7,7 @@ import {
   BarChart2,
   Trash2,
 } from "lucide-react";
-import axios from "axios";
+import api from "../api/api";
 
 const Account = ({ setloginIn }) => {
   const location = useLocation();
@@ -23,73 +23,88 @@ const Account = ({ setloginIn }) => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const [successResult, setSuccesssResult] = useState(false);
-  const [resultData, setresultData] = useState([]);
+  const [resultData, setresultData] = useState(null);
 
-  //ture or false
   useEffect(() => {
     setloginIn(true);
-  }, [setloginIn]);
+  }, [setloginIn])
 
   const handleConfirm = () => {
     setSuccessMessage("");
   };
 
   const goToHome = () => {
+    localStorage.removeItem("authToken");
+    setloginIn(false);
     navigate("/");
-    setloginIn(false)
   };
 
-  let id = localStorage.getItem("USERID");
-  
+
   const handlePicChange = async (event) => {
     event.preventDefault();
-    const files = event.target.files[0];
-    let fromdata = new FormData()
-    fromdata.append("file", files)
-    if (!id) return
-    try {
-      let response = await axios.post(`https://dongesz.com/api/Users/playerProfilePictureSet/${id}`, fromdata);
-      console.log(files);
-      console.log(response.data.result);
-    } catch (error) {
-      console.log(error);
-    }
+    
+    const file = event.target.files[0];
+    if (!file) return;
 
-  }
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await api.post(
+        "https://dongesz.com/api/Users/me/profile-picture",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log(response.data);
+      setSuccessMessage("Profile picture updated!");
+    } catch (error) {
+      console.error(error);
+      setErrorMessage("Profile picture upload failed");
+    }
+  };
 
   useEffect(() => {
-    const fetchAccountPlayerData = async () => {
-      if (!id) return; // id ellenőrzés
+    setloginIn(true);
+
+    const fetchMe = async () => {
       try {
-        const response = await axios.get(`https://dongesz.com/api/Users/playerResult/${id}`);
-        setSuccesssResult(response.data.success);
-        setresultData(response.data.result);
-      } catch (error) {
-        console.error(error);
+        const res = await api.get("https://dongesz.com/api/Users/me/result");
+        setSuccesssResult(true);
+        setresultData(res.data.result);
+        console.log(res.data.result);
+        
+      } catch {
+        navigate("/login");
       }
     };
-    fetchAccountPlayerData();
-  }, [id]);
 
+    fetchMe();
+  }, [navigate, setloginIn]);
   const deleteAccount = async () => {
-    if (!id) return;
-    try {
-      const deleteDataResult = await axios.delete(`https://dongesz.com/api/Users/${id}`);
-      if (deleteDataResult.data.success) {
-        window.confirm(setSuccessMessage(deleteDataResult.data.message));
-        localStorage.clear();
-        setErrorMessage("");
-        setTimeout(() => {
-          navigate("/")
-        }, 2000);
-      } else {
-        setErrorMessage(deleteDataResult.data.message);
-        setSuccessMessage("");
-      }
+    if (!window.confirm("Are you sure you want to delete your account?")) return;
 
-    } catch (err) {
-      console.error(err);
-      alert("Account deletion failed.");
+    try {
+      const response = await api.delete("/Users/me");
+
+      if (response.data.success) {
+        setSuccessMessage(response.data.message);
+        localStorage.removeItem("authToken");
+        setloginIn(false);
+
+        setTimeout(() => {
+          navigate("/");
+        }, 1500);
+      } else {
+        setErrorMessage(response.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorMessage("Account deletion failed");
     }
   };
 
@@ -133,13 +148,10 @@ const Account = ({ setloginIn }) => {
         </motion.div>
       )}
       <div className="account-header">
-        {successResult && (
-          <img
-            src={resultData.profilePictureUrl}
-            alt="Avatar"
-            title="Avatar"
-            className="avatarPic"
-          />
+        {resultData && (
+          <>
+            <img src={resultData.profilePictureUrl} className="avatarPic" alt="Avatar" title="Avatar" />
+          </>
         )}
         <div className="account-info">
           <h1 className="account-title">
@@ -171,8 +183,8 @@ const Account = ({ setloginIn }) => {
       </div>
 
       <div className="account-content">
-        {activeTab === "results" && <Results resultData={resultData} />}
-        {activeTab === "settings" && <Settings resultData={resultData} id={id} />}
+        {activeTab === "results" && <Results resultData={resultData} successResult={successResult} />}
+        {activeTab === "settings" && <Settings resultData={resultData} successResult={successResult}   />}
       </div>
 
       <div className="account-footer">
@@ -187,17 +199,17 @@ const Account = ({ setloginIn }) => {
   );
 };
 
-const Results = ({ resultData }) => (
+const Results = ({ resultData, successResult }) => (
   <div className="results-section">
     <h2>My Results</h2>
     <ul>
-      <li>Total Score : {resultData.totalScore}</li>
-      <li>Total Xp: {resultData.totalXp}</li>
+      <li>Total Score : {successResult ? resultData.totalScore : "" }</li>
+      <li>Total Xp: {successResult ? resultData.totalXp : "" }</li>
     </ul>
   </div>
 );
 
-const Settings = ({ resultData, id }) => {
+const Settings = ({ resultData }) => {
   const [username, setUsername] = useState("");
   const [newpassword, setNewPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
@@ -205,6 +217,7 @@ const Settings = ({ resultData, id }) => {
 
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [bio, setBio] = useState(resultData?.bio || "");
 
   const handleConfirm = () => {
     setSuccessMessage("");
@@ -213,32 +226,33 @@ const Settings = ({ resultData, id }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let textBoxforDetils = document.getElementById("textBoxforDetils").value;
-    console.log(textBoxforDetils);
+    if (!bio.trim()) {
+      setErrorMessage("Bio cannot be empty");
+      return;
+    }
+
     try {
-      const response = await axios.put(
-        `https://dongesz.com/api/Users/playerBioUpdate/${id}`,
-        { bio: textBoxforDetils }
-      );
-      console.log(response.data);
+      const response = await api.put("https://dongesz.com/api/Users/me/bio", {
+        bio: bio,
+      });
+
       if (response.data.success) {
         setSuccessMessage(response.data.message);
+        setErrorMessage("");
       } else {
         setErrorMessage(response.data.message);
       }
-
-      setTimeout(() => setSuccessMessage(""), 3000);
     } catch (error) {
-      console.log("Error response:", error.response?.data);
-      setErrorMessage("Update filed");
+      console.error(error);
+      setErrorMessage("Update failed");
       setSuccessMessage("");
     }
-    
-};
+  };
 
-return (
-  <div className="settings-section">
-    {successMessage && (
+
+  return (
+    <div className="settings-section">
+      {successMessage && (
         <motion.div
           initial={{ opacity: 0, scale: 0.8, y: -20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -275,55 +289,58 @@ return (
           </button>
         </motion.div>
       )}
-    <h2>Account Settings</h2>
-    <form onSubmit={handleSubmit} className="settings-form">
-      <div className="settings-columns">
-        {/* LEFT COLUMN – USERNAME */}
-        <div className="settings-column">
-          <h3>Username</h3>
-          <label className="current-username">Current username:   {resultData.name}</label>
+      <h2>Account Settings</h2>
+      <form onSubmit={handleSubmit} className="settings-form">
+        <div className="settings-columns">
+          {/* LEFT COLUMN – USERNAME */}
+          <div className="settings-column">
+            <h3>Username</h3>
+            <label className="current-username">Current username:   {resultData.name}</label>
 
-          <input
-            type="text"
-            value={username}
-            placeholder="Enter new username"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <label>Change your details:</label>
-          <textarea className="textBoxforDetils" id="textBoxforDetils" />
+            <input
+              type="text"
+              value={username}
+              placeholder="Enter new username"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <label>Change your details:</label>
+            <textarea
+              className="textBoxforDetils"
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+            /></div>
+
+          {/* RIGHT COLUMN – PASSWORDS */}
+          <div className="settings-column">
+            <h3>Password</h3>
+
+            <label>Old Password:</label>
+            <input
+              type="password"
+              value={oldPassword}
+              placeholder="Enter old password"
+              onChange={(e) => setOldPassword(e.target.value)}
+            />
+
+            <label>New Password:</label>
+            <input
+              type="password"
+              value={newpassword}
+              placeholder="Enter new password"
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+            <label>Confirm Password:</label>
+            <input
+              type="password"
+              value={confirmpassword}
+              placeholder="Enter new password"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </div>
         </div>
-
-        {/* RIGHT COLUMN – PASSWORDS */}
-        <div className="settings-column">
-          <h3>Password</h3>
-
-          <label>Old Password:</label>
-          <input
-            type="password"
-            value={oldPassword}
-            placeholder="Enter old password"
-            onChange={(e) => setOldPassword(e.target.value)}
-          />
-
-          <label>New Password:</label>
-          <input
-            type="password"
-            value={newpassword}
-            placeholder="Enter new password"
-            onChange={(e) => setNewPassword(e.target.value)}
-          />
-          <label>Confirm Password:</label>
-          <input
-            type="password"
-            value={confirmpassword}
-            placeholder="Enter new password"
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-        </div>
-      </div>
-      <button type="submit">Save Changes</button>
-    </form>
-  </div>
-);
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
+  );
 };
 export default Account;

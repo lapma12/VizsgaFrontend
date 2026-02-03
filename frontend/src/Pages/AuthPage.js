@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
-import ReCAPTCHA from "react-google-recaptcha";
 import "../Styles/AuthRegisterLogin.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import PasswordInput from "../Component/PasswordInput"
@@ -24,7 +23,6 @@ export default function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [recap, setRecap] = useState(null);
 
   // ALERTS
   const [successMessage, setSuccessMessage] = useState("");
@@ -48,8 +46,7 @@ export default function AuthPage() {
     isUsernameValid &&
     isEmailValid &&
     isPasswordValid &&
-    doPasswordsMatch &&
-    recap;
+    doPasswordsMatch;
 
   async function handleLogin(e) {
     e.preventDefault();
@@ -59,55 +56,69 @@ export default function AuthPage() {
       password: loginPassword,
     };
     console.log(data);
-    
+
     try {
-      const res = await axios.post("https://localhost:7224/api/Auth/login", data);
-
-      // Swagger szerinti struktúra
-      const JWT_TOKEN = res.data.token || res.data.result?.token;
-
+      // Auth API (RoleBasedAuth) login endpoint
+      const res = await axios.post(
+        "https://localhost:7224/api/Auth/login",
+        data
+      );
+      const JWT_TOKEN = res.data.token;
       if (JWT_TOKEN) {
-        localStorage.setItem("TOKEN ->", JWT_TOKEN);
-        setSuccessMessage(res.data.message || "Login successful");
+        localStorage.setItem("authToken", JWT_TOKEN);
+        setSuccessMessage("Sikeres bejelentkezés!");
+        setTimeout(() => {
+          navigate("/account");
+        }, 2000);
         setErrorMessage("");
       } else {
-        throw new Error("No token received");
+        throw new Error("No token received from server");
       }
     } catch (error) {
       console.error(error.response?.data || error.message);
-      setErrorMessage(error.response?.data?.message || "Login failed");
+      if (error.response?.status === 400) {
+        setErrorMessage("Invalid username or password");
+      } else {
+        setErrorMessage(
+          error.response?.data?.message || "Login failed"
+        );
+      }
     }
   }
 
   async function handleRegister(e) {
     e.preventDefault();
 
+
     const data = {
-      name: username,
-      email: email,
+      userName: username,
       password: password,
+      email: email,
+      fullName: username,
     };
 
     try {
       const res = await axios.post(
-        "https://dongesz.com/api/Users/playerRegister",
+        "https://localhost:7224/api/Auth/register",
         data
       );
+      console.log(res.data);
 
-      if (res.data.success && isRegisterValid) {
-        setSuccessMessage("Successful registration! Check your email.");
-        setErrorMessage("");
+      setSuccessMessage(res.data.message);
+      setErrorMessage("");
 
-        setTimeout(() => {
-          setMode("login");
-        }, 2500);
-      } else {
-        setErrorMessage("Registration failed. Check inputs.");
-      }
-    } catch {
-      setErrorMessage("Server error");
+      setTimeout(() => {
+        navigate("/account");
+      }, 1500);
+      setErrorMessage(res.data.message);
+
+    } catch (error) {
+      console.error("Register error:", error.response?.data || error.message);
+      setErrorMessage(error.response?.data?.message || "Regisztráció sikertelen");
     }
   }
+
+
   const goToForgotPasswordPage = (event) => {
     event.preventDefault();
     navigate("/forgot-password");
@@ -286,12 +297,7 @@ export default function AuthPage() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
-                <div className="recapStyle">
-                  <ReCAPTCHA
-                    sitekey="6LfwHUosAAAAAFShgVz8Fxo-xctMsRUzRZbva2tg"
-                    onChange={setRecap}
-                  />
-                </div>
+                
 
                 <button type="submit" disabled={!isRegisterValid}>
                   Register

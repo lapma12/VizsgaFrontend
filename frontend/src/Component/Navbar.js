@@ -12,28 +12,26 @@ import { RiTwitterXFill } from "react-icons/ri";
 import { IoIosLogIn } from "react-icons/io";
 
 import "../Styles/Navbar.css";
-import axios from "axios";
+import api from "../api/api";
 
 
 function Navbar({ loginIn, setloginIn }) {
   const navRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [getname, setGetName] = useState(null);
+  const [successResult, setSuccesssResult] = useState(false);
+  const [resultData, setresultData] = useState(null);
 
   const [isOpen, setIsOpen] = useState(false);
   const [picture, setPicture] = useState("")
   const navigate = useNavigate();
 
-
-  let id = localStorage.getItem("USERID");
-
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  const handleLogout = (e) => {
-    e.preventDefault();
-    setloginIn(false)
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    setloginIn(false);
     setIsOpen(false);
-    navigate('/login');
+    navigate("/login");
   };
 
   const toggleNavbar = () => {
@@ -47,20 +45,25 @@ function Navbar({ loginIn, setloginIn }) {
   };
 
   useEffect(() => {
-    if (id !== undefined && id !== null) {
-      const GetNameById = async () => {
-        try {
-          const response = await axios.get(`https://dongesz.com/api/Users/${id}`);
-          setGetName(response.data);
-          setPicture(response.data.result.profilePictureUrl);
+    const fetchMe = async () => {
+      if (!localStorage.getItem("authToken")) {
+        setloginIn(false);
+        return;
+      }
+      try {
+        const res = await api.get("https://dongesz.com/api/Users/me/result");
+        setSuccesssResult(true);
+        setresultData(res.data.result);
+        setPicture(res.data.result.profilePictureUrl);
+        setloginIn(true);
+      } catch {
+        setloginIn(false);
+        navigate("/login");
+      }
+    };
 
-        } catch (error) {
-          console.error(error);
-        }
-      };
-      GetNameById();
-    }
-  }, [id]);
+    fetchMe();
+  }, [navigate, setloginIn]);
 
   return (
     <header className="navbar">
@@ -101,7 +104,7 @@ function Navbar({ loginIn, setloginIn }) {
           </span>
           Game
         </NavLink>
-        {loginIn && id ? (
+        {loginIn ? (
           ""
         ) : (
           <NavLink to="/login" onClick={closeNavbar}>
@@ -115,13 +118,13 @@ function Navbar({ loginIn, setloginIn }) {
 
 
         <div className="nav-search-mobile">
-          {loginIn && id ? (
+          {loginIn ? (
             <NavLink
-              to={`/account/${id}`}
+              to="/account"
               className="loginIn-btn"
               onClick={closeNavbar}
             >
-              Account: {getname?.success ? getname.result.name : ""}
+              Account{successResult ? `: ${resultData.name}` : ""}
             </NavLink>
           ) : (
             <NavLink to="/login">
@@ -139,18 +142,38 @@ function Navbar({ loginIn, setloginIn }) {
 
       <div className="navbar-right">
         <>
-          {loginIn && id ? (
+          {loginIn ? (
             <div className="relative">
-              <img src={picture} alt="Avatar" title="avatar" className="img_button" onClick={toggleMenu} />
+              <img
+                src={picture}
+                alt="Avatar"
+                title="avatar"
+                className="img_button"
+                onClick={toggleMenu}
+              />
+
               {isOpen && (
                 <div className="dropdownmenu">
-                  <div >
-                    <NavLink to={`/account/${id}`} className="myaccountMenu">
+                  <div>
+                    <NavLink
+                      to="/account"
+                      className="myaccountMenu"
+                      onClick={() => setIsOpen(false)}
+                    >
                       My account
                     </NavLink>
                   </div>
+
                   <div className="singoutMenu">
-                    <button className="singout" onClick={handleLogout}>Sing out</button>
+                    <button
+                      className="singout"
+                      onClick={() => {
+                        handleLogout();
+                        setIsOpen(false);
+                      }}
+                    >
+                      Sign out
+                    </button>
                   </div>
                 </div>
               )}
@@ -168,6 +191,7 @@ function Navbar({ loginIn, setloginIn }) {
           {menuOpen ? <FaTimes /> : <FaBars />}
         </button>
       </div>
+
     </header>
   );
 }
