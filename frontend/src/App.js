@@ -13,9 +13,9 @@ import PrivacyPolicy from "./Pages/Services/Privacypolicy";
 import Terms from "./Pages/Services/Terms";
 import FAQ from "./Pages/Services/FAQ";
 import AuthPage from "./Pages/AuthPage";
+import AdminPage from "./Pages/Services/AdminPage";
 
 function App() {
-  //const [id, setId] = useState();
   const [loginIn, setloginIn] = useState(false);
   
   return (
@@ -29,8 +29,8 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/scoreboard" element={<Scoreboard/>} />
             <Route path="/game" element={<Game />} />
-            <Route path="/account" element={<Account setloginIn={setloginIn}/>}/>
             <Route path="/account/:id" element={<Account setloginIn={setloginIn} />} />
+            <Route path="/admin" element={<AdminPage/>}/>
             <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
             <Route path="/privacypolicy" element={<PrivacyPolicy/>}/>
             <Route path="/terms" element={<Terms/>}/>

@@ -4,7 +4,6 @@ import axios from "axios";
 import ReCAPTCHA from "react-google-recaptcha";
 import "../Styles/AuthRegisterLogin.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import Register from "./RegisterPage";
 import PasswordInput from "../Component/PasswordInput"
 
 
@@ -245,7 +244,7 @@ export default function AuthPage() {
                 <div className="links">
                   <p className="dontHaveAccount">
                     <a
-                      href={Register}
+                      href="/register"
                       target="#"
                       onClick={goToRegisterPage}
                       className="link-style"
@@ -255,7 +254,7 @@ export default function AuthPage() {
                   </p>
                   <p className="login-link">
                     <a
-                      href={Register}
+                      href="/forgot_password"
                       target="#"
                       onClick={goToForgotPasswordPage}
                       className="link-style"
