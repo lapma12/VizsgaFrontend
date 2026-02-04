@@ -58,6 +58,7 @@ const Account = ({ setloginIn, setuserDataState }) => {
           },
         }
       );
+      console.log(response);
       setuserDataState(true)
       setSuccessMessage("Profile picture updated!");
     } catch (error) {

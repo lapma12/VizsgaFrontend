@@ -56,21 +56,21 @@ export default function AuthPage() {
         setErrorMessage("");
         setTimeout(() => {
           emailjs
-          .send(
-            "service_u0c9fsr",
-            "template_k1gay91",
-            { email: email },
-            "AlEZ_3UQPjFc987-t"
-          )
-          .then(() => {
-            setSuccessMessage("Reset email sent successfully!");
-            setErrorMessage("");
-          })
-          .catch((err) => {
-            console.error(err);
-            setErrorMessage("Failed to send email");
-            setSuccessMessage();
-          });
+            .send(
+              "service_u0c9fsr",
+              "template_k1gay91",
+              { email: email },
+              "AlEZ_3UQPjFc987-t"
+            )
+            .then(() => {
+              setSuccessMessage("Reset email sent successfully!");
+              setErrorMessage("");
+            })
+            .catch((err) => {
+              console.error(err);
+              setErrorMessage("Failed to send email");
+              setSuccessMessage();
+            });
           navigate("/account");
         }, 2000);
       } else {

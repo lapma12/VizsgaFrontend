@@ -43,7 +43,7 @@ function Navbar({ loginIn, setloginIn,userDataState }) {
     navRef.current.classList.remove("responsive_nav");
     setMenuOpen(false);
   };
-  const [userDataState2, setuserDataState2] = useState(null)
+  const [, setuserDataState2] = useState(null)
 
   useEffect(() => {
     const fetchMe = async () => {
