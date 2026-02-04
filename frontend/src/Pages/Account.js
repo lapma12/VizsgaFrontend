@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import api from "../api/api";
 
-const Account = ({ setloginIn , setuserDataState }) => {
+const Account = ({ setloginIn, setuserDataState }) => {
   const location = useLocation();
 
   if (location.pathname === "/account") {
@@ -76,7 +76,7 @@ const Account = ({ setloginIn , setuserDataState }) => {
       }
     };
     fetchMe();
-  }, [navigate, setloginIn,successMessage]);
+  }, [navigate, setloginIn, successMessage]);
 
   const deleteAccount = async () => {
     if (!window.confirm("Are you sure you want to delete your account?")) return;
@@ -103,9 +103,8 @@ const Account = ({ setloginIn , setuserDataState }) => {
     <div className="account-page">
       {successMessage && (
         <motion.div
-          initial={{ opacity: 0, scale: 0.8, y: -20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           className="success-alert"
         >
           <>
@@ -121,9 +120,8 @@ const Account = ({ setloginIn , setuserDataState }) => {
       )}
       {errorMessage && (
         <motion.div
-          initial={{ opacity: 0, scale: 0.8, y: -20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           className="error-alert"
         >
           <div
@@ -233,30 +231,59 @@ const Settings = ({ resultData }) => {
   const handleConfirm = () => {
     setSuccessMessage("");
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!bio.trim()) {
-      setErrorMessage("Bio cannot be empty");
-      return;
+    setErrorMessage("");
+    setSuccessMessage("");
+
+    let successMessages = [];
+    let hasError = false;
+
+    // BIO update (csak ha változott)
+    if (bio !== resultData.bio) {
+      try {
+        const response = await api.put("Users/me/bio", { bio });
+
+        if (response.data.success) {
+          successMessages.push("Bio updated successfully");
+        } else {
+          hasError = true;
+          setErrorMessage(response.data.message);
+        }
+      } catch (error) {
+        console.error(error);
+        hasError = true;
+        setErrorMessage("Bio update failed");
+      }
     }
 
-    try {
-      const response = await api.put("https://dongesz.com/api/Users/me/bio", {
-        bio: bio,
-      });
+    // USERNAME update (csak ha változott)
+    if (username !== resultData.name) {
+      try {
+        const response = await api.put("Users/me/name", { name: username });
 
-      if (response.data.success) {
-        setSuccessMessage(response.data.message);
-        setErrorMessage("");
-      } else {
-        setErrorMessage(response.data.message);
+        if (response.data.success) {
+          successMessages.push("Username updated successfully");
+        } else {
+          hasError = true;
+          setErrorMessage(response.data.message);
+        }
+      } catch (error) {
+        console.error(error);
+        hasError = true;
+        setErrorMessage("Username update failed");
       }
-    } catch (error) {
-      console.error(error);
-      setErrorMessage("Update failed");
-      setSuccessMessage("");
+    }
+
+    // Success message összevonása
+    if (!hasError && successMessages.length > 0) {
+      setSuccessMessage(successMessages.join(" | "));
+    }
+
+    // Ha SEMMI nem változott
+    if (successMessages.length === 0 && !hasError) {
+      setErrorMessage("No changes were made");
     }
   };
 
@@ -265,9 +292,8 @@ const Settings = ({ resultData }) => {
     <div className="settings-section">
       {successMessage && (
         <motion.div
-          initial={{ opacity: 0, scale: 0.8, y: -20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           className="success-alert"
         >
           <>
@@ -283,9 +309,8 @@ const Settings = ({ resultData }) => {
       )}
       {errorMessage && (
         <motion.div
-          initial={{ opacity: 0, scale: 0.8, y: -20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           className="error-alert"
         >
           <div
@@ -303,11 +328,9 @@ const Settings = ({ resultData }) => {
       <h2>Account Settings</h2>
       <form onSubmit={handleSubmit} className="settings-form">
         <div className="settings-columns">
-          {/* LEFT COLUMN – USERNAME */}
           <div className="settings-column">
             <h3>Username</h3>
             <label className="current-username">Current username:   {resultData.name}</label>
-
             <input
               type="text"
               value={username}
@@ -319,7 +342,8 @@ const Settings = ({ resultData }) => {
               className="textBoxforDetils"
               value={bio}
               onChange={(e) => setBio(e.target.value)}
-            /></div>
+            />
+          </div>
 
           {/* RIGHT COLUMN – PASSWORDS */}
           <div className="settings-column">

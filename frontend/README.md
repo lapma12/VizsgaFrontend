@@ -1,1 +1,1 @@
-# Vizsgának a Frontend része
+# Vizsga Frontend

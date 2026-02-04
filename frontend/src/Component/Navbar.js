@@ -129,10 +129,8 @@ function Navbar({ loginIn, setloginIn,userDataState }) {
               Account{successResult ? `: ${resultData.name}` : ""}
             </NavLink>
           ) : (
-            <NavLink to="/login">
-              <button className="loginIn-btn">
+            <NavLink to="/login" className="loginIn-btn">
                 Log In
-              </button>
             </NavLink>
           )}
         </div>
@@ -193,7 +191,6 @@ function Navbar({ loginIn, setloginIn,userDataState }) {
           {menuOpen ? <FaTimes /> : <FaBars />}
         </button>
       </div>
-
     </header>
   );
 }

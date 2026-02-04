@@ -57,7 +57,6 @@ export default function AuthPage() {
           navigate("/account");
         }, 2000);
         
-
       } else {
         throw new Error("No token received from server");
       }
@@ -73,8 +72,6 @@ export default function AuthPage() {
 
   async function handleRegister(e) {
     e.preventDefault();
-
-
     const data = {
       userName: username,
       password: password,
@@ -87,22 +84,23 @@ export default function AuthPage() {
         "https://localhost:7224/api/Auth/register",
         data
       );
-      console.log(res.data);
+      if(res.data.success && doPasswordsMatch){
+        setSuccessMessage(res.data.message);
+        setErrorMessage("");
 
-      setSuccessMessage(res.data.message);
-      setErrorMessage("");
-
-      setTimeout(() => {
-        navigate("/account");
-      }, 1500);
-      setErrorMessage(res.data.message);
-
+        setTimeout(() => {
+          navigate("/account");
+        }, 1500);
+      }
+      else{
+        setErrorMessage(res.data.message);
+        setSuccessMessage("")
+      }
     } catch (error) {
       console.error("Register error:", error.response?.data || error.message);
       setErrorMessage(error.response?.data?.message || "Regisztráció sikertelen");
     }
   }
-
 
   const goToForgotPasswordPage = (event) => {
     event.preventDefault();
@@ -115,7 +113,6 @@ export default function AuthPage() {
 
   return (
     <div className="register-page">
-      {/* ALERTS */}
       {successMessage && (
         <motion.div
           className="success-alert"
