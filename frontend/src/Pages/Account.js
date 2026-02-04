@@ -76,8 +76,6 @@ const Account = ({ setloginIn }) => {
         const res = await api.get("https://dongesz.com/api/Users/me/result");
         setSuccesssResult(true);
         setresultData(res.data.result);
-        console.log(res.data.result);
-        
       } catch {
         navigate("/login");
       }

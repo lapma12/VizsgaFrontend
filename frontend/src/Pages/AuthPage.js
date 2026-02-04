@@ -4,6 +4,7 @@ import axios from "axios";
 import "../Styles/AuthRegisterLogin.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import PasswordInput from "../Component/PasswordInput"
+import { jwtDecode } from "jwt-decode";
 
 
 export default function AuthPage() {
@@ -28,25 +29,7 @@ export default function AuthPage() {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const isUsernameValid = username.length >= 5 && username.length <= 16;
-  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  const hasUppercase = /[A-Z]/.test(password);
-  const hasLowercase = /[a-z]/.test(password);
-  const hasNumber = /\d/.test(password);
-  const hasSpecialChar = /[!@#$%^&*]/.test(password);
-  const isPasswordValid =
-    password.length >= 8 &&
-    hasUppercase &&
-    hasLowercase &&
-    hasNumber &&
-    hasSpecialChar;
-
   const doPasswordsMatch = password === confirmPassword;
-  const isRegisterValid =
-    isUsernameValid &&
-    isEmailValid &&
-    isPasswordValid &&
-    doPasswordsMatch;
 
   async function handleLogin(e) {
     e.preventDefault();
@@ -55,22 +38,26 @@ export default function AuthPage() {
       userName: userInput,
       password: loginPassword,
     };
-    console.log(data);
 
     try {
-      // Auth API (RoleBasedAuth) login endpoint
       const res = await axios.post(
         "https://localhost:7224/api/Auth/login",
         data
       );
-      const JWT_TOKEN = res.data.token;
-      if (JWT_TOKEN) {
-        localStorage.setItem("authToken", JWT_TOKEN);
-        setSuccessMessage("Sikeres bejelentkezés!");
+      const success = res.data.success;
+
+      if (success) {
+        localStorage.setItem("authToken", res.data.token);
+        setSuccessMessage("Successfully login!");
+        const token = localStorage.getItem("authToken");
+        const decoded = jwtDecode(token);
+        console.log(decoded);
+        setErrorMessage("");
         setTimeout(() => {
           navigate("/account");
         }, 2000);
-        setErrorMessage("");
+        
+
       } else {
         throw new Error("No token received from server");
       }
@@ -79,9 +66,7 @@ export default function AuthPage() {
       if (error.response?.status === 400) {
         setErrorMessage("Invalid username or password");
       } else {
-        setErrorMessage(
-          error.response?.data?.message || "Login failed"
-        );
+        setErrorMessage("Login failed");
       }
     }
   }
@@ -297,9 +282,9 @@ export default function AuthPage() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
-                
 
-                <button type="submit" disabled={!isRegisterValid}>
+
+                <button type="submit" disabled={!doPasswordsMatch}>
                   Register
                 </button>
               </form>
