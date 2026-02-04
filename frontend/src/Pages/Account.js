@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import api from "../api/api";
 
-const Account = ({ setloginIn }) => {
+const Account = ({ setloginIn , setuserDataState }) => {
   const location = useLocation();
 
   if (location.pathname === "/account") {
@@ -42,13 +42,10 @@ const Account = ({ setloginIn }) => {
 
   const handlePicChange = async (event) => {
     event.preventDefault();
-
     const file = event.target.files[0];
     if (!file) return;
-
     const formData = new FormData();
     formData.append("file", file);
-
     try {
       const response = await api.post(
         "https://dongesz.com/api/Users/me/profile-picture",
@@ -59,8 +56,7 @@ const Account = ({ setloginIn }) => {
           },
         }
       );
-
-      console.log(response.data);
+      setuserDataState(true)
       setSuccessMessage("Profile picture updated!");
     } catch (error) {
       console.error(error);
@@ -70,7 +66,6 @@ const Account = ({ setloginIn }) => {
 
   useEffect(() => {
     setloginIn(true);
-
     const fetchMe = async () => {
       try {
         const res = await api.get("https://dongesz.com/api/Users/me/result");
@@ -80,9 +75,9 @@ const Account = ({ setloginIn }) => {
         navigate("/login");
       }
     };
-
     fetchMe();
-  }, [navigate, setloginIn]);
+  }, [navigate, setloginIn,successMessage]);
+
   const deleteAccount = async () => {
     if (!window.confirm("Are you sure you want to delete your account?")) return;
     try {
@@ -156,7 +151,6 @@ const Account = ({ setloginIn }) => {
             </label>
           </>
         )}
-
         <div className="account-info">
           <h1 className="account-title">
             Welcome,{" "}

@@ -15,7 +15,7 @@ import "../Styles/Navbar.css";
 import api from "../api/api";
 
 
-function Navbar({ loginIn, setloginIn }) {
+function Navbar({ loginIn, setloginIn,userDataState }) {
   const navRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
   const [successResult, setSuccesssResult] = useState(false);
@@ -43,6 +43,7 @@ function Navbar({ loginIn, setloginIn }) {
     navRef.current.classList.remove("responsive_nav");
     setMenuOpen(false);
   };
+  const [userDataState2, setuserDataState2] = useState(null)
 
   useEffect(() => {
     const fetchMe = async () => {
@@ -63,7 +64,8 @@ function Navbar({ loginIn, setloginIn }) {
     };
 
     fetchMe();
-  }, [navigate, setloginIn]);
+    setuserDataState2(userDataState)
+  }, [navigate, setloginIn, userDataState]);
 
   return (
     <header className="navbar">

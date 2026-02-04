@@ -17,11 +17,12 @@ import AdminPage from "./Pages/Services/AdminPage";
 
 function App() {
   const [loginIn, setloginIn] = useState(false);
+  const [userDataState, setuserDataState] = useState(false)
   
   return (
     <Router>
       <div className="flex flex-col min-h-screen">
-        <Navbar loginIn={loginIn} setloginIn={setloginIn}/>
+        <Navbar loginIn={loginIn} setloginIn={setloginIn} userDataState={userDataState}/>
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -29,7 +30,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/scoreboard" element={<Scoreboard/>} />
             <Route path="/game" element={<Game />} />
-            <Route path="/account" element={<Account setloginIn={setloginIn} />} />
+            <Route path="/account" element={<Account setloginIn={setloginIn} setuserDataState={setuserDataState} />} />
             <Route path="/admin" element={<AdminPage/>}/>
             <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
             <Route path="/privacypolicy" element={<PrivacyPolicy/>}/>
