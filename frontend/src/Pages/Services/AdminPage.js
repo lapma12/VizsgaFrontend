@@ -17,7 +17,7 @@ const AdminPage = () => {
   const [error, setError] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
   const [editValues, setEditValues] = useState({});
-  const [visibleCount, setVisibleCount] = useState(10); // Kezdetben 10 user látható
+  const [visibleCount, setVisibleCount] = useState(10); 
 
   useEffect(() => {
     fetchUsers();

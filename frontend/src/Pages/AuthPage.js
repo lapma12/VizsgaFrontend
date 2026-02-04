@@ -4,7 +4,8 @@ import axios from "axios";
 import "../Styles/AuthRegisterLogin.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import PasswordInput from "../Component/PasswordInput"
-import { jwtDecode } from "jwt-decode";
+//import { jwtDecode } from "jwt-decode";
+import emailjs from "emailjs-com";
 
 
 export default function AuthPage() {
@@ -49,14 +50,29 @@ export default function AuthPage() {
       if (success) {
         localStorage.setItem("authToken", res.data.token);
         setSuccessMessage("Successfully login!");
-        const token = localStorage.getItem("authToken");
-        const decoded = jwtDecode(token);
-        console.log(decoded);
+        // const token = localStorage.getItem("authToken");
+        // const decoded = jwtDecode(token);
+        // console.log(decoded);
         setErrorMessage("");
         setTimeout(() => {
+          emailjs
+          .send(
+            "service_u0c9fsr",
+            "template_k1gay91",
+            { email: email },
+            "AlEZ_3UQPjFc987-t"
+          )
+          .then(() => {
+            setSuccessMessage("Reset email sent successfully!");
+            setErrorMessage("");
+          })
+          .catch((err) => {
+            console.error(err);
+            setErrorMessage("Failed to send email");
+            setSuccessMessage();
+          });
           navigate("/account");
         }, 2000);
-        
       } else {
         throw new Error("No token received from server");
       }
@@ -84,15 +100,30 @@ export default function AuthPage() {
         "https://localhost:7224/api/Auth/register",
         data
       );
-      if(res.data.success && doPasswordsMatch){
+      if (res.data.success && doPasswordsMatch) {
         setSuccessMessage(res.data.message);
         setErrorMessage("");
-
+        emailjs
+          .send(
+            "service_u0c9fsr",
+            "template_k1gay91",
+            { email: email },
+            "AlEZ_3UQPjFc987-t"
+          )
+          .then(() => {
+            setSuccessMessage("Reset email sent successfully!");
+            setErrorMessage("");
+          })
+          .catch((err) => {
+            console.error(err);
+            setErrorMessage("Failed to send email");
+            setSuccessMessage();
+          });
         setTimeout(() => {
           navigate("/account");
         }, 1500);
       }
-      else{
+      else {
         setErrorMessage(res.data.message);
         setSuccessMessage("")
       }

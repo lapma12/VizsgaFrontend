@@ -6,6 +6,8 @@ import {
   Settings as CogIcon,
   BarChart2,
   Trash2,
+  EyeOff,
+  Eye,
 } from "lucide-react";
 import api from "../api/api";
 
@@ -227,6 +229,7 @@ const Settings = ({ resultData }) => {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [bio, setBio] = useState(resultData?.bio || "");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleConfirm = () => {
     setSuccessMessage("");
@@ -276,12 +279,9 @@ const Settings = ({ resultData }) => {
       }
     }
 
-    // Success message összevonása
     if (!hasError && successMessages.length > 0) {
       setSuccessMessage(successMessages.join(" | "));
     }
-
-    // Ha SEMMI nem változott
     if (successMessages.length === 0 && !hasError) {
       setErrorMessage("No changes were made");
     }
@@ -348,29 +348,42 @@ const Settings = ({ resultData }) => {
           {/* RIGHT COLUMN – PASSWORDS */}
           <div className="settings-column">
             <h3>Password</h3>
-
             <label>Old Password:</label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               value={oldPassword}
               placeholder="Enter old password"
               onChange={(e) => setOldPassword(e.target.value)}
             />
-
             <label>New Password:</label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               value={newpassword}
               placeholder="Enter new password"
               onChange={(e) => setNewPassword(e.target.value)}
             />
             <label>Confirm Password:</label>
-            <input
-              type="password"
-              value={confirmpassword}
-              placeholder="Enter new password"
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
+            <div style={{ position: "relative", width: "100%" }}>
+              <input
+                type={showPassword ? "text" : "password"}
+                value={confirmpassword}
+                placeholder="Enter new password"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: "absolute",
+                  right: "1rem",
+                  top: "55%",
+                  transform: "translateY(-50%)",
+                  cursor: "pointer",
+                  color: "#4b3621",
+                }}
+              >
+                {showPassword ? <EyeOff size={30} /> : <Eye size={30} />}
+              </span>
+            </div>
           </div>
         </div>
         <button type="submit">Save Changes</button>

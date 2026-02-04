@@ -6,7 +6,7 @@ import About from "./Pages/AboutPage";
 import Scoreboard from "./Pages/ScoreBoardPage";
 import NotFound from "./Pages/NotFound";
 import Game from "./Pages/GamePage";
-import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
+import ForgotPasswordPage from "./Component/ForgotPasswordPage";
 import Account from "./Pages/Account";
 import { useState } from "react";
 import PrivacyPolicy from "./Pages/Services/Privacypolicy";
