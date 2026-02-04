@@ -42,7 +42,7 @@ const Account = ({ setloginIn }) => {
 
   const handlePicChange = async (event) => {
     event.preventDefault();
-    
+
     const file = event.target.files[0];
     if (!file) return;
 
@@ -85,7 +85,6 @@ const Account = ({ setloginIn }) => {
   }, [navigate, setloginIn]);
   const deleteAccount = async () => {
     if (!window.confirm("Are you sure you want to delete your account?")) return;
-
     try {
       const response = await api.delete("/Users/me");
 
@@ -93,7 +92,6 @@ const Account = ({ setloginIn }) => {
         setSuccessMessage(response.data.message);
         localStorage.removeItem("authToken");
         setloginIn(false);
-
         setTimeout(() => {
           navigate("/");
         }, 1500);
@@ -148,9 +146,17 @@ const Account = ({ setloginIn }) => {
       <div className="account-header">
         {resultData && (
           <>
-            <img src={resultData.profilePictureUrl} className="avatarPic" alt="Avatar" title="Avatar" />
+            <label htmlFor="avatar" className="avatar-wrapper">
+              <img
+                src={resultData.profilePictureUrl}
+                className="avatarPic"
+                alt="Avatar"
+                title="Kattints a kép cseréjéhez"
+              />
+            </label>
           </>
         )}
+
         <div className="account-info">
           <h1 className="account-title">
             Welcome,{" "}
@@ -158,11 +164,24 @@ const Account = ({ setloginIn }) => {
               {successResult ? resultData.name : ""}
             </span>
           </h1>
-          <p className="account-subtitle">Details : {successResult ? resultData.bio : ""}</p>
-          <label>Profil pic:  </label>
-          <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" onChange={handlePicChange} />
-        </div>
 
+          <p className="account-subtitle">
+            Details : {successResult ? resultData.bio : ""}
+          </p>
+          <p className="account-subtitle">
+            Account is created at : {successResult ? new Date(resultData.createdAt).toISOString().split("T")[0] : ""}
+          </p>
+
+          {/* Rejtett file input */}
+          <input
+            type="file"
+            id="avatar"
+            name="avatar"
+            accept="image/png, image/jpeg"
+            onChange={handlePicChange}
+            hidden
+          />
+        </div>
       </div>
 
       <div className="account-menu">
@@ -182,7 +201,7 @@ const Account = ({ setloginIn }) => {
 
       <div className="account-content">
         {activeTab === "results" && <Results resultData={resultData} successResult={successResult} />}
-        {activeTab === "settings" && <Settings resultData={resultData} successResult={successResult}   />}
+        {activeTab === "settings" && <Settings resultData={resultData} successResult={successResult} />}
       </div>
 
       <div className="account-footer">
@@ -201,8 +220,8 @@ const Results = ({ resultData, successResult }) => (
   <div className="results-section">
     <h2>My Results</h2>
     <ul>
-      <li>Total Score : {successResult ? resultData.totalScore : "" }</li>
-      <li>Total Xp: {successResult ? resultData.totalXp : "" }</li>
+      <li>Total Score : {successResult ? resultData.totalScore : ""}</li>
+      <li>Total Xp: {successResult ? resultData.totalXp : ""}</li>
     </ul>
   </div>
 );
