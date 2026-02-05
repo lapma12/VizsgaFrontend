@@ -15,6 +15,7 @@ const AdminPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  // melyik sort szerkesztjük – kulcs: id vagy (ha az nincs) name
   const [editingUser, setEditingUser] = useState(null);
   const [editValues, setEditValues] = useState({});
   const [visibleCount, setVisibleCount] = useState(10); 
@@ -49,7 +50,9 @@ const AdminPage = () => {
   };
 
   const startEdit = (user) => {
-    setEditingUser(user.id);
+    // ha nincs id a scoreboard-válaszban, használjuk a nevet kulcsnak
+    const key = user.id ?? user.name;
+    setEditingUser(key);
     setEditValues({
       name: user.name,
       totalScore: user.totalScore,
@@ -137,8 +140,11 @@ const AdminPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {displayUsers.map((user, index) => (
-                    <tr key={user.id || user.name}>
+                  {displayUsers.map((user, index) => {
+                    const rowKey = user.id ?? user.name;
+                    const isEditing = editingUser === rowKey;
+                    return (
+                  <tr key={rowKey}>
                       <td>{index + 1}</td>
                       <td>
                         <img 
@@ -148,7 +154,7 @@ const AdminPage = () => {
                         />
                       </td>
                       <td>
-                        {editingUser === user.id ? (
+                        {isEditing ? (
                           <input
                             value={editValues.name}
                             onChange={(e) => handleEditChange('name', e.target.value)}
@@ -159,7 +165,7 @@ const AdminPage = () => {
                         )}
                       </td>
                       <td>
-                        {editingUser === user.id ? (
+                        {isEditing ? (
                           <input
                             type="number"
                             value={editValues.totalScore}
@@ -171,7 +177,7 @@ const AdminPage = () => {
                         )}
                       </td>
                       <td>
-                        {editingUser === user.id ? (
+                        {isEditing ? (
                           <input
                             type="number"
                             value={editValues.totalXp}
@@ -183,7 +189,7 @@ const AdminPage = () => {
                         )}
                       </td>
                       <td className="action-buttons">
-                        {editingUser === user.id ? (
+                        {isEditing ? (
                           <>
                             <button 
                               className="save-btn"
@@ -218,7 +224,8 @@ const AdminPage = () => {
                         )}
                       </td>
                     </tr>
-                  ))}
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
