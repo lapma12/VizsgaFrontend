@@ -72,6 +72,34 @@ header.navbar {
   transition: all var(--transition);
   box-shadow: 0 4px 0 var(--accentDark);
 }
+.navbar-right .signin{
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--textDark);
+  font-weight: 700;
+  font-family: "MedievalSharp", cursive;
+  padding: 6px 8px;
+  border: 2px solid #5f5f5f;
+  background: #8c7153;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--transition);
+  box-shadow: 0 4px 0 var(--accentDark);
+}
+.navbar-right .signin:hover{
+  color: #fff;
+  background: #a78b68;
+  transform: translateY(-2px);
+}
+.navbar-right .signin .icon{
+  font-size: 1.5rem;
+  color: #000;
+  display: flex;
+  align-items: center;
+}
 
 .navbar-center a:hover {
   color: #fff;

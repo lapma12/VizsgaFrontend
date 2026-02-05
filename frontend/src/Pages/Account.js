@@ -36,9 +36,15 @@ const Account = ({ setloginIn, setuserDataState }) => {
   };
 
   const goToHome = () => {
-    localStorage.removeItem("authToken");
-    setloginIn(false);
-    navigate("/");
+    if (!window.confirm("Are you sure you want to log out your account?")) return;
+    try {
+      localStorage.removeItem("authToken");
+      setloginIn(false);
+      navigate("/");
+    } catch (error) {
+      console.log(error)
+    }
+
   };
 
 

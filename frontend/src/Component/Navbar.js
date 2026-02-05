@@ -9,13 +9,12 @@ import { BsTable } from "react-icons/bs";
 import { MdAccountCircle } from "react-icons/md";
 import { IoLogoGameControllerB } from "react-icons/io";
 import { RiTwitterXFill } from "react-icons/ri";
-import { IoIosLogIn } from "react-icons/io";
 
 import "../Styles/Navbar.css";
 import api from "../api/api";
 
 
-function Navbar({ loginIn, setloginIn,userDataState }) {
+function Navbar({ loginIn, setloginIn, userDataState }) {
   const navRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
   const [successResult, setSuccesssResult] = useState(false);
@@ -106,17 +105,6 @@ function Navbar({ loginIn, setloginIn,userDataState }) {
           </span>
           Game
         </NavLink>
-        {loginIn ? (
-          ""
-        ) : (
-          <NavLink to="/login" onClick={closeNavbar}>
-            <span className="icon">
-              <MdAccountCircle />
-            </span>
-            Sign In
-          </NavLink>
-        )
-        }
 
 
         <div className="nav-search-mobile">
@@ -130,7 +118,7 @@ function Navbar({ loginIn, setloginIn,userDataState }) {
             </NavLink>
           ) : (
             <NavLink to="/login" className="loginIn-btn">
-                Log In
+              Sing In
             </NavLink>
           )}
         </div>
@@ -179,10 +167,11 @@ function Navbar({ loginIn, setloginIn,userDataState }) {
               )}
             </div>
           ) : (
-            <NavLink to="/login">
-              <button className="loginIn-btn">
-                <IoIosLogIn />
-              </button>
+            <NavLink to="/login" className="signin" onClick={closeNavbar}>
+              <span className="icon">
+                <MdAccountCircle />
+              </span>
+              Sign In
             </NavLink>
           )}
         </>
