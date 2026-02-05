@@ -13,8 +13,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 90vh;
-  background: var(--);
+  min-height: 100vh;
+  padding: 3rem 1rem;
+  background: radial-gradient(circle at top, #f3e3c3 0, var(--bgColor) 45%, #c6ac7a 100%);
   position: relative;
   overflow: hidden;
   font-family: "Poppins", sans-serif;
@@ -43,31 +44,6 @@
   animation: fadeIn 0.8s ease-out;
 }
 
-/* === INFO SIDE === */
-.register-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: var(--textDark);
-}
-
-.register-info h2 {
-  font-family: "MedievalSharp", cursive;
-  font-size: 2.6rem;
-  margin-bottom: 1.2rem;
-  color: var(--accentDark);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  text-shadow: 1px 1px 0 var(--highlight);
-}
-
-.register-info p {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin-bottom: 1.2rem;
-  color: var(--accentDark);
-}
 
 /* === FORM PANEL === */
 .register-form {
@@ -249,19 +225,22 @@
 .auth-left {
   flex: 1;
   background: linear-gradient(0deg, var(--accentDark), var(--bgColor));
-  padding: 3rem 2rem;
+  padding: 3rem 2.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: #fff;
+  align-items: flex-start;
   transition: all 0.5s ease;
 }
 
-.auth-left .register-info h2 {
-  font-family: "MedievalSharp", cursive;
-  font-size: 2.6rem;
-  text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+.auth-left .register-info {
+  max-width: 420px;
+}
 
+.auth-left .register-info h2 {
+  font-size: 2.6rem;
+  margin-bottom: 1rem;
+  color: #fff; 
 }
 
 .auth-left .register-info p {
@@ -269,7 +248,7 @@
   line-height: 1.6;
   margin: 1.5rem 0;
   opacity: 0.95;
-  
+  color: #fff; /* törzsszöveg a téma színével */
 }
 
 .left-switch {
@@ -281,6 +260,7 @@
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-top: 1.5rem;
 }
 
 .left-switch:hover {

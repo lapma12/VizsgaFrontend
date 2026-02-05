@@ -302,7 +302,11 @@ header.navbar {
     display: flex;
     justify-content: center;
   }
-  .navbar-right .loginIn-btn{
+
+  /* Mobil nézetben a jobb oldali login / sign in gomb tűnjön el,
+     csak a hamburger-menüben (nav-search-mobile) maradjon */
+  .navbar-right .loginIn-btn,
+  .navbar-right .signin {
     display: none;
   }
 

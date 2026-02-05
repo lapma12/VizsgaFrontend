@@ -181,7 +181,7 @@ export default function AuthPage() {
         <div className="auth-left">
           {mode === "login" && (
             <div className="register-info">
-              <h2>WELCOME BACK!</h2>
+              <h2>WELCOME BACK</h2>
 
               <p>
                 Step back into the adventure! Your journey is far from over, and
@@ -204,7 +204,7 @@ export default function AuthPage() {
 
           {mode === "register" && (
             <div className="register-info">
-              <h2>WELCOME!!!</h2>
+              <h2>WELCOME</h2>
 
               <p>
                 Step through the door to a new world, where every decision
