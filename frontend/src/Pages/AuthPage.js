@@ -106,7 +106,7 @@ export default function AuthPage() {
         emailjs
           .send(
             "service_u0c9fsr",
-            "template_k1gay91",
+            "template_ajrrtoc",
             { email: email },
             "AlEZ_3UQPjFc987-t"
           )
@@ -120,7 +120,7 @@ export default function AuthPage() {
             setSuccessMessage();
           });
         setTimeout(() => {
-          navigate("/account");
+          navigate("/login");
         }, 1500);
       }
       else {
@@ -129,7 +129,7 @@ export default function AuthPage() {
       }
     } catch (error) {
       console.error("Register error:", error.response?.data || error.message);
-      setErrorMessage(error.response?.data?.message || "Regisztráció sikertelen");
+      setErrorMessage(error.response?.data?.message || "Failed Registration!");
     }
   }
 
