@@ -3,6 +3,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import "../../Styles/AdminPage.css";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import api from "../../api/api";
 
 const AdminPage = () => {
   const location = useLocation();
@@ -17,7 +18,7 @@ const AdminPage = () => {
   const [error, setError] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
   const [editValues, setEditValues] = useState({});
-  const [visibleCount, setVisibleCount] = useState(10); 
+  const [visibleCount, setVisibleCount] = useState(10);
 
   useEffect(() => {
     fetchUsers();
@@ -25,7 +26,7 @@ const AdminPage = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("https://dongesz.com/api/Users/scoreboard");
+      const response = await api.get("https://dongesz.com/api/Admin/Users");
       setUsers(response.data.result);
       setFilteredUsers(response.data.result);
       setLoading(false);
@@ -131,8 +132,8 @@ const AdminPage = () => {
                     <th>#</th>
                     <th>Profile Picture</th>
                     <th>Username</th>
-                    <th>Score</th>
-                    <th>XP</th>
+                    <th>Email</th>
+                    <th>Bio</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -141,9 +142,9 @@ const AdminPage = () => {
                     <tr key={user.id || user.name}>
                       <td>{index + 1}</td>
                       <td>
-                        <img 
-                          src={user.profilePictureUrl} 
-                          alt="Avatar" 
+                        <img
+                          src={user.profilePictureUrl}
+                          alt="Avatar"
                           className="avatar-img"
                         />
                       </td>
@@ -162,36 +163,51 @@ const AdminPage = () => {
                         {editingUser === user.id ? (
                           <input
                             type="number"
-                            value={editValues.totalScore}
+                            value={editValues.email}
                             onChange={(e) => handleEditChange('totalScore', parseInt(e.target.value) || 0)}
                             className="edit-input"
                           />
                         ) : (
-                          <span className="score-value">{user.totalScore}</span>
+                          <span className="score-value">{user.email}</span>
                         )}
                       </td>
                       <td>
                         {editingUser === user.id ? (
                           <input
                             type="number"
-                            value={editValues.totalXp}
+                            value={editValues.bio}
                             onChange={(e) => handleEditChange('totalXp', parseInt(e.target.value) || 0)}
                             className="edit-input"
                           />
                         ) : (
-                          <span className="xp-value">{user.totalXp}</span>
+                          <span className="xp-value">{user.bio}</span>
+                        )}
+                      </td>
+                      <td>
+                        {editingUser === user.id ? (
+                          <select
+                            value={editValues.userType || user.userType} // ha még nincs editValues, fallback user.useType
+                            onChange={(e) => handleEditChange('userType', e.target.value)}
+                            className="edit-input"
+                          >
+                            <option value="">Válassz</option>
+                            <option value="Admin">Admin</option>
+                            <option value="User">User</option>
+                          </select>
+                        ) : (
+                          <span className="xp-value">{user.userType}</span>
                         )}
                       </td>
                       <td className="action-buttons">
                         {editingUser === user.id ? (
                           <>
-                            <button 
+                            <button
                               className="save-btn"
                               onClick={() => saveEdit(user.id)}
                             >
                               💾 Save
                             </button>
-                            <button 
+                            <button
                               className="cancel-btn"
                               onClick={() => setEditingUser(null)}
                             >
@@ -200,14 +216,14 @@ const AdminPage = () => {
                           </>
                         ) : (
                           <>
-                            <button 
+                            <button
                               className="edit-btn"
                               onClick={() => startEdit(user)}
                               title="Edit user"
                             >
                               ✏️ Edit
                             </button>
-                            <button 
+                            <button
                               className="delete-btn"
                               onClick={() => deleteUser(user.id)}
                               title="Delete user"
@@ -222,10 +238,10 @@ const AdminPage = () => {
                 </tbody>
               </table>
             </div>
-            
+
             {visibleCount < filteredUsers.length && (
               <div className="load-more-section">
-                <button 
+                <button
                   className="load-more-btn"
                   onClick={loadMoreUsers}
                 >

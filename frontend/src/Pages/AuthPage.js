@@ -4,11 +4,10 @@ import axios from "axios";
 import "../Styles/AuthRegisterLogin.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import PasswordInput from "../Component/PasswordInput"
-//import { jwtDecode } from "jwt-decode";
-import emailjs from "emailjs-com";
+import { jwtDecode } from "jwt-decode";
 
 
-export default function AuthPage() {
+export default function AuthPage({setshowAdminPanel}) {
   const navigate = useNavigate();
   const [mode, setMode] = useState("login");
 
@@ -16,6 +15,7 @@ export default function AuthPage() {
   if (location.pathname === "/login") {
     document.title = "auth";
   }
+  
   // LOGIN STATE
   const [userInput, setUserInput] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
@@ -50,29 +50,17 @@ export default function AuthPage() {
       if (success) {
         localStorage.setItem("authToken", res.data.token);
         setSuccessMessage("Successfully login!");
-        // const token = localStorage.getItem("authToken");
-        // const decoded = jwtDecode(token);
-        // console.log(decoded);
+        const token = localStorage.getItem("authToken");
+        const decoded = jwtDecode(token);
+        let decodeRole = decoded.role;
         setErrorMessage("");
-        setTimeout(() => {
-          emailjs
-            .send(
-              "service_u0c9fsr",
-              "template_k1gay91",
-              { email: email },
-              "AlEZ_3UQPjFc987-t"
-            )
-            .then(() => {
-              setSuccessMessage("Reset email sent successfully!");
-              setErrorMessage("");
-            })
-            .catch((err) => {
-              console.error(err);
-              setErrorMessage("Failed to send email");
-              setSuccessMessage();
-            });
-          navigate("/account");
-        }, 2000);
+        if (decodeRole.includes("Admin")) {
+          setTimeout(() => navigate("/admin"), 2000);
+          setshowAdminPanel(true)
+        } else {
+          setTimeout(() => navigate("/account"), 2000);
+        }
+
       } else {
         throw new Error("No token received from server");
       }
@@ -103,22 +91,6 @@ export default function AuthPage() {
       if (res.data.success && doPasswordsMatch) {
         setSuccessMessage(res.data.message);
         setErrorMessage("");
-        emailjs
-          .send(
-            "service_u0c9fsr",
-            "template_ajrrtoc",
-            { email: email },
-            "AlEZ_3UQPjFc987-t"
-          )
-          .then(() => {
-            setSuccessMessage("Reset email sent successfully!");
-            setErrorMessage("");
-          })
-          .catch((err) => {
-            console.error(err);
-            setErrorMessage("Failed to send email");
-            setSuccessMessage();
-          });
         setTimeout(() => {
           navigate("/login");
         }, 1500);

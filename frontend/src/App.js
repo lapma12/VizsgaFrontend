@@ -17,16 +17,18 @@ import AdminPage from "./Pages/Services/AdminPage";
 
 function App() {
   const [loginIn, setloginIn] = useState(false);
+  //LOGIN PANEL STATE
+  const [showAdminpanel,setshowAdminPanel] = useState(false)
   const [userDataState, setuserDataState] = useState(false)
-  
+  console.log(showAdminpanel);
   return (
     <Router>
       <div className="flex flex-col min-h-screen">
-        <Navbar loginIn={loginIn} setloginIn={setloginIn} userDataState={userDataState}/>
+        <Navbar loginIn={loginIn} setloginIn={setloginIn} userDataState={userDataState} showAdminpanel={showAdminpanel} setshowAdminPanel={setshowAdminPanel}/>
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/login" element={<AuthPage />} />
+            <Route path="/login" element={<AuthPage setshowAdminPanel={setshowAdminPanel} />}  />
             <Route path="/about" element={<About />} />
             <Route path="/scoreboard" element={<Scoreboard/>} />
             <Route path="/game" element={<Game />} />

@@ -5,6 +5,7 @@ import { AiOutlineFacebook } from "react-icons/ai";
 import { FaInstagram } from "react-icons/fa";
 import { FaRegMessage } from "react-icons/fa6";
 import { IoMdHome } from "react-icons/io";
+import { IoMdSettings } from "react-icons/io";
 import { BsTable } from "react-icons/bs";
 import { MdAccountCircle } from "react-icons/md";
 import { IoLogoGameControllerB } from "react-icons/io";
@@ -14,7 +15,7 @@ import "../Styles/Navbar.css";
 import api from "../api/api";
 
 
-function Navbar({ loginIn, setloginIn, userDataState }) {
+function Navbar({ loginIn, setloginIn, userDataState ,showAdminpanel,setshowAdminPanel }) {
   const navRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
   const [successResult, setSuccesssResult] = useState(false);
@@ -30,6 +31,7 @@ function Navbar({ loginIn, setloginIn, userDataState }) {
     localStorage.removeItem("authToken");
     setloginIn(false);
     setIsOpen(false);
+    setshowAdminPanel(false)
     navigate("/login");
   };
 
@@ -105,6 +107,15 @@ function Navbar({ loginIn, setloginIn, userDataState }) {
           </span>
           Game
         </NavLink>
+        {showAdminpanel ? (
+          <NavLink to="/game" onClick={closeNavbar}>
+          <span className="icon">
+          <IoMdSettings />
+          </span>
+          AdminPanel
+        </NavLink>
+        ): ("")}
+        
 
 
         <div className="nav-search-mobile">
