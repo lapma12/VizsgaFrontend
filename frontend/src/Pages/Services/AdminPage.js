@@ -27,7 +27,11 @@ const AdminPage = () => {
   const fetchUsers = async () => {
     try {
       const response = await api.get("https://dongesz.com/api/Admin/Users");
-      setUsers(response.data.result);
+      const usersWithType = response.data.result.map(u => ({
+        ...u,
+        userType: u.userType || "User"
+      }));
+      setUsers(usersWithType);
       setFilteredUsers(response.data.result);
       setLoading(false);
     } catch (err) {
@@ -54,7 +58,10 @@ const AdminPage = () => {
     setEditValues({
       name: user.name,
       totalScore: user.totalScore,
-      totalXp: user.totalXp
+      totalXp: user.totalXp,
+      userType: user.userType, // <-- ide!
+      bio: user.bio,           // bio mező is kell
+      email: user.email        // email mező is kell, mert most rossz field van
     });
   };
 
@@ -78,7 +85,7 @@ const AdminPage = () => {
   const deleteUser = async (userId) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       try {
-        await axios.delete(`https://dongesz.com/api/Users/${userId}`);
+        await api.delete(`https://dongesz.com/api/Admin/Users/${userId}`);
         fetchUsers(); // Refresh data
       } catch (err) {
         console.error("Error deleting user:", err);
@@ -134,6 +141,7 @@ const AdminPage = () => {
                     <th>Username</th>
                     <th>Email</th>
                     <th>Bio</th>
+                    <th>Type</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -162,9 +170,9 @@ const AdminPage = () => {
                       <td>
                         {editingUser === user.id ? (
                           <input
-                            type="number"
+                            type="text"
                             value={editValues.email}
-                            onChange={(e) => handleEditChange('totalScore', parseInt(e.target.value) || 0)}
+                            onChange={(e) => handleEditChange('email', e.target.value)}
                             className="edit-input"
                           />
                         ) : (
@@ -174,9 +182,9 @@ const AdminPage = () => {
                       <td>
                         {editingUser === user.id ? (
                           <input
-                            type="number"
+                            type="text"
                             value={editValues.bio}
-                            onChange={(e) => handleEditChange('totalXp', parseInt(e.target.value) || 0)}
+                            onChange={(e) => handleEditChange('bio', e.target.value)}
                             className="edit-input"
                           />
                         ) : (
@@ -190,7 +198,7 @@ const AdminPage = () => {
                             onChange={(e) => handleEditChange('userType', e.target.value)}
                             className="edit-input"
                           >
-                            <option value="">Válassz</option>
+                            <option value="">Choose</option>
                             <option value="Admin">Admin</option>
                             <option value="User">User</option>
                           </select>

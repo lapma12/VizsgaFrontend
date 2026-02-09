@@ -108,7 +108,7 @@ function Navbar({ loginIn, setloginIn, userDataState ,showAdminpanel,setshowAdmi
           Game
         </NavLink>
         {showAdminpanel ? (
-          <NavLink to="/game" onClick={closeNavbar}>
+          <NavLink to="/admin" onClick={closeNavbar}>
           <span className="icon">
           <IoMdSettings />
           </span>
