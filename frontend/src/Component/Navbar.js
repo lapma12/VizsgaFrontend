@@ -115,9 +115,6 @@ function Navbar({ loginIn, setloginIn, userDataState ,showAdminpanel,setshowAdmi
           AdminPanel
         </NavLink>
         ): ("")}
-        
-
-
         <div className="nav-search-mobile">
           {loginIn ? (
             <NavLink
