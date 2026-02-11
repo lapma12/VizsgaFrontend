@@ -9,7 +9,6 @@ import {
   EyeOff,
   Eye,
 } from "lucide-react";
-import { IoMdSettings } from "react-icons/io";
 import api from "../api/api";
 
 const Account = ({ setloginIn, setuserDataState,showAdminpanel }) => {

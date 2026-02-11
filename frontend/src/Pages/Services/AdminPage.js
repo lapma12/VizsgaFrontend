@@ -27,11 +27,7 @@ const AdminPage = () => {
   const fetchUsers = async () => {
     try {
       const response = await api.get("https://dongesz.com/api/Admin/Users");
-      const usersWithType = response.data.result.map(u => ({
-        ...u,
-        userType: u.userType || "User"
-      }));
-      setUsers(usersWithType);
+      setUsers(response.data.result);
       setFilteredUsers(response.data.result);
       setLoading(false);
     } catch (err) {
@@ -46,7 +42,7 @@ const AdminPage = () => {
       user.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredUsers(filtered);
-    setVisibleCount(10); // Keresés után vissza 10-re
+    setVisibleCount(10); 
   };
 
   const loadMoreUsers = () => {
@@ -59,9 +55,9 @@ const AdminPage = () => {
       name: user.name,
       totalScore: user.totalScore,
       totalXp: user.totalXp,
-      userType: user.userType, // <-- ide!
-      bio: user.bio,           // bio mező is kell
-      email: user.email        // email mező is kell, mert most rossz field van
+      userType: user.userType,
+      bio: user.bio,           
+      email: user.email        
     });
   };
 
@@ -75,7 +71,7 @@ const AdminPage = () => {
   const saveEdit = async (userId) => {
     try {
       await axios.put(`https://dongesz.com/api/Users/${userId}`, editValues);
-      fetchUsers(); // Refresh data
+      fetchUsers(); 
       setEditingUser(null);
     } catch (err) {
       console.error("Error saving user:", err);
@@ -86,7 +82,7 @@ const AdminPage = () => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       try {
         await api.delete(`https://dongesz.com/api/Admin/Users/${userId}`);
-        fetchUsers(); // Refresh data
+        fetchUsers(); 
       } catch (err) {
         console.error("Error deleting user:", err);
       }
@@ -161,7 +157,7 @@ const AdminPage = () => {
                           <input
                             value={editValues.name}
                             onChange={(e) => handleEditChange('name', e.target.value)}
-                            className="edit-input"
+                            className="values"
                           />
                         ) : (
                           user.name
@@ -173,10 +169,10 @@ const AdminPage = () => {
                             type="text"
                             value={editValues.email}
                             onChange={(e) => handleEditChange('email', e.target.value)}
-                            className="edit-input"
+                            className="values"
                           />
                         ) : (
-                          <span className="score-value">{user.email}</span>
+                          <span className="values">{user.email}</span>
                         )}
                       </td>
                       <td>
@@ -185,16 +181,16 @@ const AdminPage = () => {
                             type="text"
                             value={editValues.bio}
                             onChange={(e) => handleEditChange('bio', e.target.value)}
-                            className="edit-input"
+                            className="values"
                           />
                         ) : (
-                          <span className="xp-value">{user.bio}</span>
+                          <span className="values">{user.bio}</span>
                         )}
                       </td>
                       <td>
                         {editingUser === user.id ? (
                           <select
-                            value={editValues.userType || user.userType} // ha még nincs editValues, fallback user.useType
+                            value={editValues.userType || user.userType}
                             onChange={(e) => handleEditChange('userType', e.target.value)}
                             className="edit-input"
                           >
