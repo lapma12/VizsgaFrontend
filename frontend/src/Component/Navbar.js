@@ -28,8 +28,6 @@ function Navbar({ loginIn, setloginIn, userDataState, showAdminpanel, setshowAdm
   // ALERTS
   const [confirmMessage, setConfirmMessage] = useState("");
   const [onConfirm, setOnConfirm] = useState(null);
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
 
@@ -44,10 +42,6 @@ function Navbar({ loginIn, setloginIn, userDataState, showAdminpanel, setshowAdm
     setloginIn(false);
     setIsOpen(false);
     setshowAdminPanel(false);
-
-    setSuccessMessage("Successful logout!");
-    setErrorMessage("");
-
     setConfirmMessage("");
     navigate("/login");
   };

@@ -10,8 +10,9 @@ import {
   Eye,
 } from "lucide-react";
 import api from "../api/api";
+import { PasswordInput } from '../Component/PasswordInput';
 
-const Account = ({ setloginIn, setuserDataState,showAdminpanel }) => {
+const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
   const location = useLocation();
 
   if (location.pathname === "/account") {
@@ -23,9 +24,15 @@ const Account = ({ setloginIn, setuserDataState,showAdminpanel }) => {
 
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [logoutConfirm, setLogoutConfirm] = useState(false);
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
 
   const [successResult, setSuccesssResult] = useState(false);
   const [resultData, setresultData] = useState(null);
+
 
   useEffect(() => {
     setloginIn(true);
@@ -34,19 +41,26 @@ const Account = ({ setloginIn, setuserDataState,showAdminpanel }) => {
   const handleConfirm = () => {
     setSuccessMessage("");
   };
-
-  const goToHome = () => {
-    if (!window.confirm("Are you sure you want to log out your account?")) return;
-    try {
-      localStorage.removeItem("authToken");
-      setloginIn(false);
-      navigate("/");
-    } catch (error) {
-      console.log(error)
-    }
-
+  const handleLogoutClick = () => {
+    setLogoutConfirm(true);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    setloginIn(false);
+    setLogoutConfirm(false);
+    navigate("/login");
+  };
+  const handleDeleteClick = () => {
+    setDeleteConfirm(true);
+  };
+
+  const handleDeleteAccount = () => {
+    console.log("Deleting account...");
+
+    setDeleteConfirm(false);
+    setConfirmPassword("");
+  };
 
   const handlePicChange = async (event) => {
     event.preventDefault();
@@ -87,26 +101,26 @@ const Account = ({ setloginIn, setuserDataState,showAdminpanel }) => {
     fetchMe();
   }, [navigate, setloginIn, successMessage]);
 
-  const deleteAccount = async () => {
-    if (!window.confirm("Are you sure you want to delete your account?")) return;
-    try {
-      const response = await api.delete("/Users/me");
+  // const deleteAccount = async () => {
+  //   if (!window.confirm("Are you sure you want to delete your account?")) return;
+  //   try {
+  //     const response = await api.delete("/Users/me");
 
-      if (response.data.success) {
-        setSuccessMessage(response.data.message);
-        localStorage.removeItem("authToken");
-        setloginIn(false);
-        setTimeout(() => {
-          navigate("/");
-        }, 1500);
-      } else {
-        setErrorMessage(response.data.message);
-      }
-    } catch (error) {
-      console.error(error);
-      setErrorMessage("Account deletion failed");
-    }
-  };
+  //     if (response.data.success) {
+  //       setSuccessMessage(response.data.message);
+  //       localStorage.removeItem("authToken");
+  //       setloginIn(false);
+  //       setTimeout(() => {
+  //         navigate("/");
+  //       }, 1500);
+  //     } else {
+  //       setErrorMessage(response.data.message);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     setErrorMessage("Account deletion failed");
+  //   }
+  // };
 
   return (
     <div className="account-page">
@@ -145,6 +159,93 @@ const Account = ({ setloginIn, setuserDataState,showAdminpanel }) => {
           </button>
         </motion.div>
       )}
+      {logoutConfirm && (
+        <div className="confirm-overlay">
+          <motion.div
+            className="confirm-alert"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            <div style={{ marginBottom: "1.5rem", fontSize: "1.2rem" }}>
+              Do you want to log out?
+            </div>
+
+            <div className="confirm-buttons">
+              <button className="confirm-ok-btn" onClick={handleLogout}>
+                Log out
+              </button>
+
+              <button
+                className="confirm-cancel-btn"
+                onClick={() => setLogoutConfirm(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
+      {deleteConfirm && (
+        <div className="confirm-overlay">
+          <motion.div
+            className="confirm-alert"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            <div style={{ marginBottom: "1.5rem", fontSize: "1.2rem" }}>
+              Enter your password to delete your account
+            </div>
+
+            <div style={{ position: "relative", marginBottom: "1rem" }}>
+              <input
+                type={showPassword ? "text" : "password"}
+                value={confirmPassword}
+                placeholder="Enter your password"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: "absolute",
+                  right: "1rem",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  cursor: "pointer",
+                  color: "#444",
+                }}
+              >
+                {showPassword ? <EyeOff size={22} /> : <Eye size={22} />}
+              </span>
+            </div>
+
+            <div className="confirm-buttons">
+              <button
+                className="confirm-ok-btn"
+                onClick={() => {
+                  if (confirmPassword === "asd") {
+                    handleDeleteAccount();
+                  }
+                }}
+              >
+                Delete Account
+              </button>
+
+              <button
+                className="confirm-cancel-btn"
+                onClick={() => {
+                  setDeleteConfirm(false);
+                  setConfirmPassword("");
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
+
+
       <div className="account-header">
         {resultData && (
           <>
@@ -198,7 +299,7 @@ const Account = ({ setloginIn, setuserDataState,showAdminpanel }) => {
         >
           <CogIcon size={18} /> Settings
         </button>
-        
+
       </div>
 
       <div className="account-content">
@@ -207,10 +308,10 @@ const Account = ({ setloginIn, setuserDataState,showAdminpanel }) => {
       </div>
 
       <div className="account-footer">
-        <button className="logout-btn" onClick={goToHome}>
+        <button className="logout-btn" onClick={() => { handleLogoutClick() }}>
           Log out
         </button>
-        <button className="delete-btn" onClick={deleteAccount}>
+        <button className="delete-btn" onClick={() => { handleDeleteClick() }}>
           <Trash2 size={18} /> Delete Account
         </button>
       </div>

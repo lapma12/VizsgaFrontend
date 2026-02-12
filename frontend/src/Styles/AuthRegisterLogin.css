@@ -262,6 +262,100 @@
 .confirm-cancel-btn:hover {
   background: #eee;
 }
+/* ===== CONFIRM OVERLAY ===== */
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+/* ===== CONFIRM MODAL ===== */
+.confirm-alert {
+  background: linear-gradient(145deg, #2c2c2c, #3a3a3a);
+  color: #fff;
+  padding: 2.5rem 3rem;
+  border-radius: 20px;
+  min-width: 380px;
+  max-width: 90%;
+  text-align: center;
+  font-family: "MedievalSharp", cursive;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  animation: popIn 0.25s ease-out;
+}
+
+/* anim */
+@keyframes popIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ===== INPUT ===== */
+.confirm-alert input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  border: 2px solid #555;
+  background: #f5f5f5;
+  font-size: 1rem;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.confirm-alert input:focus {
+  border-color: #c62828;
+  box-shadow: 0 0 8px rgba(198, 40, 40, 0.4);
+}
+
+/* ===== BUTTON ROW ===== */
+.confirm-buttons {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* ===== OK (DELETE) BUTTON ===== */
+.confirm-ok-btn {
+  background: linear-gradient(135deg, #b71c1c, #e53935);
+  color: white;
+  border: none;
+  padding: 0.7rem 2.2rem;
+  font-size: 1.1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s ease;
+}
+
+.confirm-ok-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(229, 57, 53, 0.5);
+}
+
+/* ===== CANCEL BUTTON ===== */
+.confirm-cancel-btn {
+  background: #e0e0e0;
+  color: #333;
+  border: none;
+  padding: 0.7rem 2.2rem;
+  font-size: 1.1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s ease;
+}
 
 /* SPLIT AUTH CARD (KEEP THEME) */
 .auth-card {
