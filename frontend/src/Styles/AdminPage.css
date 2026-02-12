@@ -11,7 +11,7 @@
 
 .admin-header h1 {
   font-family: "MedievalSharp", cursive;
-  font-size: 3.5rem;
+  font-size: 3rem;
   margin-bottom: 2rem;
   color: var(--accentDark);
   text-shadow: 2px 2px 0 var(--highlight);
@@ -229,9 +229,9 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
-.score-value, .xp-value {
+.values, .xp-value {
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 0.8rem;
   color: #584836;
   display: block;
 }

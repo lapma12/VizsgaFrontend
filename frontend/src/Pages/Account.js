@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import api from "../api/api";
 
-const Account = ({ setloginIn, setuserDataState }) => {
+const Account = ({ setloginIn, setuserDataState,showAdminpanel }) => {
   const location = useLocation();
 
   if (location.pathname === "/account") {
@@ -198,6 +198,7 @@ const Account = ({ setloginIn, setuserDataState }) => {
         >
           <CogIcon size={18} /> Settings
         </button>
+        
       </div>
 
       <div className="account-content">

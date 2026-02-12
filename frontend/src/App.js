@@ -14,28 +14,31 @@ import Terms from "./Pages/Services/Terms";
 import FAQ from "./Pages/Services/FAQ";
 import AuthPage from "./Pages/AuthPage";
 import AdminPage from "./Pages/Services/AdminPage";
+import AdminRoute from "./Component/AdminRoute";
 
 function App() {
   const [loginIn, setloginIn] = useState(false);
+  //LOGIN PANEL STATE
+  const [showAdminpanel, setshowAdminPanel] = useState(false)
   const [userDataState, setuserDataState] = useState(false)
-  
+  console.log(showAdminpanel);
   return (
     <Router>
       <div className="flex flex-col min-h-screen">
-        <Navbar loginIn={loginIn} setloginIn={setloginIn} userDataState={userDataState}/>
+        <Navbar loginIn={loginIn} setloginIn={setloginIn} userDataState={userDataState} showAdminpanel={showAdminpanel} setshowAdminPanel={setshowAdminPanel} />
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/login" element={<AuthPage />} />
+            <Route path="/login" element={<AuthPage setshowAdminPanel={setshowAdminPanel} />} />
             <Route path="/about" element={<About />} />
-            <Route path="/scoreboard" element={<Scoreboard/>} />
+            <Route path="/scoreboard" element={<Scoreboard />} />
             <Route path="/game" element={<Game />} />
-            <Route path="/account" element={<Account setloginIn={setloginIn} setuserDataState={setuserDataState} />} />
-            <Route path="/admin" element={<AdminPage/>}/>
-            <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
-            <Route path="/privacypolicy" element={<PrivacyPolicy/>}/>
-            <Route path="/terms" element={<Terms/>}/>
-            <Route path="/faq" element={<FAQ/>}/>
+            <Route path="/account" element={<Account setloginIn={setloginIn} setuserDataState={setuserDataState} showAdminpanel={showAdminpanel} />} />
+            <Route path="/admin" element={<AdminRoute> <AdminPage/> </AdminRoute>} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/faq" element={<FAQ />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

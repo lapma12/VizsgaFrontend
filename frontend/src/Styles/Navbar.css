@@ -149,10 +149,11 @@ header.navbar {
   border: 2px solid var(--textDark);
   height: 50px;
   width: 50px;
-  border-radius: 30px;
   cursor: pointer;
   text-decoration: none;
   margin-right: 30px;
+  border-radius: 50%;
+  border: 3px solid #8c7153;
   background-color: #fff;
 }
 .relative {

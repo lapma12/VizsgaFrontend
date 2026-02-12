@@ -3,6 +3,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import "../../Styles/AdminPage.css";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import api from "../../api/api";
 
 const AdminPage = () => {
   const location = useLocation();
@@ -18,7 +19,7 @@ const AdminPage = () => {
   // melyik sort szerkesztjük – kulcs: id vagy (ha az nincs) name
   const [editingUser, setEditingUser] = useState(null);
   const [editValues, setEditValues] = useState({});
-  const [visibleCount, setVisibleCount] = useState(10); 
+  const [visibleCount, setVisibleCount] = useState(10);
 
   useEffect(() => {
     fetchUsers();
@@ -26,7 +27,7 @@ const AdminPage = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("https://dongesz.com/api/Users/scoreboard");
+      const response = await api.get("https://dongesz.com/api/Admin/Users");
       setUsers(response.data.result);
       setFilteredUsers(response.data.result);
       setLoading(false);
@@ -42,7 +43,7 @@ const AdminPage = () => {
       user.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredUsers(filtered);
-    setVisibleCount(10); // Keresés után vissza 10-re
+    setVisibleCount(10); 
   };
 
   const loadMoreUsers = () => {
@@ -56,7 +57,10 @@ const AdminPage = () => {
     setEditValues({
       name: user.name,
       totalScore: user.totalScore,
-      totalXp: user.totalXp
+      totalXp: user.totalXp,
+      userType: user.userType,
+      bio: user.bio,           
+      email: user.email        
     });
   };
 
@@ -70,7 +74,7 @@ const AdminPage = () => {
   const saveEdit = async (userId) => {
     try {
       await axios.put(`https://dongesz.com/api/Users/${userId}`, editValues);
-      fetchUsers(); // Refresh data
+      fetchUsers(); 
       setEditingUser(null);
     } catch (err) {
       console.error("Error saving user:", err);
@@ -80,8 +84,8 @@ const AdminPage = () => {
   const deleteUser = async (userId) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       try {
-        await axios.delete(`https://dongesz.com/api/Users/${userId}`);
-        fetchUsers(); // Refresh data
+        await api.delete(`https://dongesz.com/api/Admin/Users/${userId}`);
+        fetchUsers(); 
       } catch (err) {
         console.error("Error deleting user:", err);
       }
@@ -134,8 +138,9 @@ const AdminPage = () => {
                     <th>#</th>
                     <th>Profile Picture</th>
                     <th>Username</th>
-                    <th>Score</th>
-                    <th>XP</th>
+                    <th>Email</th>
+                    <th>Bio</th>
+                    <th>Type</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -147,9 +152,9 @@ const AdminPage = () => {
                   <tr key={rowKey}>
                       <td>{index + 1}</td>
                       <td>
-                        <img 
-                          src={user.profilePictureUrl} 
-                          alt="Avatar" 
+                        <img
+                          src={user.profilePictureUrl}
+                          alt="Avatar"
                           className="avatar-img"
                         />
                       </td>
@@ -158,7 +163,7 @@ const AdminPage = () => {
                           <input
                             value={editValues.name}
                             onChange={(e) => handleEditChange('name', e.target.value)}
-                            className="edit-input"
+                            className="values"
                           />
                         ) : (
                           user.name
@@ -167,37 +172,52 @@ const AdminPage = () => {
                       <td>
                         {isEditing ? (
                           <input
-                            type="number"
-                            value={editValues.totalScore}
-                            onChange={(e) => handleEditChange('totalScore', parseInt(e.target.value) || 0)}
-                            className="edit-input"
+                            type="text"
+                            value={editValues.email}
+                            onChange={(e) => handleEditChange('email', e.target.value)}
+                            className="values"
                           />
                         ) : (
-                          <span className="score-value">{user.totalScore}</span>
+                          <span className="values">{user.email}</span>
                         )}
                       </td>
                       <td>
                         {isEditing ? (
                           <input
-                            type="number"
-                            value={editValues.totalXp}
-                            onChange={(e) => handleEditChange('totalXp', parseInt(e.target.value) || 0)}
-                            className="edit-input"
+                            type="text"
+                            value={editValues.bio}
+                            onChange={(e) => handleEditChange('bio', e.target.value)}
+                            className="values"
                           />
                         ) : (
-                          <span className="xp-value">{user.totalXp}</span>
+                          <span className="values">{user.bio}</span>
+                        )}
+                      </td>
+                      <td>
+                        {editingUser === user.id ? (
+                          <select
+                            value={editValues.userType || user.userType}
+                            onChange={(e) => handleEditChange('userType', e.target.value)}
+                            className="edit-input"
+                          >
+                            <option value="">Choose</option>
+                            <option value="Admin">Admin</option>
+                            <option value="User">User</option>
+                          </select>
+                        ) : (
+                          <span className="xp-value">{user.userType}</span>
                         )}
                       </td>
                       <td className="action-buttons">
                         {isEditing ? (
                           <>
-                            <button 
+                            <button
                               className="save-btn"
                               onClick={() => saveEdit(user.id)}
                             >
                               💾 Save
                             </button>
-                            <button 
+                            <button
                               className="cancel-btn"
                               onClick={() => setEditingUser(null)}
                             >
@@ -206,14 +226,14 @@ const AdminPage = () => {
                           </>
                         ) : (
                           <>
-                            <button 
+                            <button
                               className="edit-btn"
                               onClick={() => startEdit(user)}
                               title="Edit user"
                             >
                               ✏️ Edit
                             </button>
-                            <button 
+                            <button
                               className="delete-btn"
                               onClick={() => deleteUser(user.id)}
                               title="Delete user"
@@ -229,10 +249,10 @@ const AdminPage = () => {
                 </tbody>
               </table>
             </div>
-            
+
             {visibleCount < filteredUsers.length && (
               <div className="load-more-section">
-                <button 
+                <button
                   className="load-more-btn"
                   onClick={loadMoreUsers}
                 >
