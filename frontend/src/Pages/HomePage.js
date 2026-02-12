@@ -19,7 +19,6 @@ const Homepage = () => {
           "https://dongesz.com/api/Users/count"
         );
         setCount(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error(error);
       }

@@ -3,8 +3,6 @@ import { jwtDecode } from "jwt-decode";
 
 const AdminRoute = ({ children }) => {
   const token = localStorage.getItem("authToken");
-
-  // ❌ Nincs token → login
   if (!token) {
     return <Navigate to="/login" replace />;
   }
@@ -14,14 +12,12 @@ const AdminRoute = ({ children }) => {
 
     console.log("JWT DATA:", decoded); // debug
 
-    // ⚠️ Role kiolvasás több formátumhoz
     const role =
       decoded.role ||
       decoded.userType ||
       decoded.roles ||
       decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
 
-    // ❌ Nem admin → nincs jogosultság
     if (!role.includes("Admin")) {
       return (
         <div style={styles.container}>
@@ -38,7 +34,6 @@ const AdminRoute = ({ children }) => {
       );
     }
 
-    // ✅ Admin → belép az Admin oldalra
     return children;
   } catch (err) {
     console.error("JWT ERROR:", err);

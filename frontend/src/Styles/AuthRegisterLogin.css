@@ -208,6 +208,61 @@
   font-weight: bold;
   margin-top: 12px;
 }
+/* === CONFIRM ALERT === */
+.confirm-alert {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 2rem 3rem;
+  font-size: 1.3rem;
+  border-radius: 16px;
+  text-align: center;
+  font-family: "MedievalSharp", cursive;
+  z-index: 999;
+  min-width: 320px;
+
+  background: linear-gradient(135deg, #424242, #616161);
+  color: #fff;
+}
+
+.confirm-buttons {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.confirm-ok-btn,
+.confirm-cancel-btn {
+  background: #fff;
+  border: none;
+  padding: 0.6rem 2rem;
+  font-size: 1.1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s ease;
+}
+
+/* OK gomb (pl logout) */
+.confirm-ok-btn {
+  color: #b71c1c;
+}
+
+.confirm-ok-btn:hover {
+  background: #ffe5e5;
+}
+
+/* Mégse gomb */
+.confirm-cancel-btn {
+  color: #333;
+}
+
+.confirm-cancel-btn:hover {
+  background: #eee;
+}
+
 /* SPLIT AUTH CARD (KEEP THEME) */
 .auth-card {
   display: flex;

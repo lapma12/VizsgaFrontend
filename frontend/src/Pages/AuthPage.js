@@ -7,7 +7,7 @@ import PasswordInput from "../Component/PasswordInput"
 import { jwtDecode } from "jwt-decode";
 
 
-export default function AuthPage({setshowAdminPanel}) {
+export default function AuthPage({ setshowAdminPanel }) {
   const navigate = useNavigate();
   const [mode, setMode] = useState("login");
 
@@ -15,7 +15,7 @@ export default function AuthPage({setshowAdminPanel}) {
   if (location.pathname === "/login") {
     document.title = "auth";
   }
-  
+
   // LOGIN STATE
   const [userInput, setUserInput] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
@@ -54,13 +54,14 @@ export default function AuthPage({setshowAdminPanel}) {
         const decoded = jwtDecode(token);
         let decodeRole = decoded.role;
         setErrorMessage("");
-        if (decodeRole.includes("Admin")) {
+        if (decodeRole === "Admin") {
           setTimeout(() => navigate("/admin"), 2000);
           setshowAdminPanel(true)
-        } else {
+        }
+        else{
           setTimeout(() => navigate("/account"), 2000);
         }
-
+        
       } else {
         throw new Error("No token received from server");
       }

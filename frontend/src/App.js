@@ -21,7 +21,6 @@ function App() {
   //LOGIN PANEL STATE
   const [showAdminpanel, setshowAdminPanel] = useState(false)
   const [userDataState, setuserDataState] = useState(false)
-  console.log(showAdminpanel);
   return (
     <Router>
       <div className="flex flex-col min-h-screen">

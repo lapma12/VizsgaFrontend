@@ -10,12 +10,13 @@ import { BsTable } from "react-icons/bs";
 import { MdAccountCircle } from "react-icons/md";
 import { IoLogoGameControllerB } from "react-icons/io";
 import { RiTwitterXFill } from "react-icons/ri";
+import { motion } from "framer-motion";
 
 import "../Styles/Navbar.css";
 import api from "../api/api";
 
 
-function Navbar({ loginIn, setloginIn, userDataState ,showAdminpanel,setshowAdminPanel }) {
+function Navbar({ loginIn, setloginIn, userDataState, showAdminpanel, setshowAdminPanel }) {
   const navRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
   const [successResult, setSuccesssResult] = useState(false);
@@ -23,17 +24,34 @@ function Navbar({ loginIn, setloginIn, userDataState ,showAdminpanel,setshowAdmi
 
   const [isOpen, setIsOpen] = useState(false);
   const [picture, setPicture] = useState("")
+
+  // ALERTS
+  const [confirmMessage, setConfirmMessage] = useState("");
+  const [onConfirm, setOnConfirm] = useState(null);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
   const navigate = useNavigate();
 
   const toggleMenu = () => setIsOpen(!isOpen);
+  const handleLogoutClick = () => {
+    setConfirmMessage("Do you want to Log out!");
+    setOnConfirm(() => handleLogout);
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
     setloginIn(false);
     setIsOpen(false);
-    setshowAdminPanel(false)
+    setshowAdminPanel(false);
+
+    setSuccessMessage("Successful logout!");
+    setErrorMessage("");
+
+    setConfirmMessage("");
     navigate("/login");
   };
+
 
   const toggleNavbar = () => {
     navRef.current.classList.toggle("responsive_nav");
@@ -70,6 +88,35 @@ function Navbar({ loginIn, setloginIn, userDataState ,showAdminpanel,setshowAdmi
 
   return (
     <header className="navbar">
+      {confirmMessage && (
+        <motion.div
+          className="confirm-alert"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
+          <div>{confirmMessage}</div>
+
+          <div className="confirm-buttons">
+            <button
+              className="confirm-ok-btn"
+              onClick={() => {
+                if (onConfirm) onConfirm();
+              }}
+            >
+              OK
+            </button>
+
+            <button
+              className="confirm-cancel-btn"
+              onClick={() => setConfirmMessage("")}
+            >
+              Cancel
+            </button>
+          </div>
+        </motion.div>
+      )}
+
+
       <div className="navbar-left">
         <button onClick={() => window.open("https://www.instagram.com", "_blank")}>
           <FaInstagram />
@@ -109,12 +156,12 @@ function Navbar({ loginIn, setloginIn, userDataState ,showAdminpanel,setshowAdmi
         </NavLink>
         {showAdminpanel ? (
           <NavLink to="/admin" onClick={closeNavbar}>
-          <span className="icon">
-          <IoMdSettings />
-          </span>
-          AdminPanel
-        </NavLink>
-        ): ("")}
+            <span className="icon">
+              <IoMdSettings />
+            </span>
+            AdminPanel
+          </NavLink>
+        ) : ("")}
         <div className="nav-search-mobile">
           {loginIn ? (
             <NavLink
@@ -159,14 +206,14 @@ function Navbar({ loginIn, setloginIn, userDataState ,showAdminpanel,setshowAdmi
                       My account
                     </NavLink>
                   </div>
-
                   <div className="singoutMenu">
                     <button
                       className="singout"
                       onClick={() => {
-                        handleLogout();
+                        handleLogoutClick();
                         setIsOpen(false);
                       }}
+
                     >
                       Sign out
                     </button>
