@@ -6,11 +6,14 @@ import axios from "axios";
 
 const Homepage = () => {
   const location = useLocation();
-  if (location.pathname === "/") {
-    document.title = "Home";
-  }
 
-  const [count, setCount] = useState("");
+  const [count, setCount] = useState(null);
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      document.title = "Home";
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
     const fetchPlayerCount = async () => {
@@ -22,26 +25,24 @@ const Homepage = () => {
       } catch (error) {
         console.error(error);
       }
-      
     };
     fetchPlayerCount();
   }, []);
 
   return (
     <div className="homepage-container">
-      <div className="homepage-card">
-        <img src={Logo} alt="CastL Logo" className="homepage-logo" />
-        <h1 className="homepage-title">
-          Welcome to <span>CastL</span>!
-        </h1>
-        <p className="homepage-description">
-          Explore our world, join the adventure, and become part of the CastL
-          community.
-        </p>
+      <main className="homepage-card" role="main">
+        <header className="homepage-hero">
+          <img src={Logo} alt="CastL Logo" className="homepage-logo" />
+          <p className="homepage-description">
+            Explore our world, join the adventure, and become part of the CastL
+            community.
+          </p>
+        </header>
 
         <hr className="homepage-divider" />
 
-        <div className="homepage-buttons">
+        <nav className="homepage-buttons" aria-label="Primary actions">
           <a
             href="/assets/your-game.zip"
             className="homepage-btn download-btn"
@@ -51,17 +52,21 @@ const Homepage = () => {
           </a>
 
           <Link to="/login">
-            <button className="homepage-btn start-btn">🏰 Get Started</button>
+            <button className="homepage-btn start-btn" type="button">
+              🏰 Get Started
+            </button>
           </Link>
-        </div>
+        </nav>
 
-        <p className="player-count">
-          Online players:{" "}
-          <span id="playerCount">
-            {count.success ? count.result.playerCount : ""}
-          </span>
-        </p>
-      </div>
+        <footer>
+          <p className="player-count">
+            Online players:{" "}
+            <span id="playerCount">
+              {count && count.success ? count.result.playerCount : ""}
+            </span>
+          </p>
+        </footer>
+      </main>
     </div>
   );
 };

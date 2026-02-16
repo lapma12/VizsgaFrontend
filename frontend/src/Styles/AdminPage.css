@@ -20,7 +20,7 @@
   padding: 1rem 2.5rem;
   border-radius: 15px;
   border: 4px solid #8c7153;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 .search-section {
@@ -54,7 +54,12 @@
   box-shadow: 0 0 8px rgba(140, 113, 83, 0.6);
 }
 
-.search-btn, .edit-btn, .delete-btn, .save-btn, .cancel-btn, .load-more-btn {
+.search-btn,
+.edit-btn,
+.delete-btn,
+.save-btn,
+.cancel-btn,
+.load-more-btn {
   padding: 0.75rem 1.5rem;
   border: none;
   border-radius: 8px;
@@ -63,7 +68,7 @@
   font-size: 0.95rem;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -86,7 +91,10 @@
   min-width: 70px;
 }
 
-.edit-btn:hover { background-color: #2563eb; transform: translateY(-2px); }
+.edit-btn:hover {
+  background-color: #2563eb;
+  transform: translateY(-2px);
+}
 
 .delete-btn {
   background-color: #ef4444;
@@ -94,7 +102,10 @@
   min-width: 80px;
 }
 
-.delete-btn:hover { background-color: #dc2626; transform: translateY(-2px); }
+.delete-btn:hover {
+  background-color: #dc2626;
+  transform: translateY(-2px);
+}
 
 .save-btn {
   background-color: #10b981;
@@ -103,7 +114,10 @@
   min-width: 70px;
 }
 
-.save-btn:hover { background-color: #059669; transform: translateY(-2px); }
+.save-btn:hover {
+  background-color: #059669;
+  transform: translateY(-2px);
+}
 
 .cancel-btn {
   background-color: #6b7280;
@@ -111,7 +125,10 @@
   min-width: 90px;
 }
 
-.cancel-btn:hover { background-color: #4b5563; transform: translateY(-2px); }
+.cancel-btn:hover {
+  background-color: #4b5563;
+  transform: translateY(-2px);
+}
 
 .load-more-btn {
   background-color: #f59e0b;
@@ -132,7 +149,7 @@
   color: #584836;
   font-weight: 600;
   margin-bottom: 1rem;
-  background: rgba(255,255,255,0.9);
+  background: rgba(255, 255, 255, 0.9);
   padding: 0.75rem 1.5rem;
   border-radius: 10px;
   border-left: 5px solid #8c7153;
@@ -149,8 +166,8 @@
   overflow-x: auto;
   border: 3px solid #8c7153;
   border-radius: 12px;
-  background: rgba(255,255,255,0.1);
-  box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .table-scroll-wrapper::-webkit-scrollbar {
@@ -166,7 +183,7 @@
 .table-scroll-wrapper::-webkit-scrollbar-thumb {
   background: linear-gradient(135deg, #8c7153, #a78b68);
   border-radius: 10px;
-  border: 2px solid rgba(255,255,255,0.2);
+  border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 .table-scroll-wrapper::-webkit-scrollbar-thumb:hover {
@@ -192,7 +209,7 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  border-bottom: 3px solid rgba(255,255,255,0.2);
+  border-bottom: 3px solid rgba(255, 255, 255, 0.2);
 }
 
 .admin-table tbody td {
@@ -226,10 +243,11 @@
   border: 3px solid #8c7153;
   background-color: #fff;
   object-fit: cover;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.values, .xp-value {
+.values,
+.xp-value {
   font-weight: 700;
   font-size: 0.8rem;
   color: #584836;
@@ -259,16 +277,18 @@
   margin-top: 1.5rem;
 }
 
-.loading-center, .error-message, .no-data {
+.loading-center,
+.error-message,
+.no-data {
   text-align: center;
   padding: 4rem 2rem;
   color: #584836;
   font-size: 1.2rem;
-  background: rgba(255,255,255,0.95);
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 12px;
   border: 4px solid #8c7153;
   margin: 2rem 0;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 .error-message {
@@ -276,50 +296,94 @@
   background: rgba(239, 68, 68, 0.15);
   border-color: #dc2626;
 }
+
+/* Rejtett file input */
 .file-input {
   display: none;
 }
 
-
+/* Label mint kattintható avatar */
 .avatar-label {
   display: inline-block;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 50%;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 2px solid #ddd;
+  /* finom keret */
 }
 
-
+/* Hover effekt */
 .avatar-label:hover {
-  transform: scale(1.05);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-color: #8c7153;
+  /* szín a hover alatt */
 }
 
+/* Avatar kép méretezés */
 .avatar-img {
+  display: block;
   width: 50px;
   height: 50px;
   border-radius: 50%;
   object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
+/* Finom zoom a képen hover alatt */
+.avatar-label:hover .avatar-img {
+  transform: scale(1.05);
+}
+
+
 @media screen and (max-width: 768px) {
-  .admin-container { padding: 1rem; }
-  .admin-header h1 { font-size: 2.5rem; }
-  .search-section { flex-direction: column; align-items: center; }
-  .search-input { width: 100%; max-width: 350px; }
-  .table-scroll-wrapper { max-height: 60vh; }
-  .action-buttons { flex-direction: column; }
-  .action-buttons button { 
-    width: 100%; 
-    margin-bottom: 0.25rem; 
+  .admin-container {
+    padding: 1rem;
+  }
+
+  .admin-header h1 {
+    font-size: 2.5rem;
+  }
+
+  .search-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .search-input {
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .table-scroll-wrapper {
+    max-height: 60vh;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-buttons button {
+    width: 100%;
+    margin-bottom: 0.25rem;
     padding: 0.6rem;
   }
 }
 
 @media screen and (max-width: 480px) {
-  .table-scroll-wrapper { border-width: 2px; }
+  .table-scroll-wrapper {
+    border-width: 2px;
+  }
+
   .admin-table thead th,
-  .admin-table tbody td { 
-    padding: 0.75rem 0.4rem; 
+  .admin-table tbody td {
+    padding: 0.75rem 0.4rem;
     font-size: 0.9rem;
   }
-  .avatar-img { width: 40px; height: 40px; }
+
+  .avatar-img {
+    width: 40px;
+    height: 40px;
+  }
 }

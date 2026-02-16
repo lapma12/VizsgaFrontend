@@ -189,7 +189,6 @@ const AdminPage = () => {
                                 onChange={handleFileChange}
                                 className="file-input"
                               />
-
                               <label htmlFor={`fileInput-${user.id}`} className="avatar-label">
                                 <img
                                   src={editValues.previewUrl || editValues.profilePictureUrl}
