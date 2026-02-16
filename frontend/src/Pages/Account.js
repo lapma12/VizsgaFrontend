@@ -384,6 +384,37 @@ const Settings = ({ resultData }) => {
         setErrorMessage("Username update failed");
       }
     }
+    // PASSWORD update (csak ha van kitöltve)
+    if (oldPassword && newpassword && confirmpassword) {
+
+      if (newpassword !== confirmpassword) {
+        hasError = true;
+        setErrorMessage("New passwords do not match");
+      } else {
+        try {
+          const response = await api.put("https://localhost:7224/api/Auth/me/password", {
+            currentPassword: oldPassword,
+            newPassword: newpassword
+          });
+
+          if (response.data.success) {
+            successMessages.push("Password updated successfully");
+            setOldPassword("");
+            setNewPassword("");
+            setConfirmPassword("");
+          } else {
+            hasError = true;
+            setErrorMessage(response.data.message);
+          }
+
+        } catch (error) {
+          console.error(error);
+          hasError = true;
+          setErrorMessage("Password update failed");
+        }
+      }
+    }
+
 
     if (!hasError && successMessages.length > 0) {
       setSuccessMessage(successMessages.join(" | "));
