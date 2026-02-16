@@ -69,27 +69,57 @@ const AdminPage = () => {
 
   const saveEdit = async (userId) => {
     try {
-      const response = await api.put(`Admin/Users/${userId}/profile`, editValues);
-      if (response.data.result) {
-        fetchUsers();
-        setEditingUser(null);
-        alert(response.message)
+      const formData = new FormData();
+      formData.append("Name", editValues.name);
+      formData.append("Email", editValues.email);
+      formData.append("Bio", editValues.bio);
+      formData.append("UserType", editValues.userType);
+
+      // Csak ha van új fájl, adjuk hozzá
+      if (editValues.profilePictureFile) {
+        formData.append("ProfilePicture", editValues.profilePictureFile);
       }
+
+      const response = await api.put(
+        `Admin/Users/${userId}/profile`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        }
+      );
+      console.log(response);
+      fetchUsers();
+      setEditingUser(null);
 
     } catch (err) {
       console.error("Error saving user:", err);
     }
   };
 
+
+
   const deleteUser = async (userId) => {
-      try {
-        await api.delete(`Admin/Users/${userId}`);
-        fetchUsers();
-        alert("Succesfully delete!!!")
-      } catch (err) {
-        console.error("Error deleting user:", err);
-      }
+    try {
+      await api.delete(`Admin/Users/${userId}`);
+      fetchUsers();
+      alert("Succesfully delete!!!")
+    } catch (err) {
+      console.error("Error deleting user:", err);
+    }
   };
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setEditValues(prev => ({
+      ...prev,
+      profilePictureFile: file,
+      previewUrl: URL.createObjectURL(file)
+    }));
+  };
+
 
   const displayUsers = filteredUsers.slice(0, visibleCount);
 
@@ -147,16 +177,34 @@ const AdminPage = () => {
                   {displayUsers.map((user, index) => {
                     const rowKey = user.id ?? user.name;
                     const isEditing = editingUser === rowKey;
-                    console.log(user);
                     return (
                       <tr key={rowKey}>
                         <td>{index + 1}</td>
                         <td>
-                          <img
-                            src={user.profilePictureUrl}
-                            alt="Avatar"
-                            className="avatar-img"
-                          />
+                          {isEditing ? (
+                            <>
+                              <input
+                                type="file"
+                                id={`fileInput-${user.id}`}
+                                onChange={handleFileChange}
+                                className="file-input"
+                              />
+
+                              <label htmlFor={`fileInput-${user.id}`} className="avatar-label">
+                                <img
+                                  src={editValues.previewUrl || editValues.profilePictureUrl}
+                                  alt="Avatar"
+                                  className="avatar-img"
+                                />
+                              </label>
+                            </>
+                          ) : (
+                            <img
+                              src={user.profilePictureUrl}
+                              alt="Avatar"
+                              className="avatar-img"
+                            />
+                          )}
                         </td>
                         <td>
                           {isEditing ? (

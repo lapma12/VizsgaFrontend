@@ -221,8 +221,7 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
               <button
                 className="confirm-ok-btn"
                 onClick={() => {
-                  if (confirmPassword === "asd")
-                    handleDeleteAccount();
+                  handleDeleteAccount();
                 }}
               >
                 Delete Account

@@ -276,8 +276,30 @@
   background: rgba(239, 68, 68, 0.15);
   border-color: #dc2626;
 }
+.file-input {
+  display: none;
+}
 
-/* Responsive */
+
+.avatar-label {
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+.avatar-label:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+
+.avatar-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 @media screen and (max-width: 768px) {
   .admin-container { padding: 1rem; }
   .admin-header h1 { font-size: 2.5rem; }
