@@ -10,7 +10,6 @@ import {
   Eye,
 } from "lucide-react";
 import api from "../api/api";
-import { PasswordInput } from '../Component/PasswordInput';
 
 const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
   const location = useLocation();
@@ -22,17 +21,19 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
   const [activeTab, setActiveTab] = useState("results");
   const navigate = useNavigate();
 
+  //ALERT 
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+  //ALERT BOXES
   const [logoutConfirm, setLogoutConfirm] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-
+  //DATA
   const [successResult, setSuccesssResult] = useState(false);
   const [resultData, setresultData] = useState(null);
-
 
   useEffect(() => {
     setloginIn(true);
@@ -41,27 +42,45 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
   const handleConfirm = () => {
     setSuccessMessage("");
   };
+  //LOG OUT FROM ACCOUNT
   const handleLogoutClick = () => {
     setLogoutConfirm(true);
   };
-
   const handleLogout = () => {
     localStorage.removeItem("authToken");
     setloginIn(false);
     setLogoutConfirm(false);
     navigate("/login");
   };
+
+
+  //DELETE ACCOUNT
   const handleDeleteClick = () => {
     setDeleteConfirm(true);
   };
-
-  const handleDeleteAccount = () => {
-    console.log("Deleting account...");
-
-    setDeleteConfirm(false);
-    setConfirmPassword("");
+  const handleDeleteAccount = async () => {
+    try {
+      const response = await api.delete("/Users/me");
+      if (response.data.success) {
+        setSuccessMessage(response.data.message);
+        localStorage.removeItem("authToken");
+        setloginIn(false);
+        setDeleteConfirm(false);
+        setConfirmPassword("");
+        setTimeout(() => {
+          navigate("/");
+        }, 1500);
+      } else {
+        setErrorMessage(response.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorMessage("Account deletion failed");
+    }
   };
 
+
+  //PICTURE CHANGE
   const handlePicChange = async (event) => {
     event.preventDefault();
     const file = event.target.files[0];
@@ -78,15 +97,15 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
           },
         }
       );
-      console.log(response);
       setuserDataState(true)
+      console.log(response);
       setSuccessMessage("Profile picture updated!");
     } catch (error) {
       console.error(error);
       setErrorMessage("Profile picture upload failed");
     }
   };
-
+  //ALL DATA TO ACCOUNT
   useEffect(() => {
     setloginIn(true);
     const fetchMe = async () => {
@@ -100,27 +119,6 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
     };
     fetchMe();
   }, [navigate, setloginIn, successMessage]);
-
-  // const deleteAccount = async () => {
-  //   if (!window.confirm("Are you sure you want to delete your account?")) return;
-  //   try {
-  //     const response = await api.delete("/Users/me");
-
-  //     if (response.data.success) {
-  //       setSuccessMessage(response.data.message);
-  //       localStorage.removeItem("authToken");
-  //       setloginIn(false);
-  //       setTimeout(() => {
-  //         navigate("/");
-  //       }, 1500);
-  //     } else {
-  //       setErrorMessage(response.data.message);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     setErrorMessage("Account deletion failed");
-  //   }
-  // };
 
   return (
     <div className="account-page">
@@ -223,9 +221,8 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
               <button
                 className="confirm-ok-btn"
                 onClick={() => {
-                  if (confirmPassword === "asd") {
+                  if (confirmPassword === "asd")
                     handleDeleteAccount();
-                  }
                 }}
               >
                 Delete Account

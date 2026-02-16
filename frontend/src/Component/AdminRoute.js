@@ -10,8 +10,6 @@ const AdminRoute = ({ children }) => {
   try {
     const decoded = jwtDecode(token);
 
-    console.log("JWT DATA:", decoded); // debug
-
     const role =
       decoded.role ||
       decoded.userType ||

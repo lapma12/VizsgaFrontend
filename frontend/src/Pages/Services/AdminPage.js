@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import "../../Styles/AdminPage.css";
 import { useLocation } from "react-router-dom";
-import axios from "axios";
 import api from "../../api/api";
 
 const AdminPage = () => {
@@ -43,7 +42,7 @@ const AdminPage = () => {
       user.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredUsers(filtered);
-    setVisibleCount(10); 
+    setVisibleCount(10);
   };
 
   const loadMoreUsers = () => {
@@ -51,16 +50,13 @@ const AdminPage = () => {
   };
 
   const startEdit = (user) => {
-    // ha nincs id a scoreboard-válaszban, használjuk a nevet kulcsnak
     const key = user.id ?? user.name;
     setEditingUser(key);
     setEditValues({
       name: user.name,
-      totalScore: user.totalScore,
-      totalXp: user.totalXp,
-      userType: user.userType,
-      bio: user.bio,           
-      email: user.email        
+      email: user.email,
+      bio: user.bio,
+      profilePictureUrl: user.profilePictureUrl
     });
   };
 
@@ -73,23 +69,26 @@ const AdminPage = () => {
 
   const saveEdit = async (userId) => {
     try {
-      await axios.put(`https://dongesz.com/api/Users/${userId}`, editValues);
-      fetchUsers(); 
-      setEditingUser(null);
+      const response = await api.put(`Admin/Users/${userId}/profile`, editValues);
+      if (response.data.result) {
+        fetchUsers();
+        setEditingUser(null);
+        alert(response.message)
+      }
+
     } catch (err) {
       console.error("Error saving user:", err);
     }
   };
 
   const deleteUser = async (userId) => {
-    if (window.confirm("Are you sure you want to delete this user?")) {
       try {
-        await api.delete(`https://dongesz.com/api/Admin/Users/${userId}`);
-        fetchUsers(); 
+        await api.delete(`Admin/Users/${userId}`);
+        fetchUsers();
+        alert("Succesfully delete!!!")
       } catch (err) {
         console.error("Error deleting user:", err);
       }
-    }
   };
 
   const displayUsers = filteredUsers.slice(0, visibleCount);
@@ -148,102 +147,103 @@ const AdminPage = () => {
                   {displayUsers.map((user, index) => {
                     const rowKey = user.id ?? user.name;
                     const isEditing = editingUser === rowKey;
+                    console.log(user);
                     return (
-                  <tr key={rowKey}>
-                      <td>{index + 1}</td>
-                      <td>
-                        <img
-                          src={user.profilePictureUrl}
-                          alt="Avatar"
-                          className="avatar-img"
-                        />
-                      </td>
-                      <td>
-                        {isEditing ? (
-                          <input
-                            value={editValues.name}
-                            onChange={(e) => handleEditChange('name', e.target.value)}
-                            className="values"
+                      <tr key={rowKey}>
+                        <td>{index + 1}</td>
+                        <td>
+                          <img
+                            src={user.profilePictureUrl}
+                            alt="Avatar"
+                            className="avatar-img"
                           />
-                        ) : (
-                          user.name
-                        )}
-                      </td>
-                      <td>
-                        {isEditing ? (
-                          <input
-                            type="text"
-                            value={editValues.email}
-                            onChange={(e) => handleEditChange('email', e.target.value)}
-                            className="values"
-                          />
-                        ) : (
-                          <span className="values">{user.email}</span>
-                        )}
-                      </td>
-                      <td>
-                        {isEditing ? (
-                          <input
-                            type="text"
-                            value={editValues.bio}
-                            onChange={(e) => handleEditChange('bio', e.target.value)}
-                            className="values"
-                          />
-                        ) : (
-                          <span className="values">{user.bio}</span>
-                        )}
-                      </td>
-                      <td>
-                        {editingUser === user.id ? (
-                          <select
-                            value={editValues.userType || user.userType}
-                            onChange={(e) => handleEditChange('userType', e.target.value)}
-                            className="edit-input"
-                          >
-                            <option value="">Choose</option>
-                            <option value="Admin">Admin</option>
-                            <option value="User">User</option>
-                          </select>
-                        ) : (
-                          <span className="xp-value">{user.userType}</span>
-                        )}
-                      </td>
-                      <td className="action-buttons">
-                        {isEditing ? (
-                          <>
-                            <button
-                              className="save-btn"
-                              onClick={() => saveEdit(user.id)}
+                        </td>
+                        <td>
+                          {isEditing ? (
+                            <input
+                              value={editValues.name}
+                              onChange={(e) => handleEditChange('name', e.target.value)}
+                              className="values"
+                            />
+                          ) : (
+                            user.name
+                          )}
+                        </td>
+                        <td>
+                          {isEditing ? (
+                            <input
+                              type="text"
+                              value={editValues.email}
+                              onChange={(e) => handleEditChange('email', e.target.value)}
+                              className="values"
+                            />
+                          ) : (
+                            <span className="values">{user.email}</span>
+                          )}
+                        </td>
+                        <td>
+                          {isEditing ? (
+                            <input
+                              type="text"
+                              value={editValues.bio}
+                              onChange={(e) => handleEditChange('bio', e.target.value)}
+                              className="values"
+                            />
+                          ) : (
+                            <span className="values">{user.bio}</span>
+                          )}
+                        </td>
+                        <td>
+                          {editingUser === user.id ? (
+                            <select
+                              value={editValues.userType || user.userType}
+                              onChange={(e) => handleEditChange('userType', e.target.value)}
+                              className="edit-input"
                             >
-                              💾 Save
-                            </button>
-                            <button
-                              className="cancel-btn"
-                              onClick={() => setEditingUser(null)}
-                            >
-                              ❌ Cancel
-                            </button>
-                          </>
-                        ) : (
-                          <>
-                            <button
-                              className="edit-btn"
-                              onClick={() => startEdit(user)}
-                              title="Edit user"
-                            >
-                              ✏️ Edit
-                            </button>
-                            <button
-                              className="delete-btn"
-                              onClick={() => deleteUser(user.id)}
-                              title="Delete user"
-                            >
-                              🗑️ Delete
-                            </button>
-                          </>
-                        )}
-                      </td>
-                    </tr>
+                              <option value="">Choose</option>
+                              <option value="Admin">Admin</option>
+                              <option value="User">User</option>
+                            </select>
+                          ) : (
+                            <span className="xp-value">{user.userType}</span>
+                          )}
+                        </td>
+                        <td className="action-buttons">
+                          {isEditing ? (
+                            <>
+                              <button
+                                className="save-btn"
+                                onClick={() => saveEdit(user.id)}
+                              >
+                                💾 Save
+                              </button>
+                              <button
+                                className="cancel-btn"
+                                onClick={() => setEditingUser(null)}
+                              >
+                                ❌ Cancel
+                              </button>
+                            </>
+                          ) : (
+                            <>
+                              <button
+                                className="edit-btn"
+                                onClick={() => startEdit(user)}
+                                title="Edit user"
+                              >
+                                ✏️ Edit
+                              </button>
+                              <button
+                                className="delete-btn"
+                                onClick={() => deleteUser(user.id)}
+                                title="Delete user"
+                              >
+                                🗑️ Delete
+                              </button>
+                            </>
+                          )}
+                        </td>
+                      </tr>
                     );
                   })}
                 </tbody>

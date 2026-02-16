@@ -54,7 +54,7 @@ export default function AuthPage({ setshowAdminPanel }) {
         const decoded = jwtDecode(token);
         let decodeRole = decoded.role;
         setErrorMessage("");
-        if (decodeRole === "Admin") {
+        if (decodeRole.includes("Admin")) {
           setTimeout(() => navigate("/admin"), 2000);
           setshowAdminPanel(true)
         }
