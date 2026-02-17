@@ -14,7 +14,7 @@ export default function AuthPage({ setshowAdminPanel }) {
 
   const location = useLocation();
   if (location.pathname === "/login") {
-    document.title = "auth";
+    document.title = "Sign Up";
   }
 
   // LOGIN STATE

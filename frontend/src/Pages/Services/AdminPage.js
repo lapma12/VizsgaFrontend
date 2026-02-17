@@ -162,22 +162,26 @@ const AdminPage = () => {
         onCancel={closeConfirm}
       />
 
-      <div className="admin-header">
-        <h1>Admin Panel - All Users ({users.length} total)</h1>
-      </div>
+      <div className="admin-panel-card">
+        <div className="admin-header">
+          <h1>Admin Panel</h1>
+          <p className="admin-subtitle">
+            Manage all users easily – total users: <span>{users.length}</span>
+          </p>
+        </div>
 
-      <div className="search-section">
-        <input
-          type="text"
-          className="search-input"
-          placeholder="Search by username..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <button className="search-btn" onClick={handleSearch}>
-          Search
-        </button>
-      </div>
+        <div className="search-section">
+          <input
+            type="text"
+            className="search-input"
+            placeholder="Search by username..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <button className="search-btn" onClick={handleSearch}>
+            Search
+          </button>
+        </div>
 
       <div className="admin-table-container">
         {loading ? (
@@ -334,18 +338,19 @@ const AdminPage = () => {
               </table>
             </div>
 
-            {visibleCount < filteredUsers.length && (
-              <div className="load-more-section">
-                <button
-                  className="load-more-btn"
-                  onClick={loadMoreUsers}
-                >
-                  Load More (+10 users)
-                </button>
-              </div>
-            )}
-          </>
-        )}
+              {visibleCount < filteredUsers.length && (
+                <div className="load-more-section">
+                  <button
+                    className="load-more-btn"
+                    onClick={loadMoreUsers}
+                  >
+                    Load More (+10 users)
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

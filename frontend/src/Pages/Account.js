@@ -15,9 +15,7 @@ import ConfirmModal from "../Component/ConfirmModal";
 const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
   const location = useLocation();
 
-  if (location.pathname === "/account") {
-    document.title = "Account";
-  }
+  
 
   const [activeTab, setActiveTab] = useState("results");
   const navigate = useNavigate();
@@ -36,6 +34,10 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
   const [successResult, setSuccesssResult] = useState(false);
   const [resultData, setresultData] = useState(null);
 
+  if (location.pathname === "/account") {
+    document.title = "My Account -> " + resultData?.name;
+  }
+  
   useEffect(() => {
     setloginIn(true);
   }, [setloginIn])

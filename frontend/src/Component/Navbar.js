@@ -10,7 +10,7 @@ import { BsTable } from "react-icons/bs";
 import { MdAccountCircle } from "react-icons/md";
 import { IoLogoGameControllerB } from "react-icons/io";
 import { RiTwitterXFill } from "react-icons/ri";
-import { motion } from "framer-motion";
+import ConfirmModal from "./ConfirmModal";
 
 import "../Styles/Navbar.css";
 import api from "../api/api";
@@ -26,15 +26,13 @@ function Navbar({ loginIn, setloginIn, userDataState, showAdminpanel, setshowAdm
   const [picture, setPicture] = useState("")
 
   // ALERTS
-  const [confirmMessage, setConfirmMessage] = useState("");
-  const [onConfirm, setOnConfirm] = useState(null);
+  const [logoutConfirm, setLogoutConfirm] = useState(false);
 
   const navigate = useNavigate();
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const handleLogoutClick = () => {
-    setConfirmMessage("Do you want to Log out!");
-    setOnConfirm(() => handleLogout);
+    setLogoutConfirm(true);
   };
 
   const handleLogout = () => {
@@ -42,7 +40,7 @@ function Navbar({ loginIn, setloginIn, userDataState, showAdminpanel, setshowAdm
     setloginIn(false);
     setIsOpen(false);
     setshowAdminPanel(false);
-    setConfirmMessage("");
+    setLogoutConfirm(false);
     navigate("/login");
   };
 
@@ -82,33 +80,14 @@ function Navbar({ loginIn, setloginIn, userDataState, showAdminpanel, setshowAdm
 
   return (
     <header className="navbar">
-      {confirmMessage && (
-        <motion.div
-          className="confirm-alert"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-        >
-          <div>{confirmMessage}</div>
-
-          <div className="confirm-buttons">
-            <button
-              className="confirm-ok-btn"
-              onClick={() => {
-                if (onConfirm) onConfirm();
-              }}
-            >
-              OK
-            </button>
-
-            <button
-              className="confirm-cancel-btn"
-              onClick={() => setConfirmMessage("")}
-            >
-              Cancel
-            </button>
-          </div>
-        </motion.div>
-      )}
+      <ConfirmModal
+        open={logoutConfirm}
+        message="Do you want to log out?"
+        confirmLabel="Log out"
+        cancelLabel="Cancel"
+        onConfirm={handleLogout}
+        onCancel={() => setLogoutConfirm(false)}
+      />
 
 
       <div className="navbar-left">
