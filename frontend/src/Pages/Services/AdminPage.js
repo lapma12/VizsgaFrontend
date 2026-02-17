@@ -3,6 +3,8 @@ import ClipLoader from "react-spinners/ClipLoader";
 import "../../Styles/AdminPage.css";
 import { useLocation } from "react-router-dom";
 import api from "../../api/api";
+import Toast from "../../Component/Toast";
+import ConfirmModal from "../../Component/ConfirmModal";
 
 const AdminPage = () => {
   const location = useLocation();
@@ -19,6 +21,9 @@ const AdminPage = () => {
   const [editingUser, setEditingUser] = useState(null);
   const [editValues, setEditValues] = useState({});
   const [visibleCount, setVisibleCount] = useState(10);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [confirmModal, setConfirmModal] = useState({ open: false, message: "", onConfirm: null });
 
   useEffect(() => {
     fetchUsers();
@@ -92,22 +97,39 @@ const AdminPage = () => {
       console.log(response);
       fetchUsers();
       setEditingUser(null);
-
+      setSuccessMessage("User saved successfully!");
+      setErrorMessage("");
     } catch (err) {
       console.error("Error saving user:", err);
+      setErrorMessage(err.response?.data?.message || "Failed to save user.");
+      setSuccessMessage("");
     }
   };
 
 
 
+  const openConfirm = (message, onConfirm) => {
+    setConfirmModal({ open: true, message, onConfirm });
+  };
+
+  const closeConfirm = () => {
+    setConfirmModal({ open: false, message: "", onConfirm: null });
+  };
+
   const deleteUser = async (userId) => {
-    try {
-      await api.delete(`Admin/Users/${userId}`);
-      fetchUsers();
-      alert("Succesfully delete!!!")
-    } catch (err) {
-      console.error("Error deleting user:", err);
-    }
+    openConfirm("Are you sure you want to delete this user?", async () => {
+      closeConfirm();
+      try {
+        await api.delete(`Admin/Users/${userId}`);
+        fetchUsers();
+        setSuccessMessage("User deleted successfully!");
+        setErrorMessage("");
+      } catch (err) {
+        console.error("Error deleting user:", err);
+        setErrorMessage(err.response?.data?.message || "Failed to delete user.");
+        setSuccessMessage("");
+      }
+    });
   };
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -125,6 +147,21 @@ const AdminPage = () => {
 
   return (
     <div className="admin-container">
+      <Toast type="success" message={successMessage} onClose={() => setSuccessMessage("")} />
+      <Toast type="error" message={errorMessage} onClose={() => setErrorMessage("")} />
+
+      <ConfirmModal
+        open={confirmModal.open}
+        message={confirmModal.message}
+        confirmLabel="Delete"
+        cancelLabel="Cancel"
+        confirmDanger
+        onConfirm={() => {
+          if (confirmModal.onConfirm) confirmModal.onConfirm();
+        }}
+        onCancel={closeConfirm}
+      />
+
       <div className="admin-header">
         <h1>Admin Panel - All Users ({users.length} total)</h1>
       </div>
@@ -241,7 +278,7 @@ const AdminPage = () => {
                           )}
                         </td>
                         <td>
-                          {editingUser === user.id ? (
+                          {isEditing ? (
                             <select
                               value={editValues.userType || user.userType}
                               onChange={(e) => handleEditChange('userType', e.target.value)}

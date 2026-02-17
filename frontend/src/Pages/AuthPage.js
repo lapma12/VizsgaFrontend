@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import axios from "axios";
 import "../Styles/AuthRegisterLogin.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import PasswordInput from "../Component/PasswordInput"
+import PasswordInput from "../Component/PasswordInput";
+import Toast from "../Component/Toast";
 import { jwtDecode } from "jwt-decode";
 
 
@@ -117,34 +118,8 @@ export default function AuthPage({ setshowAdminPanel }) {
 
   return (
     <div className="register-page">
-      {successMessage && (
-        <motion.div
-          className="success-alert"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-        >
-          <div dangerouslySetInnerHTML={{ __html: successMessage }} />
-          <button className="confirm-btn" onClick={() => setSuccessMessage("")}>
-            OK
-          </button>
-        </motion.div>
-      )}
-
-      {errorMessage && (
-        <motion.div
-          className="error-alert"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-        >
-          <div dangerouslySetInnerHTML={{ __html: errorMessage }} />
-          <button
-            className="error-confirm-btn"
-            onClick={() => setErrorMessage("")}
-          >
-            OK
-          </button>
-        </motion.div>
-      )}
+      <Toast type="success" message={successMessage} onClose={() => setSuccessMessage("")} html />
+      <Toast type="error" message={errorMessage} onClose={() => setErrorMessage("")} html />
 
       <motion.div
         className="auth-card"

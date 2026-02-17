@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import "../Styles/Account.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -10,6 +9,8 @@ import {
   Eye,
 } from "lucide-react";
 import api from "../api/api";
+import Toast from "../Component/Toast";
+import ConfirmModal from "../Component/ConfirmModal";
 
 const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
   const location = useLocation();
@@ -122,125 +123,53 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
 
   return (
     <div className="account-page">
-      {successMessage && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="success-alert"
-        >
-          <>
-            <div
-              className="message"
-              dangerouslySetInnerHTML={{ __html: successMessage }}
-            />
-            <button className="confirm-btn" onClick={handleConfirm}>
-              OK
-            </button>
-          </>
-        </motion.div>
-      )}
-      {errorMessage && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="error-alert"
-        >
-          <div
-            className="message"
-            dangerouslySetInnerHTML={{ __html: errorMessage }}
+      <Toast type="success" message={successMessage} onClose={handleConfirm} html />
+      <Toast type="error" message={errorMessage} onClose={() => setErrorMessage("")} html />
+
+      <ConfirmModal
+        open={logoutConfirm}
+        message="Do you want to log out?"
+        confirmLabel="Log out"
+        cancelLabel="Cancel"
+        onConfirm={handleLogout}
+        onCancel={() => setLogoutConfirm(false)}
+      />
+
+      <ConfirmModal
+        open={deleteConfirm}
+        message="Enter your password to delete your account"
+        confirmLabel="Delete Account"
+        cancelLabel="Cancel"
+        confirmDanger
+        onConfirm={handleDeleteAccount}
+        onCancel={() => {
+          setDeleteConfirm(false);
+          setConfirmPassword("");
+        }}
+      >
+        <div style={{ position: "relative", marginBottom: "0.5rem" }}>
+          <input
+            type={showPassword ? "text" : "password"}
+            value={confirmPassword}
+            placeholder="Enter your password"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            style={{ width: "100%", padding: "0.5rem 2.5rem 0.5rem 0.75rem", borderRadius: "8px", border: "2px solid #8c7153" }}
           />
-          <button
-            className="error-confirm-btn"
-            onClick={() => setErrorMessage("")}
+          <span
+            onClick={() => setShowPassword(!showPassword)}
+            style={{
+              position: "absolute",
+              right: "0.75rem",
+              top: "50%",
+              transform: "translateY(-50%)",
+              cursor: "pointer",
+              color: "#444",
+            }}
           >
-            OK
-          </button>
-        </motion.div>
-      )}
-      {logoutConfirm && (
-        <div className="confirm-overlay">
-          <motion.div
-            className="confirm-alert"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            <div style={{ marginBottom: "1.5rem", fontSize: "1.2rem" }}>
-              Do you want to log out?
-            </div>
-
-            <div className="confirm-buttons">
-              <button className="confirm-ok-btn" onClick={handleLogout}>
-                Log out
-              </button>
-
-              <button
-                className="confirm-cancel-btn"
-                onClick={() => setLogoutConfirm(false)}
-              >
-                Cancel
-              </button>
-            </div>
-          </motion.div>
+            {showPassword ? <EyeOff size={22} /> : <Eye size={22} />}
+          </span>
         </div>
-      )}
-      {deleteConfirm && (
-        <div className="confirm-overlay">
-          <motion.div
-            className="confirm-alert"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            <div style={{ marginBottom: "1.5rem", fontSize: "1.2rem" }}>
-              Enter your password to delete your account
-            </div>
-
-            <div style={{ position: "relative", marginBottom: "1rem" }}>
-              <input
-                type={showPassword ? "text" : "password"}
-                value={confirmPassword}
-                placeholder="Enter your password"
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-
-              <span
-                onClick={() => setShowPassword(!showPassword)}
-                style={{
-                  position: "absolute",
-                  right: "1rem",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  cursor: "pointer",
-                  color: "#444",
-                }}
-              >
-                {showPassword ? <EyeOff size={22} /> : <Eye size={22} />}
-              </span>
-            </div>
-
-            <div className="confirm-buttons">
-              <button
-                className="confirm-ok-btn"
-                onClick={() => {
-                  handleDeleteAccount();
-                }}
-              >
-                Delete Account
-              </button>
-
-              <button
-                className="confirm-cancel-btn"
-                onClick={() => {
-                  setDeleteConfirm(false);
-                  setConfirmPassword("");
-                }}
-              >
-                Cancel
-              </button>
-            </div>
-          </motion.div>
-        </div>
-      )}
-
+      </ConfirmModal>
 
       <div className="account-header">
         {resultData && (
@@ -426,41 +355,9 @@ const Settings = ({ resultData }) => {
 
   return (
     <div className="settings-section">
-      {successMessage && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="success-alert"
-        >
-          <>
-            <div
-              className="message"
-              dangerouslySetInnerHTML={{ __html: successMessage }}
-            />
-            <button className="confirm-btn" onClick={handleConfirm}>
-              OK
-            </button>
-          </>
-        </motion.div>
-      )}
-      {errorMessage && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="error-alert"
-        >
-          <div
-            className="message"
-            dangerouslySetInnerHTML={{ __html: errorMessage }}
-          />
-          <button
-            className="error-confirm-btn"
-            onClick={() => setErrorMessage("")}
-          >
-            OK
-          </button>
-        </motion.div>
-      )}
+      <Toast type="success" message={successMessage} onClose={handleConfirm} html />
+      <Toast type="error" message={errorMessage} onClose={() => setErrorMessage("")} html />
+
       <h2>Account Settings</h2>
       <form onSubmit={handleSubmit} className="settings-form">
         <div className="settings-columns">

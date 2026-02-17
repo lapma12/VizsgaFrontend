@@ -1,0 +1,143 @@
+/* Közös message box stílusok – téma színek: #bbaa80, #8c7153, #584836, #2d1b14 */
+
+/* ---- Toast (success / error) ---- */
+.shared-toast {
+  position: fixed;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+  max-width: 90vw;
+  min-width: 280px;
+  border: 3px solid;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.shared-toast--success {
+  background: linear-gradient(135deg, #bbaa80, #a78b68);
+  color: #2d1b14;
+  border-color: #8c7153;
+}
+
+.shared-toast--error {
+  background: linear-gradient(135deg, #c9a86c, #bbaa80);
+  color: #2d1b14;
+  border-color: #8c7153;
+}
+
+.shared-toast__text {
+  flex: 1;
+}
+
+.shared-toast__text .message {
+  margin: 0;
+}
+
+.shared-toast__btn {
+  padding: 0.5rem 1.25rem;
+  border-radius: 8px;
+  border: 2px solid #584836;
+  background: #8c7153;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.shared-toast__btn:hover {
+  background: #a78b68;
+  transform: translateY(-1px);
+}
+
+/* ---- Confirm modal ---- */
+.shared-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(45, 27, 20, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+  padding: 1rem;
+}
+
+.shared-modal {
+  background: linear-gradient(135deg, #f3e3c3, #e8d8b4);
+  border: 4px solid #8c7153;
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+.shared-modal__message {
+  color: #2d1b14;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.shared-modal__body {
+  margin-bottom: 1.5rem;
+}
+
+.shared-modal__actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.shared-modal__btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid;
+  font-size: 1rem;
+}
+
+.shared-modal__btn--cancel {
+  background: #bbaa80;
+  color: #2d1b14;
+  border-color: #8c7153;
+}
+
+.shared-modal__btn--cancel:hover {
+  background: #a78b68;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.shared-modal__btn--confirm {
+  background: #8c7153;
+  color: #fff;
+  border-color: #584836;
+}
+
+.shared-modal__btn--confirm:hover {
+  background: #a78b68;
+  transform: translateY(-2px);
+}
+
+.shared-modal__btn--danger {
+  background: #8c7153;
+  color: #fff;
+  border-color: #584836;
+}
+
+.shared-modal__btn--danger:hover {
+  background: #a78b68;
+  transform: translateY(-2px);
+}
