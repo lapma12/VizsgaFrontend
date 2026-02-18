@@ -280,7 +280,7 @@ const Settings = ({ resultData }) => {
     let hasError = false;
 
     // BIO update (csak ha változott)
-    if (bio !== resultData.bio) {
+    if (bio !== resultData.bio && bio) {
       try {
         const response = await api.put("Users/me/bio", { bio });
 
@@ -298,7 +298,7 @@ const Settings = ({ resultData }) => {
     }
 
     // USERNAME update (csak ha változott)
-    if (username !== resultData.name) {
+    if (username !== resultData.name && username) {
       try {
         const response = await api.put("Users/me/name", { name: username });
 

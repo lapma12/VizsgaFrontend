@@ -1,49 +1,86 @@
-
 .game-page {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80vh;
+  min-height: 100vh;
   width: 100%;
-  padding: 2rem;
-  overflow: hidden;
-  background:url("../Img/GameBackground.png") ;
+  padding: 4rem 2rem;
+  background: url("../Img/GameBackground.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
 }
 
+/* ===== Main Container ===== */
 .game-container {
-  background: linear-gradient(
-  135deg,
-  rgba(232, 216, 180, 0.6),
-  rgba(215, 193, 149, 0.6)
-);
+  background: linear-gradient(135deg,
+      rgba(232, 216, 180, 0.6),
+      rgba(215, 193, 149, 0.6));
   padding: 3rem;
   border-radius: 1.5rem;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-  max-width: 700px;
-  width: 90%;
+  max-width: 900px;
+  width: 100%;
   text-align: center;
   color: #fff;
-  backdrop-filter: blur(5px); /* finom elmosódás a háttérképen */
-  border: 2px solid rgba(255, 255, 255, 0.2); /* kis “üveg” hatás */
+  backdrop-filter: blur(6px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
-
+/* ===== Title ===== */
 .game-title {
   font-family: "MedievalSharp", cursive;
-  font-size: 4rem;  
+  font-size: 4rem;
   color: var(--accentDark);
   text-shadow: 2px 2px 0 var(--highlight);
   margin-bottom: 1rem;
 }
 
+/* ===== Text ===== */
 .game-description {
   font-size: 1rem;
   margin-bottom: 2rem;
   color: #fff;
   line-height: 1.6;
+}
+
+/* ===== Tutorial Section ===== */
+.tutorial-section {
+  margin: 5rem 1;
+  margin-bottom: 2rem;
+}
+
+.tutorial-title {
+  font-family: "MedievalSharp", cursive;
+  font-size: 2rem;
+  color: var(--accentDark);
+  margin-bottom: 1rem;
+}
+
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  /* 16:9 */
+  height: 0;
+  overflow: hidden;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  border: 3px solid var(--accentDark);
+}
+
+.video-wrapper iframe,
+.video-wrapper video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* ===== Download Section ===== */
+.download-section {
+  margin-top: 2rem;
 }
 
 .download-button {
@@ -65,21 +102,28 @@
   background-color: #a78b68;
   transform: translateY(-2px);
 }
-.download-button:active{
+
+.download-button:active {
   background-color: #705a3a;
   transform: translateY(0);
 }
-@media (max-width: 600px) {
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
   .game-title {
     font-size: 2.5rem;
   }
 
+  .tutorial-title {
+    font-size: 1.5rem;
+  }
+
   .download-button {
-    padding: 10px 12px;
-  font-size: 1rem;
+    padding: 10px 16px;
+    font-size: 1rem;
   }
 
   .game-description {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 }
