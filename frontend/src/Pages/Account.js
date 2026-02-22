@@ -18,7 +18,7 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
   const [activeTab, setActiveTab] = useState("results");
   const navigate = useNavigate();
 
-  //ALERT 
+  //ALERT
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -35,10 +35,10 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
   if (location.pathname === "/account") {
     document.title = "My Account -> " + resultData?.name;
   }
-  
+
   useEffect(() => {
     setloginIn(true);
-  }, [setloginIn])
+  }, [setloginIn]);
 
   const handleConfirm = () => {
     setSuccessMessage("");
@@ -58,28 +58,41 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
   const handleDeleteClick = () => {
     setDeleteConfirm(true);
   };
-  const handleDeleteAccount = async () => {
+  const handleDeleteAccount = async (event) => {
+    event.preventDefault();
     try {
-      const response = await api.delete("/main/Users/me/");
-      if (response.data.success) {
-        setSuccessMessage(response.data.message);
-        localStorage.removeItem("authToken");
-        setloginIn(false);
-        setDeleteConfirm(false);
-        setConfirmPassword("");
-        setTimeout(() => {
-          navigate("/");
-        }, 1500);
+      const passCheck = await api.post("/auth/Auth/me/checkpassword", {
+        password: confirmPassword,
+      });
+      console.log("passCheck:", passCheck.data);
+      console.log("success value:", passCheck.data.success);
+      console.log("type:", typeof passCheck.data.success);
+      if (passCheck.data.success) {
+        const response = await api.delete("/main/Users/me/");
+        console.log(response);
+        
+        if (response.data.success) {
+          setSuccessMessage(response.data.message);
+          localStorage.removeItem("authToken");
+          setloginIn(false);
+          setDeleteConfirm(false);
+          setConfirmPassword("");
+          setTimeout(() => {
+            navigate("/");
+          }, 1500);
+        }
       } else {
-        setErrorMessage(response.data.message);
+        setErrorMessage("Password is wrong!");
       }
     } catch (error) {
-      console.error(error);
-      setErrorMessage("Account deletion failed");
+      if (confirmPassword === "") {
+        setErrorMessage("Fill the gap!");
+      } else {
+        console.error(error);
+        setErrorMessage("Account deletion failed");
+      }
     }
   };
-
-
   //PICTURE CHANGE
   const handlePicChange = async (event) => {
     event.preventDefault();
@@ -95,9 +108,9 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-        }
+        },
       );
-      setuserDataState(true)
+      setuserDataState(true);
       console.log(response);
       setSuccessMessage("Profile picture updated!");
     } catch (error) {
@@ -122,8 +135,18 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
 
   return (
     <div className="account-page">
-      <Toast type="success" message={successMessage} onClose={handleConfirm} html />
-      <Toast type="error" message={errorMessage} onClose={() => setErrorMessage("")} html />
+      <Toast
+        type="success"
+        message={successMessage}
+        onClose={handleConfirm}
+        html
+      />
+      <Toast
+        type="error"
+        message={errorMessage}
+        onClose={() => setErrorMessage("")}
+        html
+      />
 
       <ConfirmModal
         open={logoutConfirm}
@@ -152,7 +175,12 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
             value={confirmPassword}
             placeholder="Enter your password"
             onChange={(e) => setConfirmPassword(e.target.value)}
-            style={{ width: "100%", padding: "0.5rem 2.5rem 0.5rem 0.75rem", borderRadius: "8px", border: "2px solid #8c7153" }}
+            style={{
+              width: "100%",
+              padding: "0.5rem 2.5rem 0.5rem 0.75rem",
+              borderRadius: "8px",
+              border: "2px solid #8c7153",
+            }}
           />
           <span
             onClick={() => setShowPassword(!showPassword)}
@@ -195,7 +223,10 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
             Details : {successResult ? resultData.bio : ""}
           </p>
           <p className="account-subtitle">
-            Account is created at : {successResult ? new Date(resultData.createdAt).toISOString().split("T")[0] : ""}
+            Account is created at :{" "}
+            {successResult
+              ? new Date(resultData.createdAt).toISOString().split("T")[0]
+              : ""}
           </p>
 
           {/* Rejtett file input */}
@@ -223,19 +254,32 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
         >
           <CogIcon size={18} /> Settings
         </button>
-
       </div>
 
       <div className="account-content">
-        {activeTab === "results" && <Results resultData={resultData} successResult={successResult} />}
-        {activeTab === "settings" && <Settings resultData={resultData} successResult={successResult} />}
+        {activeTab === "results" && (
+          <Results resultData={resultData} successResult={successResult} />
+        )}
+        {activeTab === "settings" && (
+          <Settings resultData={resultData} successResult={successResult} />
+        )}
       </div>
 
       <div className="account-footer">
-        <button className="logout-btn" onClick={() => { handleLogoutClick() }}>
+        <button
+          className="logout-btn"
+          onClick={() => {
+            handleLogoutClick();
+          }}
+        >
           Log out
         </button>
-        <button className="delete-btn" onClick={() => { handleDeleteClick() }}>
+        <button
+          className="delete-btn"
+          onClick={() => {
+            handleDeleteClick();
+          }}
+        >
           <Trash2 size={18} /> Delete Account
         </button>
       </div>
@@ -276,7 +320,7 @@ const Settings = ({ resultData }) => {
     let successMessages = [];
     let hasError = false;
 
-    // BIO update 
+    // BIO update
     if (bio !== resultData.bio && bio) {
       try {
         const response = await api.put("/main/Users/me/bio", { bio });
@@ -294,10 +338,12 @@ const Settings = ({ resultData }) => {
       }
     }
 
-    // USERNAME update 
+    // USERNAME update
     if (username !== resultData.name && username) {
       try {
-        const response = await api.put("/main/Users/me/name", { name: username });
+        const response = await api.put("/main/Users/me/name", {
+          name: username,
+        });
 
         if (response.data.success) {
           successMessages.push("Username updated successfully");
@@ -311,9 +357,8 @@ const Settings = ({ resultData }) => {
         setErrorMessage("Username update failed");
       }
     }
-    // PASSWORD update 
+    // PASSWORD update
     if (oldPassword && newpassword && confirmpassword) {
-
       if (newpassword !== confirmpassword) {
         hasError = true;
         setErrorMessage("New passwords do not match");
@@ -321,7 +366,7 @@ const Settings = ({ resultData }) => {
         try {
           const response = await api.put("/auth/Auth/me/password", {
             currentPassword: oldPassword,
-            newPassword: newpassword
+            newPassword: newpassword,
           });
 
           if (response.data.success) {
@@ -333,7 +378,6 @@ const Settings = ({ resultData }) => {
             hasError = true;
             setErrorMessage(response.data.message);
           }
-
         } catch (error) {
           console.error(error);
           hasError = true;
@@ -341,7 +385,6 @@ const Settings = ({ resultData }) => {
         }
       }
     }
-
 
     if (!hasError && successMessages.length > 0) {
       setSuccessMessage(successMessages.join(" | "));
@@ -351,18 +394,29 @@ const Settings = ({ resultData }) => {
     }
   };
 
-
   return (
     <div className="settings-section">
-      <Toast type="success" message={successMessage} onClose={handleConfirm} html />
-      <Toast type="error" message={errorMessage} onClose={() => setErrorMessage("")} html />
+      <Toast
+        type="success"
+        message={successMessage}
+        onClose={handleConfirm}
+        html
+      />
+      <Toast
+        type="error"
+        message={errorMessage}
+        onClose={() => setErrorMessage("")}
+        html
+      />
 
       <h2>Account Settings</h2>
       <form onSubmit={handleSubmit} className="settings-form">
         <div className="settings-columns">
           <div className="settings-column">
             <h3>Username</h3>
-            <label className="current-username">Current username:   {resultData.name}</label>
+            <label className="current-username">
+              Current username: {resultData.name}
+            </label>
             <input
               type="text"
               value={username}

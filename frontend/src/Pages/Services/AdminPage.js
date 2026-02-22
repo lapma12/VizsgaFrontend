@@ -210,7 +210,6 @@ const AdminPage = () => {
                     <th>Username</th>
                     <th>Email</th>
                     <th>Bio</th>
-                    <th>Type</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -279,21 +278,6 @@ const AdminPage = () => {
                             />
                           ) : (
                             <span className="values">{user.bio}</span>
-                          )}
-                        </td>
-                        <td>
-                          {isEditing ? (
-                            <select
-                              value={editValues.userType || user.userType}
-                              onChange={(e) => handleEditChange('userType', e.target.value)}
-                              className="edit-input"
-                            >
-                              <option value="">Choose</option>
-                              <option value="Admin">Admin</option>
-                              <option value="User">User</option>
-                            </select>
-                          ) : (
-                            <span className="xp-value">{user.userType}</span>
                           )}
                         </td>
                         <td className="action-buttons">
