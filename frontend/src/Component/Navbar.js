@@ -63,7 +63,7 @@ function Navbar({ loginIn, setloginIn, userDataState, showAdminpanel, setshowAdm
         return;
       }
       try {
-        const res = await api.get("https://dongesz.com/api/Users/me/result");
+        const res = await api.get("/main/Users/me/result");
         setSuccesssResult(true);
         setresultData(res.data.result);
         setPicture(res.data.result.profilePictureUrl);

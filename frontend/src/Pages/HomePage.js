@@ -19,7 +19,7 @@ const Homepage = () => {
     const fetchPlayerCount = async () => {
       try {
         const response = await axios.get(
-          "https://dongesz.com/api/Users/count"
+          "https://dongesz.com/api/main/Users/playerCount"
         );
         setCount(response.data);
       } catch (error) {

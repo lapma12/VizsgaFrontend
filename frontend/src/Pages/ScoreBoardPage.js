@@ -22,7 +22,7 @@ const Scoreboard = () => {
     const fetchScoreboardPlayer = async () => {
       try {
         const response = await axios.get(
-          "https://dongesz.com/api/Users/scoreboard"
+          "https://dongesz.com/api/main/Users/leaderboard"
         );
         setScores(response.data.result);
         setFilteredScores(response.data.result);

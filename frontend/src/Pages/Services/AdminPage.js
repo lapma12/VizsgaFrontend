@@ -31,7 +31,7 @@ const AdminPage = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await api.get("https://dongesz.com/api/Admin/Users");
+      const response = await api.get("/main/Admin/Users");
       setUsers(response.data.result);
       setFilteredUsers(response.data.result);
       setLoading(false);
@@ -86,7 +86,7 @@ const AdminPage = () => {
       }
 
       const response = await api.put(
-        `Admin/Users/${userId}/profile`,
+        `main/Admin/Users/${userId}/profile`,
         formData,
         {
           headers: {
@@ -120,7 +120,7 @@ const AdminPage = () => {
     openConfirm("Are you sure you want to delete this user?", async () => {
       closeConfirm();
       try {
-        await api.delete(`Admin/Users/${userId}`);
+        await api.delete(`main/Admin/Users/${userId}`);
         fetchUsers();
         setSuccessMessage("User deleted successfully!");
         setErrorMessage("");

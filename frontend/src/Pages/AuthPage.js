@@ -33,6 +33,7 @@ export default function AuthPage({ setshowAdminPanel }) {
 
   const doPasswordsMatch = password === confirmPassword;
 
+  //LOGIN
   async function handleLogin(e) {
     e.preventDefault();
 
@@ -43,7 +44,7 @@ export default function AuthPage({ setshowAdminPanel }) {
 
     try {
       const res = await axios.post(
-        "https://localhost:7224/api/Auth/login",
+        "https://dongesz.com/api/auth/Auth/login",
         data
       );
       const success = res.data.success;
@@ -75,7 +76,7 @@ export default function AuthPage({ setshowAdminPanel }) {
       }
     }
   }
-
+  //REGISTER
   async function handleRegister(e) {
     e.preventDefault();
     const data = {
@@ -87,11 +88,11 @@ export default function AuthPage({ setshowAdminPanel }) {
 
     try {
       const res = await axios.post(
-        "https://localhost:7224/api/Auth/register",
+        "https://dongesz.com/api/auth/Auth/register",
         data
       );
       if (res.data.success && doPasswordsMatch) {
-        setSuccessMessage(res.data.message);
+        setSuccessMessage("Successfully registration, check your email");
         setErrorMessage("");
         setTimeout(() => {
           navigate("/login");

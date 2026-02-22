@@ -15,8 +15,6 @@ import ConfirmModal from "../Component/ConfirmModal";
 const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
   const location = useLocation();
 
-  
-
   const [activeTab, setActiveTab] = useState("results");
   const navigate = useNavigate();
 
@@ -56,14 +54,13 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
     navigate("/login");
   };
 
-
   //DELETE ACCOUNT
   const handleDeleteClick = () => {
     setDeleteConfirm(true);
   };
   const handleDeleteAccount = async () => {
     try {
-      const response = await api.delete("/Users/me");
+      const response = await api.delete("/main/Users/me/");
       if (response.data.success) {
         setSuccessMessage(response.data.message);
         localStorage.removeItem("authToken");
@@ -92,7 +89,7 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
     formData.append("file", file);
     try {
       const response = await api.post(
-        "https://dongesz.com/api/Users/me/profile-picture",
+        "/main/Users/me/profile-picture",
         formData,
         {
           headers: {
@@ -113,7 +110,7 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
     setloginIn(true);
     const fetchMe = async () => {
       try {
-        const res = await api.get("https://dongesz.com/api/Users/me/result");
+        const res = await api.get("/main/Users/me/result");
         setSuccesssResult(true);
         setresultData(res.data.result);
       } catch {
@@ -279,10 +276,10 @@ const Settings = ({ resultData }) => {
     let successMessages = [];
     let hasError = false;
 
-    // BIO update (csak ha változott)
+    // BIO update 
     if (bio !== resultData.bio && bio) {
       try {
-        const response = await api.put("Users/me/bio", { bio });
+        const response = await api.put("/main/Users/me/bio", { bio });
 
         if (response.data.success) {
           successMessages.push("Bio updated successfully");
@@ -297,10 +294,10 @@ const Settings = ({ resultData }) => {
       }
     }
 
-    // USERNAME update (csak ha változott)
+    // USERNAME update 
     if (username !== resultData.name && username) {
       try {
-        const response = await api.put("Users/me/name", { name: username });
+        const response = await api.put("/main/Users/me/name", { name: username });
 
         if (response.data.success) {
           successMessages.push("Username updated successfully");
@@ -314,7 +311,7 @@ const Settings = ({ resultData }) => {
         setErrorMessage("Username update failed");
       }
     }
-    // PASSWORD update (csak ha van kitöltve)
+    // PASSWORD update 
     if (oldPassword && newpassword && confirmpassword) {
 
       if (newpassword !== confirmpassword) {
@@ -322,7 +319,7 @@ const Settings = ({ resultData }) => {
         setErrorMessage("New passwords do not match");
       } else {
         try {
-          const response = await api.put("https://localhost:7224/api/Auth/me/password", {
+          const response = await api.put("/auth/Auth/me/password", {
             currentPassword: oldPassword,
             newPassword: newpassword
           });
