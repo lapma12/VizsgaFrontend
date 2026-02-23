@@ -239,13 +239,13 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
 
       <div className="account-menu">
         <button
-          className={activeTab === "results" ? "active" : ""}
+          className={`${activeTab === "results" ? "active" : ""} btn-pill btn-pill--primary`}
           onClick={() => setActiveTab("results")}
         >
           <BarChart2 size={18} /> My Results
         </button>
         <button
-          className={activeTab === "settings" ? "active" : ""}
+          className={`${activeTab === "settings" ? "active" : ""} btn-pill btn-pill--primary`}
           onClick={() => setActiveTab("settings")}
         >
           <CogIcon size={18} /> Settings
@@ -263,7 +263,7 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
 
       <div className="account-footer">
         <button
-          className="logout-btn"
+          className="logout-btn btn-pill btn-pill--ghost"
           onClick={() => {
             handleLogoutClick();
           }}

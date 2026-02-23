@@ -61,7 +61,10 @@ const AdminPage = () => {
       name: user.name,
       email: user.email,
       bio: user.bio,
-      profilePictureUrl: user.profilePictureUrl
+      profilePictureUrl: user.profilePictureUrl,
+      // tároljuk a jelenlegi szerepet / admin státuszt is
+      userType: user.type,
+      isAdmin: user.type === "Admin",
     });
   };
 
@@ -90,7 +93,9 @@ const AdminPage = () => {
         headers: { "Content-Type": "multipart/form-data" }
       });
 
-      if (editValues.isAdmin) {
+
+      const wasAdmin = editValues.userType === "Admin";
+      if (!wasAdmin && editValues.isAdmin) {
         await api.post("/auth/Auth/assignrole", {
           username: editValues.name,
           rolename: "Admin"
@@ -178,7 +183,7 @@ const AdminPage = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <button className="search-btn" onClick={handleSearch}>
+          <button className="search-btn btn-pill" onClick={handleSearch}>
             Search
           </button>
         </div>
@@ -292,20 +297,20 @@ const AdminPage = () => {
                                 }
                               />
                             ) : (
-                              <span>{user.type === "Admin" ? "✔️" : "❌"}</span>
+                              <span>Click to change admin status </span>
                             )}
                           </td>
                           <td className="action-buttons">
                             {isEditing ? (
                               <>
                                 <button
-                                  className="save-btn"
+                                  className="save-btn btn-pill"
                                   onClick={() => saveEdit(user.id)}
                                 >
                                   💾 Save
                                 </button>
                                 <button
-                                  className="cancel-btn"
+                                  className="cancel-btn btn-pill"
                                   onClick={() => setEditingUser(null)}
                                 >
                                   ❌ Cancel
@@ -314,14 +319,14 @@ const AdminPage = () => {
                             ) : (
                               <>
                                 <button
-                                  className="edit-btn"
+                                  className="edit-btn btn-pill"
                                   onClick={() => startEdit(user)}
                                   title="Edit user"
                                 >
                                   ✏️ Edit
                                 </button>
                                 <button
-                                  className="delete-btn"
+                                  className="delete-btn btn-pill btn-pill--danger"
                                   onClick={() => deleteUser(user.id)}
                                   title="Delete user"
                                 >

@@ -102,62 +102,131 @@ export default function AuthPage({ setshowAdminPanel }) {
       to: email,
       subject: "Successful registration",
       body:  `
-      <html>
-        <head>
-          <style>
-            :root {
-              --bgColor: #e8d8b4;
-              --accentDark: #4b3621;
-              --accentLight: #8c7153;
-              --highlight: #e1c373;
-              --textDark: #2d1b0f;
-            }
-            body {
-              margin: 0;
-              padding: 0;
-              font-family: Arial, sans-serif;
-              background-color: #e8d8b4;
-              color: #2d1b0f;
-            }
-            .container {
-              max-width: 600px;
-              margin: 50px auto;
-              padding: 20px;
-              background-color: #8c7153;
-              border-radius: 8px;
-              box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-              text-align: center;
-            }
-            .header {
-              font-size: 24px;
-              font-weight: bold;
-              color: #4b3621;
-              margin-bottom: 20px;
-            }
-            .highlight {
-              display: inline-block;
-              padding: 5px 10px;
-              background-color: #e1c373;
-              color: #4b3621;
-              border-radius: 4px;
-              font-weight: bold;
-            }
-            .footer {
-              margin-top: 30px;
-              font-size: 12px;
-              color: #4b3621;
-            }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="header">Welcome to CastL!</div>
-            <div class="highlight">Successful registration</div>
-            <p>Thank you for joining our platform. You can now explore all the features CastL offers!</p>
-            <div class="footer">© 2026 CastL. All rights reserved.</div>
-          </div>
-        </body>
-      </html>
+      <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CastL Registration Success</title>
+  <style>
+    :root {
+      --bgColor: #e8d8b4;
+      --accentDark: #4b3621;
+      --accentLight: #8c7153;
+      --highlight: #e1c373;
+      --textDark: #2d1b0f;
+    }
+
+    /* Reset */
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: var(--bgColor);
+      color: var(--textDark);
+    }
+
+    /* Container */
+    .email-container {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 30px;
+      background-color: var(--accentLight);
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      text-align: center;
+    }
+
+    /* Header */
+    .email-header {
+      font-size: 28px;
+      font-weight: bold;
+      color: var(--accentDark);
+      margin-bottom: 20px;
+    }
+
+    /* Highlight */
+    .highlight {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: var(--highlight);
+      color: var(--accentDark);
+      border-radius: 6px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    /* Paragraph */
+    .email-body {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--textDark);
+      margin-bottom: 30px;
+    }
+
+    /* CTA Button */
+    .cta-button {
+      display: inline-block;
+      padding: 12px 30px;
+      background-color: var(--accentDark);
+      color: #fff;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: background-color 0.2s ease;
+    }
+
+    .cta-button:hover {
+      background-color: var(--accentLight);
+    }
+
+    /* Footer */
+    .email-footer {
+      font-size: 12px;
+      color: var(--accentDark);
+      margin-top: 40px;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .email-container {
+        padding: 20px;
+      }
+
+      .email-header {
+        font-size: 24px;
+      }
+
+      .highlight {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+
+      .email-body {
+        font-size: 14px;
+      }
+
+      .cta-button {
+        padding: 10px 20px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="email-container">
+    <div class="email-header">Welcome to CastL!</div>
+    <div class="highlight">Successful Registration</div>
+    <div class="email-body">
+      Thank you for joining our platform. You can now explore all the features CastL offers!<br><br>
+      Get started by visiting your account dashboard and discovering your new experience.
+    </div>
+    <a href="https://castl.com/dashboard" class="cta-button">Go to Dashboard</a>
+    <div class="email-footer">© 2026 CastL. All rights reserved.</div>
+  </div>
+</body>
+</html>
       `
     };
 
@@ -312,7 +381,7 @@ export default function AuthPage({ setshowAdminPanel }) {
                     </a>
                   </p>
                 </div>
-                <button type="submit">Login</button>
+                <button type="submit" className="btn-pill btn-pill--primary">Login</button>
               </form>
             )}
 
@@ -341,7 +410,7 @@ export default function AuthPage({ setshowAdminPanel }) {
                 />
 
 
-                <button type="submit" disabled={!doPasswordsMatch}>
+                <button type="submit" disabled={!doPasswordsMatch} className="btn-pill btn-pill--primary">
                   Register
                 </button>
               </form>

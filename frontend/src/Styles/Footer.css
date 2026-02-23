@@ -7,7 +7,10 @@
     display: flex;  
     flex-direction: column;
     align-items: center;
-    transition: opacity 0.5s ease;
+    position: relative;
+    overflow: hidden;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    animation: footerFadeUp 650ms ease-out both;
 }
 
 .footerImg {      
@@ -85,6 +88,40 @@
     color: #9ca3af;
     margin-bottom: 3rem;
 }
+
+/* Decorative golden glow line like navbar, but inverted */
+.footer::before {
+    content: "";
+    position: absolute;
+    left: -30%;
+    top: -4px;
+    width: 50%;
+    height: 3px;
+    background: linear-gradient(
+        90deg,
+        rgba(225, 195, 115, 0) 0%,
+        rgba(225, 195, 115, 0.9) 40%,
+        #ffffff 50%,
+        rgba(225, 195, 115, 0.9) 60%,
+        rgba(225, 195, 115, 0) 100%
+    );
+    filter: blur(0.5px);
+    opacity: 0.9;
+    animation: footerGlowSweep 3200ms linear infinite;
+}
+
+/* Subtle hover lift on footer columns */
+.footer-column {
+    flex: 1;
+    margin-bottom: 1.5rem;
+    transform: translateY(0);
+    transition: transform 220ms ease, text-shadow 220ms ease;
+}
+
+.footer-column:hover {
+    transform: translateY(-4px);
+    text-shadow: 0 0 14px rgba(225, 195, 115, 0.35);
+}
 @media only screen and (max-width: 768px) {
     .footer-text {
         max-width: 100%;
@@ -120,5 +157,38 @@
     .footerImg{
         width: 110% ;
         height: 60px;
+    }
+}
+
+/* Animations */
+@keyframes footerFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes footerGlowSweep {
+    0% {
+        transform: translateX(0);
+        opacity: 0;
+    }
+    15% {
+        opacity: 1;
+    }
+    50% {
+        transform: translateX(260%);
+        opacity: 1;
+    }
+    85% {
+        opacity: 0.4;
+    }
+    100% {
+        transform: translateX(320%);
+        opacity: 0;
     }
 }
