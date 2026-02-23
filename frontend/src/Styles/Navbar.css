@@ -49,6 +49,7 @@ header.navbar {
 .navbar-left button:hover {
   color: #fff;
   transform: translateY(-2px);
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
 }
 
 /* --- CENTER NAV LINKS --- */
@@ -92,10 +93,11 @@ header.navbar {
   transition: all var(--transition);
   box-shadow: 0 4px 0 var(--accentDark);
 }
-.navbar-right .signin:hover{
+.navbar-right .signin:hover {
   color: #fff;
   background: #a78b68;
   transform: translateY(-2px);
+  box-shadow: 0 6px 0 rgba(75, 54, 33, 0.4);
 }
 .navbar-right .signin .icon{
   font-size: 1.5rem;
@@ -108,6 +110,7 @@ header.navbar {
   color: #fff;
   background: #a78b68;
   transform: translateY(-2px);
+  box-shadow: 0 6px 0 rgba(75, 54, 33, 0.4);
 }
 
 /* animated golden underline on hover / active */
@@ -177,16 +180,16 @@ header.navbar {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;        
+  font-size: 22px;
   font-weight: bold;
   border-radius: 6px;
   cursor: pointer;
   transition: all var(--transition);
-  padding: 0;             
-  line-height: 1;         
+  padding: 0;
+  line-height: 1;
   text-decoration: none;
 }
-.img_button{
+.img_button {
   border: 2px solid var(--textDark);
   height: 50px;
   width: 50px;
@@ -196,6 +199,11 @@ header.navbar {
   border-radius: 50%;
   border: 3px solid #8c7153;
   background-color: #fff;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.img_button:hover {
+  transform: scale(1.06);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 .relative {
   position: relative;
@@ -267,6 +275,8 @@ header.navbar {
 .loginIn-btn:hover {
   background: #a78b68;
   color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 0 rgba(75, 54, 33, 0.4);
 }
 
 /* --- TOGGLE (hamburger) --- */
@@ -293,71 +303,145 @@ header.navbar {
   display: block;
 }
 
-/* --- RESPONSIVE --- */
+/* --- RESPONSIVE: mobil, modernebb --- */
 @media (max-width: 1000px) {
-  /* === MOBILE NAV CONTAINER === */
+  /* Overlay: a header (z-index: 100) alatt kell legyen, hogy a menü linkjeire lehessen kattintani */
+  .navbar-backdrop {
+    position: fixed;
+    inset: 0;
+    background: transparent;
+    z-index: 99;
+    overflow: hidden;
+    touch-action: none;
+  }
+
+  /* Mobil panel: jobbról csúszik be, glass stílus */
   .navbar-center {
     position: fixed;
     top: 0;
-    right: -100%;
-    width: 100%;                /* ⬅️ TELJES SZÉLESSÉG */
+    right: 0;
+    width: min(100%, 320px);
     height: 100vh;
-
+    max-height: 100dvh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;        /* ⬅️ VALÓDI KÖZÉP */
-
-    background: rgba(186, 170, 128, 0.97);
-    backdrop-filter: blur(10px);
-    transition: right 0.3s ease;
-    gap: 2rem;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 5rem 1.25rem 2rem;
+    gap: 0.5rem;
+    background: rgba(232, 216, 180, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-left: 1px solid rgba(75, 54, 33, 0.15);
+    box-shadow: -8px 0 32px rgba(0, 0, 0, 0.12);
     z-index: 999;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+    overflow-y: auto;
   }
 
   .navbar-center.responsive_nav {
-    right: 0;
+    transform: translateX(0);
+    box-shadow: -12px 0 40px rgba(0, 0, 0, 0.18);
   }
 
-  /* === NAV LINKS & BUTTONS === */
-  .navbar-center a,
+  /* Mobil linkek: kártyaszerű, nagy tap target */
+  .navbar-center > a,
   .nav-search-mobile .loginIn-btn {
-    width: 90%;                 /* ⬅️ EGYFORMA SZÉLESSÉG */
-    max-width: 360px;
-    font-size: 1.3rem;
-    justify-content: center;
+    width: 100%;
+    max-width: none;
+    padding: 1rem 1.25rem;
+    font-size: 1.05rem;
+    justify-content: flex-start;
+    gap: 0.75rem;
+    border-radius: 12px;
+    border: 2px solid rgba(75, 54, 33, 0.2);
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    min-height: 52px;
   }
 
-  /* === TOGGLE BUTTON === */
+  .navbar-center > a:hover,
+  .navbar-center > a.active {
+    background: rgba(167, 139, 104, 0.35);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateX(4px);
+  }
+
+  .navbar-center > a .icon {
+    font-size: 1.35rem;
+    opacity: 0.9;
+  }
+
+  /* Underline animáció kikapcsolva mobilra */
+  .navbar-center > a::after {
+    display: none;
+  }
+
+  /* Account / Sign in gomb a menü alján, kiemelten */
+  .nav-search-mobile {
+    width: 100%;
+    display: flex;
+    justify-content: stretch;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(75, 54, 33, 0.15);
+  }
+
+  .nav-search-mobile .loginIn-btn {
+    background: linear-gradient(135deg, #8c7153, #a78b68);
+    color: #fff;
+    border-color: var(--textDark);
+    font-weight: 700;
+  }
+
+  .nav-search-mobile .loginIn-btn:hover {
+    background: linear-gradient(135deg, #a78b68, #bbaa80);
+  }
+
+  /* Hamburger gomb: kerek, modernebb */
   .nav-toggle-btn {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(75, 54, 33, 0.08);
+    color: var(--textDark);
+    font-size: 1.35rem;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
   }
 
-  /* === HIDE DESKTOP ELEMENTS === */
+  .nav-toggle-btn:hover {
+    background: rgba(75, 54, 33, 0.15);
+    color: var(--textDark);
+    transform: scale(1.05);
+  }
+
+  .navbar-right .nav-toggle-btn {
+    margin-left: 0;
+  }
+
+  /* Drawer belsejében ne legyen dupla hamburger, csak a fejlécben */
+  .navbar-center .nav-toggle-btn {
+    display: none;
+  }
+
+  /* === DESKTOP ELEMENTS HIDE === */
   .desktop-only {
     display: none;
   }
 
-  /* === MOBILE LOGIN BUTTON WRAPPER === */
-  .nav-search-mobile {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-
-  /* Mobil nézetben a jobb oldali login / sign in gomb tűnjön el,
-     csak a hamburger-menüben (nav-search-mobile) maradjon */
   .navbar-right .loginIn-btn,
   .navbar-right .signin {
     display: none;
   }
 
   .loginIn-btn {
-    height: 44px;
-    font-weight: bold;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all var(--transition);
+    min-height: 52px;
+    font-weight: 700;
+    border-radius: 12px;
   }
-
 }

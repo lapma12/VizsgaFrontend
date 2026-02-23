@@ -405,7 +405,21 @@ const Settings = ({ resultData }) => {
         html
       />
 
-      <h2>Account Settings</h2>
+      <div className="settings-header-row">
+        <h2>Account Settings</h2>
+        <div className="password-info">
+          <span className="password-info-icon">i</span>
+          <div className="password-info-tooltip">
+            <p className="password-info-title">Password requirements</p>
+            <ul>
+              <li>At least 8 characters long</li>
+              <li>Contains at least one uppercase letter (A–Z)</li>
+              <li>Contains at least one number (0–9)</li>
+              <li>Contains at least one special character (!, ?, %, @, #, etc.)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
       <form onSubmit={handleSubmit} className="settings-form">
         <div className="settings-columns">
           <div className="settings-column">
@@ -445,7 +459,7 @@ const Settings = ({ resultData }) => {
               onChange={(e) => setNewPassword(e.target.value)}
             />
             <label>Confirm Password:</label>
-            <div style={{ position: "relative", width: "100%" }}>
+            <div className="settings-password-wrap">
               <input
                 type={showPassword ? "text" : "password"}
                 value={confirmpassword}
@@ -453,17 +467,11 @@ const Settings = ({ resultData }) => {
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
               <span
+                className="settings-password-toggle"
                 onClick={() => setShowPassword(!showPassword)}
-                style={{
-                  position: "absolute",
-                  right: "1rem",
-                  top: "55%",
-                  transform: "translateY(-50%)",
-                  cursor: "pointer",
-                  color: "#4b3621",
-                }}
+                aria-hidden
               >
-                {showPassword ? <EyeOff size={30} /> : <Eye size={30} />}
+                {showPassword ? <EyeOff size={22} /> : <Eye size={22} />}
               </span>
             </div>
           </div>

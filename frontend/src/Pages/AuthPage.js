@@ -302,7 +302,21 @@ export default function AuthPage({ setshowAdminPanel }) {
 
           {mode === "register" && (
             <div className="register-info">
-              <h2>WELCOME</h2>
+              <div className="register-info-header">
+                <h2>WELCOME</h2>
+                <div className="password-info">
+                  <span className="password-info-icon">i</span>
+                  <div className="password-info-tooltip">
+                    <p className="password-info-title">Password requirements</p>
+                    <ul>
+                      <li>At least 8 characters long</li>
+                      <li>Contains at least one uppercase letter (A–Z)</li>
+                      <li>Contains at least one number (0–9)</li>
+                      <li>Contains at least one special character (!, ?, %, @, #, etc.)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
 
               <p>
                 Step through the door to a new world, where every decision

@@ -379,6 +379,97 @@ body {
   align-items: center;
 }
 
+.settings-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.settings-header-row h2 {
+  margin: 0;
+}
+
+.password-info {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.password-info-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid rgba(75, 54, 33, 0.7);
+  color: var(--accentDark);
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  background: rgba(255, 255, 255, 0.6);
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.password-info-icon:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.password-info-tooltip {
+  position: absolute;
+  top: 125%;
+  right: 0;
+  min-width: 240px;
+  max-width: 280px;
+  background: rgba(15, 10, 6, 0.96);
+  color: #f8f3e6;
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  z-index: 5;
+}
+
+.password-info-tooltip::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 14px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: transparent transparent rgba(15, 10, 6, 0.96) transparent;
+}
+
+.password-info-title {
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.password-info-tooltip ul {
+  padding-left: 1.1rem;
+  margin: 0;
+}
+
+.password-info-tooltip li {
+  margin-bottom: 0.2rem;
+}
+
+.password-info:hover .password-info-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
 .settings-columns {
   width: 100%;
   display: grid;
@@ -399,8 +490,30 @@ body {
   min-width: 200px;
 }
 .settings-column label {
-  display: block;     /* ⬅️ EZ A KULCS */
+  display: block;
   margin-top: 0.75rem;
+}
+
+.settings-password-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.settings-password-wrap input {
+  width: 100%;
+  padding-right: 2.75rem;
+  box-sizing: border-box;
+}
+
+.settings-password-toggle {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--accentDark);
+  display: flex;
+  align-items: center;
 }
 
 /* === Popup Animation === */
@@ -428,23 +541,150 @@ body {
   }
 }
 
-/* === Responsive === */
-@media only screen and (max-width: 600px) {
+/* === Responsive (mobile) === */
+@media only screen and (max-width: 768px) {
+  .account-page {
+    margin: 1rem;
+    padding: 1.25rem;
+  }
+
   .account-header {
     flex-direction: column;
     text-align: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
   }
-  .account-page {
-    margin: 40px;
+
+  .avatarPic {
+    width: 100px;
+    height: 100px;
+  }
+
+  .account-info h1 {
+    font-size: 1.5rem;
+  }
+
+  .account-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .account-menu {
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .account-menu button {
+    padding: 0.65rem 1.2rem;
+    font-size: 0.95rem;
+  }
+
+  .account-content {
+    padding: 1.25rem;
+  }
+
+  .settings-section h2,
+  .results-section h2 {
+    font-size: 1.35rem;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Settings form – mobil: egy oszlop, teljes szélesség */
+  .settings-columns {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .settings-column {
+    padding: 1.25rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .settings-column h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .settings-column label {
+    display: block;
+    margin-top: 0.75rem;
+    margin-bottom: 0.35rem;
+    font-size: 0.95rem;
+  }
+
+  .settings-column input,
+  .account-content input {
+    width: 100%;
+    max-width: none;
+    padding: 0.85rem 1rem;
+    font-size: 1rem;
+    min-height: 48px;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .settings-password-wrap input {
+    padding-right: 3rem;
+  }
+
+  .textBoxforDetils {
+    width: 100% !important;
+    max-width: none;
+    min-height: 5rem;
+    padding: 0.85rem 1rem;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+
+  .settings-form button,
+  .account-content form button {
+    width: 100%;
+    max-width: 320px;
+    min-width: 0;
+    padding: 0.9rem 1.25rem;
+    font-size: 1rem;
+    min-height: 48px;
   }
 
   .account-footer {
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .logout-btn,
+  .delete-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.85rem 1.25rem;
+    min-height: 48px;
   }
 }
-@media only screen and (max-width: 600px) {
-  .settings-columns {
-    grid-template-columns: 1fr;
+
+@media only screen and (max-width: 480px) {
+  .account-page {
+    margin: 0.75rem;
+    padding: 1rem;
+  }
+
+  .account-menu {
+    flex-direction: column;
+  }
+
+  .account-menu button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .settings-column {
+    padding: 1rem;
+  }
+
+  .current-username {
+    font-size: 0.9rem;
+    word-break: break-word;
   }
 }

@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { AiOutlineFacebook } from "react-icons/ai";
 import { FaInstagram } from "react-icons/fa";
 import { FaRegMessage } from "react-icons/fa6";
@@ -30,6 +30,7 @@ function Navbar({ loginIn, setloginIn, userDataState, showAdminpanel, setshowAdm
   const [logoutConfirm, setLogoutConfirm] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const handleLogoutClick = () => {
@@ -51,11 +52,37 @@ function Navbar({ loginIn, setloginIn, userDataState, showAdminpanel, setshowAdm
     setMenuOpen((prev) => !prev);
   };
 
-  const closeNavbar = () => {
-    navRef.current.classList.remove("responsive_nav");
+  const closeNavbar = useCallback(() => {
+    navRef.current?.classList.remove("responsive_nav");
     setMenuOpen(false);
-  };
-  const [, setuserDataState2] = useState(null)
+  }, []);
+
+  const [, setuserDataState2] = useState(null);
+
+  /* Mobil: menü nyitva → ne lehessen a háttérben görgetni (body + html pl. iOS) */
+  useEffect(() => {
+    const html = document.documentElement;
+    const body = document.body;
+    if (menuOpen) {
+      html.style.overflow = "hidden";
+      body.style.overflow = "hidden";
+      body.style.touchAction = "none";
+    } else {
+      html.style.overflow = "";
+      body.style.overflow = "";
+      body.style.touchAction = "";
+    }
+    return () => {
+      html.style.overflow = "";
+      body.style.overflow = "";
+      body.style.touchAction = "";
+    };
+  }, [menuOpen]);
+
+  /* Lapváltáskor (új oldal) mindig zárja be a mobilmenüt */
+  useEffect(() => {
+    closeNavbar();
+  }, [location.pathname, closeNavbar]);
 
   useEffect(() => {
     const fetchMe = async () => {
@@ -117,6 +144,17 @@ function Navbar({ loginIn, setloginIn, userDataState, showAdminpanel, setshowAdm
         onConfirm={handleLogout}
         onCancel={() => setLogoutConfirm(false)}
       />
+      {/* Mobil: overlay, ha a menü nyitva */}
+      {menuOpen && (
+        <div
+          className="navbar-backdrop"
+          onClick={toggleNavbar}
+          onKeyDown={(e) => e.key === "Escape" && toggleNavbar()}
+          role="button"
+          tabIndex={0}
+          aria-label="Close menu"
+        />
+      )}
       <header className="navbar">
       <div className="navbar-left">
         <button onClick={() => window.open("https://www.instagram.com", "_blank")}>

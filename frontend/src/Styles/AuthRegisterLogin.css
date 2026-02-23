@@ -386,6 +386,92 @@
   max-width: 420px;
 }
 
+.register-info-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.password-info {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.password-info-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  background: rgba(255, 255, 255, 0.12);
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.password-info-icon:hover {
+  background: rgba(255, 255, 255, 0.24);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.password-info-tooltip {
+  position: absolute;
+  top: 125%;
+  right: 0;
+  min-width: 240px;
+  max-width: 280px;
+  background: rgba(15, 10, 6, 0.96);
+  color: #f8f3e6;
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  z-index: 5;
+}
+
+.password-info-tooltip::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 14px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: transparent transparent rgba(15, 10, 6, 0.96) transparent;
+}
+
+.password-info-title {
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.password-info-tooltip ul {
+  padding-left: 1.1rem;
+  margin: 0;
+}
+
+.password-info-tooltip li {
+  margin-bottom: 0.2rem;
+}
+
+.password-info:hover .password-info-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
 .auth-left .register-info h2 {
   font-size: 2.6rem;
   margin-bottom: 1rem;
