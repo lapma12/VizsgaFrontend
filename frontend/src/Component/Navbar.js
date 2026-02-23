@@ -121,7 +121,7 @@ function Navbar({ loginIn, setloginIn, userDataState, showAdminpanel, setshowAdm
 
         setSuccesssResult(true);
         setresultData(me);
-        setPicture(me.profilePictureUrl);
+        setPicture(me.profilePictureUrl || "");
         setloginIn(true);
       } catch {
         setloginIn(false);
@@ -226,13 +226,24 @@ function Navbar({ loginIn, setloginIn, userDataState, showAdminpanel, setshowAdm
         <>
           {loginIn ? (
             <div className="relative">
-              <img
-                src={picture}
-                alt="Avatar"
-                title="avatar"
-                className="img_button"
-                onClick={toggleMenu}
-              />
+              {picture ? (
+                <img
+                  src={picture}
+                  alt="Avatar"
+                  title="avatar"
+                  className="img_button"
+                  onClick={toggleMenu}
+                />
+              ) : (
+                <div
+                  className="img_button img_button--placeholder"
+                  onClick={toggleMenu}
+                  title="avatar"
+                  aria-label="Profile"
+                >
+                  <MdAccountCircle size={32} />
+                </div>
+              )}
 
               {isOpen && (
                 <div className="dropdownmenu">

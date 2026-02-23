@@ -8,6 +8,7 @@ import {
   EyeOff,
   Eye,
 } from "lucide-react";
+import { MdAccountCircle } from "react-icons/md";
 import api from "../api/api";
 import Toast from "../Component/Toast";
 import ConfirmModal from "../Component/ConfirmModal";
@@ -198,12 +199,18 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
         {resultData && (
           <>
             <label htmlFor="avatar" className="avatar-wrapper">
-              <img
-                src={resultData.profilePictureUrl}
-                className="avatarPic"
-                alt="Avatar"
-                title="Kattints a kép cseréjéhez"
-              />
+              {resultData.profilePictureUrl ? (
+                <img
+                  src={resultData.profilePictureUrl}
+                  className="avatarPic"
+                  alt="Avatar"
+                  title="Kattints a kép cseréjéhez"
+                />
+              ) : (
+                <div className="avatarPic avatarPic--placeholder" title="Kattints a kép cseréjéhez">
+                  <MdAccountCircle size={64} />
+                </div>
+              )}
             </label>
           </>
         )}

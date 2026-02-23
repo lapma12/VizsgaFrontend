@@ -46,6 +46,15 @@ body {
   transition: 0.2s ease;
 }
 
+.avatarPic--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--accentLight);
+  border: 3px solid var(--accentLight);
+}
+
 .avatar-wrapper:hover .avatarPic {
   opacity: 0.5;
   transform: scale(1.03);

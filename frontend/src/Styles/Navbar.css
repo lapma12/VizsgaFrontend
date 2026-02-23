@@ -205,6 +205,15 @@ header.navbar {
   transform: scale(1.06);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
+
+.img_button--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accentLight);
+  background-color: #fff;
+}
+
 .relative {
   position: relative;
   display: inline-block;
