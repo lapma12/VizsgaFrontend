@@ -108,7 +108,7 @@ function Navbar({ loginIn, setloginIn, userDataState, showAdminpanel, setshowAdm
   }, [navigate, setloginIn, setshowAdminPanel, userDataState]);
 
   return (
-    <header className="navbar">
+    <>
       <ConfirmModal
         open={logoutConfirm}
         message="Do you want to log out?"
@@ -117,8 +117,7 @@ function Navbar({ loginIn, setloginIn, userDataState, showAdminpanel, setshowAdm
         onConfirm={handleLogout}
         onCancel={() => setLogoutConfirm(false)}
       />
-
-
+      <header className="navbar">
       <div className="navbar-left">
         <button onClick={() => window.open("https://www.instagram.com", "_blank")}>
           <FaInstagram />
@@ -238,6 +237,7 @@ function Navbar({ loginIn, setloginIn, userDataState, showAdminpanel, setshowAdm
         </button>
       </div>
     </header>
+    </>
   );
 }
 
