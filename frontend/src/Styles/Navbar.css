@@ -305,7 +305,6 @@ header.navbar {
 
 /* --- RESPONSIVE: mobil, modernebb --- */
 @media (max-width: 1000px) {
-  /* Overlay: a header (z-index: 100) alatt kell legyen, hogy a menü linkjeire lehessen kattintani */
   .navbar-backdrop {
     position: fixed;
     inset: 0;
@@ -315,7 +314,6 @@ header.navbar {
     touch-action: none;
   }
 
-  /* Mobil panel: jobbról csúszik be, glass stílus */
   .navbar-center {
     position: fixed;
     top: 0;

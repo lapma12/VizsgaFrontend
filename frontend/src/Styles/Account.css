@@ -404,8 +404,8 @@ body {
   border-radius: 50%;
   border: 2px solid rgba(75, 54, 33, 0.7);
   color: var(--accentDark);
-  font-weight: 700;
-  font-size: 1rem;
+  font-weight: 500;
+  font-size: 0.7rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -424,15 +424,16 @@ body {
   position: absolute;
   top: 125%;
   right: 0;
-  min-width: 240px;
-  max-width: 280px;
-  background: rgba(15, 10, 6, 0.96);
-  color: #f8f3e6;
+  min-width: 220px;
+  max-width: 260px;
+  background: #fff;
+  color: var(--textDark);
   border-radius: 10px;
-  padding: 0.9rem 1rem;
-  font-size: 0.8rem;
-  line-height: 1.5;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+  padding: 0.65rem 0.85rem;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(75, 54, 33, 0.15);
   opacity: 0;
   visibility: hidden;
   transform: translateY(-4px);
@@ -447,21 +448,24 @@ body {
   right: 14px;
   border-width: 6px;
   border-style: solid;
-  border-color: transparent transparent rgba(15, 10, 6, 0.96) transparent;
+  border-color: transparent transparent #fff transparent;
 }
 
 .password-info-title {
   font-weight: 700;
-  margin-bottom: 0.4rem;
+  font-size: 1rem;
+  margin-bottom: 0.35rem;
+  color:#fff !important;
 }
 
 .password-info-tooltip ul {
-  padding-left: 1.1rem;
+  padding-left: 1rem;
   margin: 0;
 }
 
 .password-info-tooltip li {
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.15rem;
+  font-size: 0.72rem;
 }
 
 .password-info:hover .password-info-tooltip {
