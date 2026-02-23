@@ -17,7 +17,6 @@ const AdminPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  // melyik sort szerkesztjük – kulcs: id vagy (ha az nincs) name
   const [editingUser, setEditingUser] = useState(null);
   const [editValues, setEditValues] = useState({});
   const [visibleCount, setVisibleCount] = useState(10);
@@ -62,7 +61,6 @@ const AdminPage = () => {
       email: user.email,
       bio: user.bio,
       profilePictureUrl: user.profilePictureUrl,
-      // tároljuk a jelenlegi szerepet / admin státuszt is
       userType: user.type,
       isAdmin: user.type === "Admin",
     });
@@ -76,8 +74,11 @@ const AdminPage = () => {
     }));
   };
 
-  const saveEdit = async (userId) => {
+  const saveEdit = async (user) => {
     try {
+      const userId = user.id;
+      const originalIsAdmin = user.type === "Admin";
+
       const formData = new FormData();
       formData.append("Name", editValues.name);
       formData.append("Email", editValues.email);
@@ -94,11 +95,9 @@ const AdminPage = () => {
       });
 
 
-      const wasAdmin = editValues.userType === "Admin";
-      if (!wasAdmin && editValues.isAdmin) {
-        await api.post("/auth/Auth/assignrole", {
-          username: editValues.name,
-          rolename: "Admin"
+      if (editValues.isAdmin !== originalIsAdmin) {
+        await api.post("/auth/Auth/toggleadminrole", {
+          userName: user.name,
         });
       }
 
@@ -289,15 +288,25 @@ const AdminPage = () => {
                           </td>
                           <td>
                             {isEditing ? (
-                              <input
-                                type="checkbox"
-                                checked={!!editValues.isAdmin}
-                                onChange={(e) =>
-                                  setEditValues(prev => ({ ...prev, isAdmin: e.target.checked }))
+                              <button
+                                type="button"
+                                className={`admin-toggle-btn ${editValues.isAdmin ? "admin-toggle-btn--yes" : "admin-toggle-btn--no"}`}
+                                onClick={() =>
+                                  setEditValues(prev => ({ ...prev, isAdmin: !prev.isAdmin }))
                                 }
-                              />
+                              >
+                                {editValues.isAdmin ? "Yes" : "No"}
+                              </button>
                             ) : (
-                              <span>Click to change admin status </span>
+                              <span
+                                // className={
+                                //   user.type === "Admin"
+                                //     ? "admin-badge admin-badge--admin"
+                                //     : "admin-badge admin-badge--user"
+                                // }
+                              >
+                                
+                              </span>
                             )}
                           </td>
                           <td className="action-buttons">
@@ -305,7 +314,7 @@ const AdminPage = () => {
                               <>
                                 <button
                                   className="save-btn btn-pill"
-                                  onClick={() => saveEdit(user.id)}
+                                  onClick={() => saveEdit(user)}
                                 >
                                   💾 Save
                                 </button>

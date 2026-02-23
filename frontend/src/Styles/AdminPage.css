@@ -276,6 +276,53 @@
   display: block;
 }
 
+/* Add Admin oszlop – toggle gomb + badge */
+.admin-toggle-btn {
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  border: 2px solid #4b3621;
+  background: #f5e9cf;
+  color: #4b3621;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  min-width: 70px;
+}
+
+.admin-toggle-btn--yes {
+  background: #16a34a;
+  border-color: #166534;
+  color: #fff;
+}
+
+.admin-toggle-btn--no {
+  background: #f5e9cf;
+}
+
+.admin-toggle-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+.admin-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.admin-badge--admin {
+  background: #16a34a;
+  color: #fff;
+}
+
+.admin-badge--user {
+  background: rgba(255, 255, 255, 0.6);
+  color: #4b3621;
+}
+
 .edit-input {
   width: 100px;
   padding: 0.5rem;
