@@ -65,6 +65,7 @@ const AdminPage = () => {
     });
   };
 
+
   const handleEditChange = (field, value) => {
     setEditValues(prev => ({
       ...prev,
@@ -80,21 +81,22 @@ const AdminPage = () => {
       formData.append("Bio", editValues.bio);
       formData.append("UserType", editValues.userType);
 
-      // Csak ha van új fájl, adjuk hozzá
       if (editValues.profilePictureFile) {
         formData.append("ProfilePicture", editValues.profilePictureFile);
       }
 
-      const response = await api.put(
-        `main/Admin/Users/${userId}/profile`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
-        }
-      );
-      console.log(response);
+      // Update profile
+      await api.put(`main/Admin/Users/${userId}/profile`, formData, {
+        headers: { "Content-Type": "multipart/form-data" }
+      });
+
+      if (editValues.isAdmin) {
+        await api.post("/auth/Auth/assignrole", {
+          username: editValues.name,
+          rolename: "Admin"
+        });
+      }
+
       fetchUsers();
       setEditingUser(null);
       setSuccessMessage("User saved successfully!");
@@ -105,8 +107,6 @@ const AdminPage = () => {
       setSuccessMessage("");
     }
   };
-
-
 
   const openConfirm = (message, onConfirm) => {
     setConfirmModal({ open: true, message, onConfirm });
@@ -183,144 +183,159 @@ const AdminPage = () => {
           </button>
         </div>
 
-      <div className="admin-table-container">
-        {loading ? (
-          <div className="loading-center">
-            <ClipLoader size={50} color="#8c7153" />
-          </div>
-        ) : error ? (
-          <div className="error-message">
-            The data could not be loaded.
-          </div>
-        ) : filteredUsers.length === 0 ? (
-          <div className="no-data">
-            No users found.
-          </div>
-        ) : (
-          <>
-            <div className="table-info">
-              Showing {displayUsers.length} of {filteredUsers.length} users
+        <div className="admin-table-container">
+          {loading ? (
+            <div className="loading-center">
+              <ClipLoader size={50} color="#8c7153" />
             </div>
-            <div className="table-scroll-wrapper">
-              <table className="admin-table">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Profile Picture</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Bio</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {displayUsers.map((user, index) => {
-                    const rowKey = user.id ?? user.name;
-                    const isEditing = editingUser === rowKey;
-                    return (
-                      <tr key={rowKey}>
-                        <td>{index + 1}</td>
-                        <td>
-                          {isEditing ? (
-                            <>
-                              <input
-                                type="file"
-                                id={`fileInput-${user.id}`}
-                                onChange={handleFileChange}
-                                className="file-input"
-                              />
-                              <label htmlFor={`fileInput-${user.id}`} className="avatar-label">
-                                <img
-                                  src={editValues.previewUrl || editValues.profilePictureUrl}
-                                  alt="Avatar"
-                                  className="avatar-img"
+          ) : error ? (
+            <div className="error-message">
+              The data could not be loaded.
+            </div>
+          ) : filteredUsers.length === 0 ? (
+            <div className="no-data">
+              No users found.
+            </div>
+          ) : (
+            <>
+              <div className="table-info">
+                Showing {displayUsers.length} of {filteredUsers.length} users
+              </div>
+              <div className="table-scroll-wrapper">
+                <table className="admin-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Profile Picture</th>
+                      <th>Username</th>
+                      <th>Email</th>
+                      <th>Bio</th>
+                      <th>Add Admin</th>
+                      <th>Actions</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {displayUsers.map((user, index) => {
+                      const rowKey = user.id ?? user.name;
+                      const isEditing = editingUser === rowKey;
+                      return (
+                        <tr key={rowKey}>
+                          <td>{index + 1}</td>
+                          <td>
+                            {isEditing ? (
+                              <>
+                                <input
+                                  type="file"
+                                  id={`fileInput-${user.id}`}
+                                  onChange={handleFileChange}
+                                  className="file-input"
                                 />
-                              </label>
-                            </>
-                          ) : (
-                            <img
-                              src={user.profilePictureUrl}
-                              alt="Avatar"
-                              className="avatar-img"
-                            />
-                          )}
-                        </td>
-                        <td>
-                          {isEditing ? (
-                            <input
-                              value={editValues.name}
-                              onChange={(e) => handleEditChange('name', e.target.value)}
-                              className="values"
-                            />
-                          ) : (
-                            user.name
-                          )}
-                        </td>
-                        <td>
-                          {isEditing ? (
-                            <input
-                              type="text"
-                              value={editValues.email}
-                              onChange={(e) => handleEditChange('email', e.target.value)}
-                              className="values"
-                            />
-                          ) : (
-                            <span className="values">{user.email}</span>
-                          )}
-                        </td>
-                        <td>
-                          {isEditing ? (
-                            <input
-                              type="text"
-                              value={editValues.bio}
-                              onChange={(e) => handleEditChange('bio', e.target.value)}
-                              className="values"
-                            />
-                          ) : (
-                            <span className="values">{user.bio}</span>
-                          )}
-                        </td>
-                        <td className="action-buttons">
-                          {isEditing ? (
-                            <>
-                              <button
-                                className="save-btn"
-                                onClick={() => saveEdit(user.id)}
-                              >
-                                💾 Save
-                              </button>
-                              <button
-                                className="cancel-btn"
-                                onClick={() => setEditingUser(null)}
-                              >
-                                ❌ Cancel
-                              </button>
-                            </>
-                          ) : (
-                            <>
-                              <button
-                                className="edit-btn"
-                                onClick={() => startEdit(user)}
-                                title="Edit user"
-                              >
-                                ✏️ Edit
-                              </button>
-                              <button
-                                className="delete-btn"
-                                onClick={() => deleteUser(user.id)}
-                                title="Delete user"
-                              >
-                                🗑️ Delete
-                              </button>
-                            </>
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
+                                <label htmlFor={`fileInput-${user.id}`} className="avatar-label">
+                                  <img
+                                    src={editValues.previewUrl || editValues.profilePictureUrl}
+                                    alt="Avatar"
+                                    className="avatar-img"
+                                  />
+                                </label>
+                              </>
+                            ) : (
+                              <img
+                                src={user.profilePictureUrl}
+                                alt="Avatar"
+                                className="avatar-img"
+                              />
+                            )}
+                          </td>
+                          <td>
+                            {isEditing ? (
+                              <input
+                                value={editValues.name}
+                                onChange={(e) => handleEditChange('name', e.target.value)}
+                                className="values"
+                              />
+                            ) : (
+                              user.name
+                            )}
+                          </td>
+                          <td>
+                            {isEditing ? (
+                              <input
+                                type="text"
+                                value={editValues.email}
+                                onChange={(e) => handleEditChange('email', e.target.value)}
+                                className="values"
+                              />
+                            ) : (
+                              <span className="values">{user.email}</span>
+                            )}
+                          </td>
+                          <td>
+                            {isEditing ? (
+                              <input
+                                type="text"
+                                value={editValues.bio}
+                                onChange={(e) => handleEditChange('bio', e.target.value)}
+                                className="values"
+                              />
+                            ) : (
+                              <span className="values">{user.bio}</span>
+                            )}
+                          </td>
+                          <td>
+                            {isEditing ? (
+                              <input
+                                type="checkbox"
+                                checked={!!editValues.isAdmin}
+                                onChange={(e) =>
+                                  setEditValues(prev => ({ ...prev, isAdmin: e.target.checked }))
+                                }
+                              />
+                            ) : (
+                              <span>{user.type === "Admin" ? "✔️" : "❌"}</span>
+                            )}
+                          </td>
+                          <td className="action-buttons">
+                            {isEditing ? (
+                              <>
+                                <button
+                                  className="save-btn"
+                                  onClick={() => saveEdit(user.id)}
+                                >
+                                  💾 Save
+                                </button>
+                                <button
+                                  className="cancel-btn"
+                                  onClick={() => setEditingUser(null)}
+                                >
+                                  ❌ Cancel
+                                </button>
+                              </>
+                            ) : (
+                              <>
+                                <button
+                                  className="edit-btn"
+                                  onClick={() => startEdit(user)}
+                                  title="Edit user"
+                                >
+                                  ✏️ Edit
+                                </button>
+                                <button
+                                  className="delete-btn"
+                                  onClick={() => deleteUser(user.id)}
+                                  title="Delete user"
+                                >
+                                  🗑️ Delete
+                                </button>
+                              </>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
 
               {visibleCount < filteredUsers.length && (
                 <div className="load-more-section">

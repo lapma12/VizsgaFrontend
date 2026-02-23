@@ -54,16 +54,19 @@ export default function AuthPage({ setshowAdminPanel }) {
         setSuccessMessage("Successfully login!");
         const token = localStorage.getItem("authToken");
         const decoded = jwtDecode(token);
-        let decodeRole = decoded.role;
+        const decodeRole = decoded.role || decoded.roles || decoded.userType;
+        const isAdmin = Array.isArray(decodeRole)
+          ? decodeRole.includes("Admin")
+          : typeof decodeRole === "string" && decodeRole.includes("Admin");
         setErrorMessage("");
-        if (decodeRole.includes("Admin")) {
+        setshowAdminPanel(isAdmin);
+
+        if (isAdmin) {
           setTimeout(() => navigate("/admin"), 2000);
-          setshowAdminPanel(true)
-        }
-        else{
+        } else {
           setTimeout(() => navigate("/account"), 2000);
         }
-        
+
       } else {
         throw new Error("No token received from server");
       }
@@ -76,9 +79,18 @@ export default function AuthPage({ setshowAdminPanel }) {
       }
     }
   }
-  //REGISTER
   async function handleRegister(e) {
     e.preventDefault();
+
+    // Példa: password confirm ellenőrzés
+    const doPasswordsMatch = password === confirmPassword;
+
+    if (!doPasswordsMatch) {
+      setErrorMessage("Passwords do not match!");
+      setSuccessMessage("");
+      return;
+    }
+
     const data = {
       userName: username,
       password: password,
@@ -86,21 +98,89 @@ export default function AuthPage({ setshowAdminPanel }) {
       fullName: username,
     };
 
+    const emailData = {
+      to: email,
+      subject: "Successful registration",
+      body:  `
+      <html>
+        <head>
+          <style>
+            :root {
+              --bgColor: #e8d8b4;
+              --accentDark: #4b3621;
+              --accentLight: #8c7153;
+              --highlight: #e1c373;
+              --textDark: #2d1b0f;
+            }
+            body {
+              margin: 0;
+              padding: 0;
+              font-family: Arial, sans-serif;
+              background-color: #e8d8b4;
+              color: #2d1b0f;
+            }
+            .container {
+              max-width: 600px;
+              margin: 50px auto;
+              padding: 20px;
+              background-color: #8c7153;
+              border-radius: 8px;
+              box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+              text-align: center;
+            }
+            .header {
+              font-size: 24px;
+              font-weight: bold;
+              color: #4b3621;
+              margin-bottom: 20px;
+            }
+            .highlight {
+              display: inline-block;
+              padding: 5px 10px;
+              background-color: #e1c373;
+              color: #4b3621;
+              border-radius: 4px;
+              font-weight: bold;
+            }
+            .footer {
+              margin-top: 30px;
+              font-size: 12px;
+              color: #4b3621;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <div class="header">Welcome to CastL!</div>
+            <div class="highlight">Successful registration</div>
+            <p>Thank you for joining our platform. You can now explore all the features CastL offers!</p>
+            <div class="footer">© 2026 CastL. All rights reserved.</div>
+          </div>
+        </body>
+      </html>
+      `
+    };
+
     try {
       const res = await axios.post(
         "https://dongesz.com/api/auth/Auth/register",
         data
       );
-      if (res.data.success && doPasswordsMatch) {
-        setSuccessMessage("Successfully registration, check your email");
+
+      const emailSender = await axios.post(
+        "https://dongesz.com/api/main/Email",
+        emailData
+      );
+
+      if (res.data.success && emailSender.data.success) {
+        setSuccessMessage("Successfully registered, check your email");
         setErrorMessage("");
         setTimeout(() => {
           navigate("/login");
         }, 1500);
-      }
-      else {
-        setErrorMessage(res.data.message);
-        setSuccessMessage("")
+      } else {
+        setErrorMessage(res.data.message || "Registration failed!");
+        setSuccessMessage("");
       }
     } catch (error) {
       console.error("Register error:", error.response?.data || error.message);

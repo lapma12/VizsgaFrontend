@@ -14,6 +14,7 @@ import ConfirmModal from "./ConfirmModal";
 
 import "../Styles/Navbar.css";
 import api from "../api/api";
+import { jwtDecode } from "jwt-decode";
 
 
 function Navbar({ loginIn, setloginIn, userDataState, showAdminpanel, setshowAdminPanel }) {
@@ -58,25 +59,53 @@ function Navbar({ loginIn, setloginIn, userDataState, showAdminpanel, setshowAdm
 
   useEffect(() => {
     const fetchMe = async () => {
-      if (!localStorage.getItem("authToken")) {
+      const token = localStorage.getItem("authToken");
+      if (!token) {
         setloginIn(false);
+        setshowAdminPanel(false);
         return;
       }
+
+      // Decode role from JWT to determine admin status
+      try {
+        const decoded = jwtDecode(token);
+        const role =
+          decoded.role ||
+          decoded.roles ||
+          decoded.userType ||
+          decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+
+        const isAdmin = Array.isArray(role)
+          ? role.includes("Admin")
+          : typeof role === "string" && role.includes("Admin");
+
+        setshowAdminPanel(isAdmin);
+      } catch {
+        // If token is invalid, reset state and redirect to login
+        setloginIn(false);
+        setshowAdminPanel(false);
+        navigate("/login");
+        return;
+      }
+
       try {
         const res = await api.get("/main/Users/me/result");
+        const me = res.data.result;
+
         setSuccesssResult(true);
-        setresultData(res.data.result);
-        setPicture(res.data.result.profilePictureUrl);
+        setresultData(me);
+        setPicture(me.profilePictureUrl);
         setloginIn(true);
       } catch {
         setloginIn(false);
+        setshowAdminPanel(false);
         navigate("/login");
       }
     };
 
     fetchMe();
     setuserDataState2(userDataState)
-  }, [navigate, setloginIn, userDataState]);
+  }, [navigate, setloginIn, setshowAdminPanel, userDataState]);
 
   return (
     <header className="navbar">

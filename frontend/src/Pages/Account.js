@@ -64,13 +64,9 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
       const passCheck = await api.post("/auth/Auth/me/checkpassword", {
         password: confirmPassword,
       });
-      console.log("passCheck:", passCheck.data);
-      console.log("success value:", passCheck.data.success);
-      console.log("type:", typeof passCheck.data.success);
       if (passCheck.data.success) {
         const response = await api.delete("/main/Users/me/");
         console.log(response);
-        
         if (response.data.success) {
           setSuccessMessage(response.data.message);
           localStorage.removeItem("authToken");
