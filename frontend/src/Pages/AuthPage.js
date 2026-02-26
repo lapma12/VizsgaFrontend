@@ -31,6 +31,8 @@ export default function AuthPage({ setshowAdminPanel }) {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
+  const [isRegistering, setIsRegistering] = useState(false);
+
   const doPasswordsMatch = password === confirmPassword;
 
   //LOGIN
@@ -82,12 +84,16 @@ export default function AuthPage({ setshowAdminPanel }) {
   async function handleRegister(e) {
     e.preventDefault();
 
+    if (isRegistering) return;
+    setIsRegistering(true);
+
     // Példa: password confirm ellenőrzés
     const doPasswordsMatch = password === confirmPassword;
 
     if (!doPasswordsMatch) {
       setErrorMessage("Passwords do not match!");
       setSuccessMessage("");
+      setIsRegistering(false);
       return;
     }
 
@@ -100,133 +106,232 @@ export default function AuthPage({ setshowAdminPanel }) {
 
     const emailData = {
       to: email,
-      subject: "Successful registration",
-      body:  `
-      <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CastL Registration Success</title>
-  <style>
-    :root {
-      --bgColor: #e8d8b4;
-      --accentDark: #4b3621;
-      --accentLight: #8c7153;
-      --highlight: #e1c373;
-      --textDark: #2d1b0f;
-    }
+      subject: "Welcome to CastL – Registration successful",
+      body: `
+      <!doctype html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Welcome to CastL</title>
+        <style>
+          body, html {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top, #f5e6c9 0, #e8d8b4 40%, #d0bc8a 100%);
+            color: #2d1b0f;
+          }
 
-    /* Reset */
-    body, html {
-      margin: 0;
-      padding: 0;
-      font-family: 'Arial', sans-serif;
-      background-color: var(--bgColor);
-      color: var(--textDark);
-    }
+          .email-root {
+            padding: 32px 12px;
+          }
 
-    /* Container */
-    .email-container {
-      max-width: 600px;
-      margin: 40px auto;
-      padding: 30px;
-      background-color: var(--accentLight);
-      border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-      text-align: center;
-    }
+          .email-card {
+            max-width: 640px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, #f8ecd0, #e8d3a8);
+            border-radius: 20px;
+            border: 1px solid rgba(75, 54, 33, 0.35);
+            box-shadow:
+              0 22px 60px rgba(75, 54, 33, 0.45),
+              0 0 0 1px rgba(232, 216, 180, 0.9);
+            overflow: hidden;
+          }
 
-    /* Header */
-    .email-header {
-      font-size: 28px;
-      font-weight: bold;
-      color: var(--accentDark);
-      margin-bottom: 20px;
-    }
+          .email-header {
+            padding: 26px 28px 10px;
+            border-bottom: 1px solid rgba(75, 54, 33, 0.15);
+          }
 
-    /* Highlight */
-    .highlight {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: var(--highlight);
-      color: var(--accentDark);
-      border-radius: 6px;
-      font-weight: bold;
-      margin-bottom: 20px;
-      font-size: 16px;
-    }
+          .brand-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 12px;
+            border-radius: 999px;
+            background: rgba(75, 54, 33, 0.06);
+            border: 1px solid rgba(75, 54, 33, 0.35);
+            color: #5c4630;
+            font-size: 11px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+          }
 
-    /* Paragraph */
-    .email-body {
-      font-size: 16px;
-      line-height: 1.6;
-      color: var(--textDark);
-      margin-bottom: 30px;
-    }
+          .brand-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #e1c373;
+            box-shadow: 0 0 0 4px rgba(225, 195, 115, 0.45);
+          }
 
-    /* CTA Button */
-    .cta-button {
-      display: inline-block;
-      padding: 12px 30px;
-      background-color: var(--accentDark);
-      color: #fff;
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 8px;
-      transition: background-color 0.2s ease;
-    }
+          .email-title {
+            margin-top: 18px;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            color: #3a2414;
+          }
 
-    .cta-button:hover {
-      background-color: var(--accentLight);
-    }
+          .email-subtitle {
+            margin-top: 6px;
+            font-size: 14px;
+            color: #6f5640;
+          }
 
-    /* Footer */
-    .email-footer {
-      font-size: 12px;
-      color: var(--accentDark);
-      margin-top: 40px;
-    }
+          .email-body {
+            padding: 22px 28px 10px;
+            font-size: 14px;
+            line-height: 1.7;
+            color: #3b2616;
+          }
 
-    /* Responsive */
-    @media (max-width: 480px) {
-      .email-container {
-        padding: 20px;
-      }
+          .highlight-box {
+            margin: 18px 0 16px;
+            padding: 12px 14px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(140, 113, 83, 0.5);
+          }
 
-      .email-header {
-        font-size: 24px;
-      }
+          .highlight-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #8c7153;
+            margin-bottom: 4px;
+          }
 
-      .highlight {
-        font-size: 14px;
-        padding: 8px 16px;
-      }
+          .highlight-text {
+            font-size: 13px;
+            color: #5c4630;
+          }
 
-      .email-body {
-        font-size: 14px;
-      }
+          .cta-wrapper {
+            padding: 12px 28px 26px;
+          }
 
-      .cta-button {
-        padding: 10px 20px;
-        font-size: 14px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="email-container">
-    <div class="email-header">Welcome to CastL!</div>
-    <div class="highlight">Successful Registration</div>
-    <div class="email-body">
-      Thank you for joining our platform. You can now explore all the features CastL offers!<br><br>
-      Get started by visiting your account dashboard and discovering your new experience.
-    </div>
-    <a href="https://castl.com/dashboard" class="cta-button">Go to Dashboard</a>
-    <div class="email-footer">© 2026 CastL. All rights reserved.</div>
-  </div>
-</body>
-</html>
+          .cta-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 11px 26px;
+            border-radius: 999px;
+            border: 0;
+            background: linear-gradient(135deg, #8c7153, #a7885f);
+            color: #fff !important;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            box-shadow:
+              0 14px 30px rgba(75, 54, 33, 0.55),
+              inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+          }
+
+          .cta-icon {
+            font-size: 14px;
+          }
+
+          .secondary-link {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #6f5640;
+          }
+
+          .secondary-link a {
+            color: #8c7153;
+            text-decoration: none;
+          }
+
+          .secondary-link a:hover {
+            text-decoration: underline;
+          }
+
+          .email-footer {
+            padding: 14px 28px 24px;
+            border-top: 1px solid rgba(75, 54, 33, 0.18);
+            font-size: 11px;
+            color: #7b6347;
+            background: #e0cfa4;
+          }
+
+          @media (max-width: 480px) {
+            .email-card {
+              margin: 0 4px;
+            }
+
+            .email-header,
+            .email-body,
+            .cta-wrapper,
+            .email-footer {
+              padding-left: 18px;
+              padding-right: 18px;
+            }
+
+            .email-title {
+              font-size: 20px;
+            }
+          }
+        </style>
+      </head>
+      <body>
+        <div class="email-root">
+          <div class="email-card">
+            <div class="email-header">
+              <div class="brand-pill">
+                <span class="brand-dot"></span>
+                <span>CastL account</span>
+              </div>
+              <div class="email-title">Registration successful</div>
+              <div class="email-subtitle">
+                Your CastL account is now ready. You can log in and start your adventure.
+              </div>
+            </div>
+
+            <div class="email-body">
+              <p>Hi ${username || "Explorer"},</p>
+              <p>
+                Thank you for joining <strong>CastL</strong>. Your account has been created
+                successfully with the email address <strong>${email}</strong>.
+              </p>
+
+              <div class="highlight-box">
+                <div class="highlight-title">Next steps</div>
+                <div class="highlight-text">
+                  Use the button below to return to the CastL site and log in with your new account.
+                </div>
+              </div>
+
+              <p>
+                If you did not create this account, you can safely ignore this message.
+              </p>
+            </div>
+
+            <div class="cta-wrapper">
+              <a
+                href="http://localhost:3000/login"
+                class="cta-button"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span>Back to CastL</span>
+                <span class="cta-icon">⮕</span>
+              </a>
+              <div class="secondary-link">
+                Or open <a href="https://dongesz.com" target="_blank" rel="noopener noreferrer">castl.com</a> in your browser.
+              </div>
+            </div>
+
+            <div class="email-footer">
+              This is an automatic message about your CastL account registration.
+              Please do not reply to this email.<br />
+              © 2026 CastL. All rights reserved.
+            </div>
+          </div>
+        </div>
+      </body>
+      </html>
       `
     };
 
@@ -236,24 +341,35 @@ export default function AuthPage({ setshowAdminPanel }) {
         data
       );
 
-      const emailSender = await axios.post(
-        "https://dongesz.com/api/main/Email",
-        emailData
-      );
+      if (res.data.success) {
+        // Csak sikeres regisztráció után küldünk emailt
+        const emailSender = await axios.post(
+          "https://dongesz.com/api/main/Email",
+          emailData
+        );
 
-      if (res.data.success && emailSender.data.success) {
-        setSuccessMessage("Successfully registered, check your email");
-        setErrorMessage("");
-        setTimeout(() => {
-          navigate("/login");
-        }, 1500);
+        if (emailSender.data.success) {
+          setErrorMessage("");
+
+          setTimeout(() => {
+            setSuccessMessage("Successfully registered, check your email");
+            setMode("login");
+            setIsRegistering(false);
+          }, 2000);
+        } else {
+          setErrorMessage("Registration succeeded, but email sending failed.");
+          setSuccessMessage("");
+          setIsRegistering(false);
+        }
       } else {
         setErrorMessage(res.data.message || "Registration failed!");
         setSuccessMessage("");
+        setIsRegistering(false);
       }
     } catch (error) {
       console.error("Register error:", error.response?.data || error.message);
       setErrorMessage(error.response?.data?.message || "Failed Registration!");
+      setIsRegistering(false);
     }
   }
 
@@ -424,8 +540,19 @@ export default function AuthPage({ setshowAdminPanel }) {
                 />
 
 
-                <button type="submit" disabled={!doPasswordsMatch} className="btn-pill btn-pill--primary">
-                  Register
+                <button
+                  type="submit"
+                  disabled={!doPasswordsMatch || isRegistering}
+                  className="btn-pill btn-pill--primary"
+                >
+                  {isRegistering ? (
+                    <span className="btn-loading">
+                      <span className="spinner" />
+                      <span>Registering...</span>
+                    </span>
+                  ) : (
+                    "Register"
+                  )}
                 </button>
               </form>
             )}

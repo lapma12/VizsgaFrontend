@@ -43,7 +43,7 @@
   width: clamp(11rem, 30vw, 17rem);
   margin-bottom: 0.75rem;
   margin-top: -2.5rem;
-  filter: drop-shadow(0 16px 26px rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(0 30px 10px rgba(0, 0, 0, 0.6));
   animation: logoFloat 4600ms ease-in-out infinite;
 }
 
@@ -231,7 +231,7 @@
 
   .homepage-logo {
     width: 220px;
-    margin-top: -2rem;
+    margin-top: 0rem;
   }
 
   .homepage-title {
