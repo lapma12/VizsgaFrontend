@@ -9,6 +9,7 @@ import { IoMdSettings } from "react-icons/io";
 import { BsTable } from "react-icons/bs";
 import { MdAccountCircle } from "react-icons/md";
 import { IoLogoGameControllerB } from "react-icons/io";
+import { FaRegNewspaper } from "react-icons/fa6";
 import { RiTwitterXFill } from "react-icons/ri";
 import ConfirmModal from "./ConfirmModal";
 
@@ -180,6 +181,12 @@ function Navbar({ loginIn, setloginIn, userDataState, showAdminpanel, setshowAdm
             <FaRegMessage />
           </span>
           About
+        </NavLink>
+        <NavLink to="/news" onClick={closeNavbar}>
+          <span className="icon">
+            <FaRegNewspaper />
+          </span>
+          News
         </NavLink>
         <NavLink to="/scoreboard" onClick={closeNavbar}>
           <span className="icon">

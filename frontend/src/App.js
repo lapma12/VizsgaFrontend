@@ -3,6 +3,7 @@ import Navbar from "./Component/Navbar";
 import Footer from "./Component/Footer";
 import Home from "./Pages/HomePage";
 import About from "./Pages/AboutPage";
+import NewsPage from "./Pages/NewsPage";
 import Scoreboard from "./Pages/ScoreBoardPage";
 import NotFound from "./Pages/NotFound";
 import Game from "./Pages/GamePage";
@@ -30,6 +31,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<AuthPage setshowAdminPanel={setshowAdminPanel} />} />
             <Route path="/about" element={<About />} />
+            <Route path="/news" element={<NewsPage />} />
             <Route path="/scoreboard" element={<Scoreboard />} />
             <Route path="/game" element={<Game />} />
             <Route path="/account" element={<Account setloginIn={setloginIn} setuserDataState={setuserDataState} showAdminpanel={showAdminpanel} />} />
