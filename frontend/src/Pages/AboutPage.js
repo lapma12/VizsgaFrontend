@@ -28,7 +28,7 @@ const AboutPage = () => {
         <section className="about-header">
           <h1>About us</h1>
           <p>
-            Welcome to the website of our 3D game development team! Our goal is to
+            Welcome to the website of our 2D game development team! Our goal is to
             create a unique, immersive experience where gameplay, visuals and
             technology work perfectly together.
           </p>
@@ -44,7 +44,7 @@ const AboutPage = () => {
               competition and a rewarding progression system.
             </p>
             <p>
-              Behind the scenes we combine a custom 3D environment with a modern
+              Behind the scenes we combine a custom 2D environment with a modern
               web experience. That means fast loading, responsive design and a
               consistent visual style across the whole site.
             </p>

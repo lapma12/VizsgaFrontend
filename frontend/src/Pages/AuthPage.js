@@ -342,7 +342,7 @@ export default function AuthPage({ setshowAdminPanel }) {
       );
 
       if (res.data.success) {
-        // Csak sikeres regisztráció után küldünk emailt
+        
         const emailSender = await axios.post(
           "https://dongesz.com/api/main/Email",
           emailData
