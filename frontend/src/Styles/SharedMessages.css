@@ -14,7 +14,8 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   z-index: 1000;
   max-width: 90vw;
-  min-width: 280px;
+  min-width: 0;
+  width: auto;
   border: 3px solid;
   font-weight: 600;
   font-size: 1rem;
@@ -140,4 +141,54 @@
 .shared-modal__btn--danger:hover {
   background: #a78b68;
   transform: translateY(-2px);
+}
+
+/* --- Responsive tweaks for small screens --- */
+@media (max-width: 600px) {
+  .shared-toast {
+    top: 1rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    width: calc(100vw - 2rem);
+    max-width: 100%;
+  }
+
+  .shared-toast__btn {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.9rem;
+  }
+
+  .shared-modal-overlay {
+    padding: 0.75rem;
+  }
+
+  .shared-modal {
+    padding: 1.5rem 1.25rem;
+    border-width: 3px;
+    max-width: 100%;
+  }
+
+  .shared-modal__message {
+    font-size: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .shared-modal__actions {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 420px) {
+  .shared-modal__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .shared-modal__btn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    padding: 0.6rem 1rem;
+    font-size: 0.95rem;
+  }
 }

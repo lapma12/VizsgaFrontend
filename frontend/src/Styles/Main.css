@@ -189,7 +189,7 @@
     transform: translateY(0) translateZ(0) rotateZ(0deg) scale(1);
   }
   40% {
-    transform: translateY(-16px) translateZ(14px) rotateZ(-0.7deg) scale(1.03);
+    transform: translateY(-12px) translateZ(14px) rotateZ(-0.7deg) scale(1.03);
   }
   60% {
     transform: translateY(-10px) translateZ(10px) rotateZ(0.5deg) scale(1.02);

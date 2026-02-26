@@ -4,27 +4,23 @@
   align-items: center;
   min-height: 100vh;
   width: 100%;
-  padding: 4rem 2rem;
+  padding: 4rem 2rem 5rem;
   background: url("../Img/GameBackground.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
+  background-attachment: fixed;
 }
 
 /* ===== Main Container ===== */
 .game-container {
-  background: linear-gradient(135deg,
-      rgba(232, 216, 180, 0.6),
-      rgba(215, 193, 149, 0.6));
+  background: linear-gradient(135deg, #f3e3c3, #e8d8b4);
   padding: 3rem;
   border-radius: 1.5rem;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-  max-width: 900px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
+  max-width: 1000px;
   width: 100%;
   text-align: center;
-  color: #fff;
-  backdrop-filter: blur(6px);
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: var(--textDark);
+  backdrop-filter: blur(8px);
+  border: 3px solid var(--accentDark);
 }
 
 /* ===== Title ===== */
@@ -40,21 +36,36 @@
 .game-description {
   font-size: 1rem;
   margin-bottom: 2rem;
-  color: #fff;
+  color: #3c2b16;
   line-height: 1.6;
 }
 
 /* ===== Tutorial Section ===== */
 .tutorial-section {
-  margin: 5rem 1;
-  margin-bottom: 2rem;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+  background: radial-gradient(circle at 0% 0%, rgba(225, 195, 115, 0.3), transparent 55%),
+    rgba(140, 113, 83, 0.95);
+  border-radius: 1.25rem;
+  padding: 2.2rem 2rem 2.4rem;
+  border: 1px solid rgba(75, 54, 33, 0.9);
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(0, 0, 0, 0.1);
+  color: #fff;
 }
 
 .tutorial-title {
   font-family: "MedievalSharp", cursive;
   font-size: 2rem;
-  color: var(--accentDark);
+  color: #ffebc0;
   margin-bottom: 1rem;
+}
+
+.tutorial-description {
+  font-size: 0.98rem;
+  margin-bottom: 1.5rem;
+  color: #fdf7eb;
 }
 
 .video-wrapper {
@@ -80,7 +91,7 @@
 
 /* ===== Download Section ===== */
 .download-section {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
 .download-button {
