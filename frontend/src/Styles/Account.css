@@ -20,7 +20,22 @@ body {
   box-shadow: 0 10px 40px rgba(75, 54, 33, 0.4);
   color: var(--textDark);
   font-family: "Poppins", sans-serif;
+  position: relative;
+  overflow: hidden;
   animation: fadeInDown 0.6s ease-in-out;
+}
+
+.account-page::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(225, 195, 115, 0.25), transparent 60%),
+    radial-gradient(circle at 100% 100%, rgba(140, 113, 83, 0.2), transparent 55%);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: -1;
+  animation: floatGlow 12s ease-in-out infinite alternate;
 }
 
 /* === Header === */
@@ -118,17 +133,33 @@ body {
   gap: 0.5rem;
   font-weight: 600;
   box-shadow: 0 4px 0 var(--accentDark);
+  position: relative;
+  overflow: hidden;
 }
 
 .account-menu button:hover {
   background-color: #a78b68;
   transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(75, 54, 33, 0.4);
 }
 
 .account-menu .active {
   background: var(--highlight);
   color: var(--textDark);
   border-color: var(--accentDark);
+  box-shadow: 0 6px 14px rgba(75, 54, 33, 0.5);
+}
+
+.account-menu .active::after {
+  content: "";
+  position: absolute;
+  inset-inline: 14%;
+  bottom: 6px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accentDark), var(--accentLight));
+  transform-origin: center;
+  animation: tabUnderlineIn 0.35s ease-out forwards;
 }
 
 /* === Content === */
@@ -137,6 +168,8 @@ body {
   padding: 2rem;
   border-radius: 1rem;
   border: 2px solid rgba(75, 54, 33, 0.2);
+  box-shadow: 0 14px 32px rgba(75, 54, 33, 0.25);
+  animation: fadeInUp 0.5s ease-out;
 }
 
 /* === Results === */
@@ -161,6 +194,13 @@ body {
   margin-bottom: 0.75rem;
   font-size: 1rem;
   border-left: 4px solid var(--accentLight);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.account-content li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(75, 54, 33, 0.25);
+  background-color: rgba(140, 113, 83, 0.22);
 }
 
 /* === Settings Form === */
@@ -551,6 +591,40 @@ body {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatGlow {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(10px, -8px, 0) scale(1.03);
+  }
+  100% {
+    transform: translate3d(-8px, 10px, 0) scale(1.02);
+  }
+}
+
+@keyframes tabUnderlineIn {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
   }
 }
 
