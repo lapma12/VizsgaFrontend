@@ -133,7 +133,7 @@ function Navbar({ loginIn, setloginIn, userDataState, showAdminpanel, setshowAdm
 
     fetchMe();
     setuserDataState2(userDataState)
-  }, [navigate, setloginIn, setshowAdminPanel, userDataState]);
+  }, [navigate, setloginIn, setshowAdminPanel, userDataState, loginIn]);
 
   return (
     <>

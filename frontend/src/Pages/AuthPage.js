@@ -119,56 +119,31 @@ export default function AuthPage({ setshowAdminPanel }) {
             margin: 0;
             padding: 0;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: radial-gradient(circle at top, #f5e6c9 0, #e8d8b4 40%, #d0bc8a 100%);
+            background: #e8d8b4;
             color: #2d1b0f;
           }
 
           .email-root {
-            padding: 32px 12px;
+            padding: 24px 12px;
           }
 
           .email-card {
-            max-width: 640px;
+            max-width: 560px;
             margin: 0 auto;
-            background: linear-gradient(145deg, #f8ecd0, #e8d3a8);
-            border-radius: 20px;
+            background: #f8ecd0;
+            border-radius: 16px;
             border: 1px solid rgba(75, 54, 33, 0.35);
-            box-shadow:
-              0 22px 60px rgba(75, 54, 33, 0.45),
-              0 0 0 1px rgba(232, 216, 180, 0.9);
+            box-shadow: 0 16px 40px rgba(75, 54, 33, 0.35);
             overflow: hidden;
           }
 
           .email-header {
-            padding: 26px 28px 10px;
+            padding: 20px 22px 10px;
             border-bottom: 1px solid rgba(75, 54, 33, 0.15);
           }
 
-          .brand-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 5px 12px;
-            border-radius: 999px;
-            background: rgba(75, 54, 33, 0.06);
-            border: 1px solid rgba(75, 54, 33, 0.35);
-            color: #5c4630;
-            font-size: 11px;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-          }
-
-          .brand-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 999px;
-            background: #e1c373;
-            box-shadow: 0 0 0 4px rgba(225, 195, 115, 0.45);
-          }
-
           .email-title {
-            margin-top: 18px;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
             letter-spacing: 0.03em;
             color: #3a2414;
@@ -176,47 +151,37 @@ export default function AuthPage({ setshowAdminPanel }) {
 
           .email-subtitle {
             margin-top: 6px;
-            font-size: 14px;
+            font-size: 13px;
             color: #6f5640;
           }
 
           .email-body {
-            padding: 22px 28px 10px;
+            padding: 18px 22px 8px;
             font-size: 14px;
-            line-height: 1.7;
+            line-height: 1.6;
             color: #3b2616;
           }
 
           .highlight-box {
-            margin: 18px 0 16px;
-            padding: 12px 14px;
-            border-radius: 16px;
+            margin: 14px 0 12px;
+            padding: 10px 12px;
+            border-radius: 12px;
             background: rgba(255, 255, 255, 0.7);
             border: 1px solid rgba(140, 113, 83, 0.5);
-          }
-
-          .highlight-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: #8c7153;
-            margin-bottom: 4px;
-          }
-
-          .highlight-text {
             font-size: 13px;
             color: #5c4630;
           }
 
           .cta-wrapper {
-            padding: 12px 28px 26px;
+            padding: 10px 22px 20px;
           }
 
           .cta-button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 11px 26px;
+            gap: 6px;
+            padding: 10px 22px;
             border-radius: 999px;
             border: 0;
             background: linear-gradient(135deg, #8c7153, #a7885f);
@@ -224,54 +189,14 @@ export default function AuthPage({ setshowAdminPanel }) {
             font-weight: 600;
             font-size: 14px;
             text-decoration: none;
-            box-shadow:
-              0 14px 30px rgba(75, 54, 33, 0.55),
-              inset 0 0 0 1px rgba(255, 255, 255, 0.4);
-          }
-
-          .cta-icon {
-            font-size: 14px;
-          }
-
-          .secondary-link {
-            margin-top: 10px;
-            font-size: 12px;
-            color: #6f5640;
-          }
-
-          .secondary-link a {
-            color: #8c7153;
-            text-decoration: none;
-          }
-
-          .secondary-link a:hover {
-            text-decoration: underline;
           }
 
           .email-footer {
-            padding: 14px 28px 24px;
+            padding: 10px 22px 16px;
             border-top: 1px solid rgba(75, 54, 33, 0.18);
             font-size: 11px;
             color: #7b6347;
             background: #e0cfa4;
-          }
-
-          @media (max-width: 480px) {
-            .email-card {
-              margin: 0 4px;
-            }
-
-            .email-header,
-            .email-body,
-            .cta-wrapper,
-            .email-footer {
-              padding-left: 18px;
-              padding-right: 18px;
-            }
-
-            .email-title {
-              font-size: 20px;
-            }
           }
         </style>
       </head>
@@ -279,32 +204,25 @@ export default function AuthPage({ setshowAdminPanel }) {
         <div class="email-root">
           <div class="email-card">
             <div class="email-header">
-              <div class="brand-pill">
-                <span class="brand-dot"></span>
-                <span>CastL account</span>
-              </div>
-              <div class="email-title">Registration successful</div>
+              <div class="email-title">Welcome to CastL</div>
               <div class="email-subtitle">
-                Your CastL account is now ready. You can log in and start your adventure.
+                Your account is ready. You can log in and start playing.
               </div>
             </div>
 
             <div class="email-body">
               <p>Hi ${username || "Explorer"},</p>
               <p>
-                Thank you for joining <strong>CastL</strong>. Your account has been created
-                successfully with the email address <strong>${email}</strong>.
+                Your <strong>CastL</strong> account has been created with the email
+                <strong>${email}</strong>.
               </p>
 
               <div class="highlight-box">
-                <div class="highlight-title">Next steps</div>
-                <div class="highlight-text">
-                  Use the button below to return to the CastL site and log in with your new account.
-                </div>
+                Use the button below to return to CastL and log in with your new account.
               </div>
 
               <p>
-                If you did not create this account, you can safely ignore this message.
+                If you did not create this account, you can ignore this message.
               </p>
             </div>
 
@@ -315,18 +233,12 @@ export default function AuthPage({ setshowAdminPanel }) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <span>Back to CastL</span>
-                <span class="cta-icon">⮕</span>
+                Back to CastL
               </a>
-              <div class="secondary-link">
-                Or open <a href="https://dongesz.com" target="_blank" rel="noopener noreferrer">castl.com</a> in your browser.
-              </div>
             </div>
 
             <div class="email-footer">
-              This is an automatic message about your CastL account registration.
-              Please do not reply to this email.<br />
-              © 2026 CastL. All rights reserved.
+              Automatic message about your CastL registration. Please do not reply.
             </div>
           </div>
         </div>
