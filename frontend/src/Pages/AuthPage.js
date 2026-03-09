@@ -8,7 +8,7 @@ import Toast from "../Component/Toast";
 import { jwtDecode } from "jwt-decode";
 
 
-export default function AuthPage({ setshowAdminPanel }) {
+export default function AuthPage({ setshowAdminPanel , setEmailGet }) {
   const navigate = useNavigate();
   const [mode, setMode] = useState("login");
 
@@ -103,6 +103,7 @@ export default function AuthPage({ setshowAdminPanel }) {
       email: email,
       fullName: username,
     };
+    setEmailGet(email);
 
     const emailData = {
       to: email,

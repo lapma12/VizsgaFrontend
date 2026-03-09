@@ -12,6 +12,7 @@ import { MdAccountCircle } from "react-icons/md";
 import api from "../api/api";
 import Toast from "../Component/Toast";
 import ConfirmModal from "../Component/ConfirmModal";
+import axios from "axios";
 
 const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
   const location = useLocation();
@@ -223,7 +224,7 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
           </h1>
 
           <p className="account-subtitle">
-            Details : {successResult ? resultData.bio : ""}
+            Details : {successResult ? resultData.bio : "" || null}
           </p>
           <p className="account-subtitle">
             Account is created at :{" "}
@@ -264,7 +265,7 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
           <Results resultData={resultData} successResult={successResult} />
         )}
         {activeTab === "settings" && (
-          <Settings resultData={resultData} successResult={successResult} />
+          <Settings resultData={resultData} />
         )}
       </div>
 
@@ -323,6 +324,90 @@ const Settings = ({ resultData }) => {
     let successMessages = [];
     let hasError = false;
 
+    const emailData = {
+      to: resultData.email,
+      subject: "CastL – Password changed successfully",
+      body: `
+  <!doctype html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Password changed</title>
+    <style>
+      body, html {
+        margin: 0;
+        padding: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #e8d8b4;
+        color: #2d1b0f;
+      }
+
+      .email-root {
+        padding: 24px 12px;
+      }
+
+      .email-card {
+        max-width: 560px;
+        margin: 0 auto;
+        background: #f8ecd0;
+        border-radius: 16px;
+        border: 1px solid rgba(75, 54, 33, 0.35);
+        box-shadow: 0 16px 40px rgba(75, 54, 33, 0.35);
+        overflow: hidden;
+      }
+
+      .email-header {
+        padding: 20px 22px 10px;
+        border-bottom: 1px solid rgba(75, 54, 33, 0.15);
+      }
+
+      .email-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: #3a2414;
+      }
+
+      .email-body {
+        padding: 18px 22px;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .email-footer {
+        padding: 10px 22px 16px;
+        border-top: 1px solid rgba(75, 54, 33, 0.18);
+        font-size: 11px;
+        color: #7b6347;
+        background: #e0cfa4;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-root">
+      <div class="email-card">
+        <div class="email-header">
+          <div class="email-title">CastL</div>
+        </div>
+
+        <div class="email-body">
+          <p>Hi ${username || "Explorer"},</p>
+          <p>Your password has been <strong>successfully changed</strong>.</p>
+          <p>If you did not make this change, please secure your account immediately.</p>
+        </div>
+
+        <div class="email-footer">
+          Automatic security notification from CastL.
+        </div>
+      </div>
+    </div>
+  </body>
+  </html>
+  `
+    };
+    console.log(resultData.email);
+
+
     // BIO update
     if (bio !== resultData.bio && bio) {
       try {
@@ -374,9 +459,18 @@ const Settings = ({ resultData }) => {
 
           if (response.data.success) {
             successMessages.push("Password updated successfully");
+
             setOldPassword("");
             setNewPassword("");
             setConfirmPassword("");
+
+            // email küldés külön
+            try {
+              await axios.post("https://dongesz.com/api/main/Email", emailData);
+            } catch (emailError) {
+              console.error("Email sending failed:", emailError);
+            }
+
           } else {
             hasError = true;
             setErrorMessage(response.data.message);

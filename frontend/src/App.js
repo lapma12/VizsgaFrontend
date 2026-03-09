@@ -34,8 +34,8 @@ function App() {
             <Route path="/news" element={<NewsPage />} />
             <Route path="/scoreboard" element={<Scoreboard />} />
             <Route path="/game" element={<Game />} />
-            <Route path="/account" element={<Account setloginIn={setloginIn} setuserDataState={setuserDataState} showAdminpanel={showAdminpanel} />} />
-            <Route path="/admin" element={<AdminRoute> <AdminPage/> </AdminRoute>} />
+            <Route path="/account" element={<Account setloginIn={setloginIn} setuserDataState={setuserDataState} showAdminpanel={showAdminpanel}/>} />
+            <Route path="/admin" element={<AdminRoute> <AdminPage /> </AdminRoute>} />
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<Terms />} />
