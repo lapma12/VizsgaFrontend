@@ -295,7 +295,7 @@ const Results = ({ resultData, successResult }) => (
     <h2>My Results</h2>
     <ul>
       <li>Total Score : {successResult ? resultData.totalScore : ""}</li>
-      <li>Total Xp: {successResult ? resultData.totalXp : ""}</li>
+      <li>Total Kill: {successResult ? resultData.totalKills : ""}</li>
     </ul>
   </div>
 );

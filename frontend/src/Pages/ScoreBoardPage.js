@@ -72,7 +72,7 @@ const Scoreboard = () => {
           Sort by Username
         </button>
         <button className="filter-btn" onClick={() => applyFilter("xp")}>
-          Sort by XP
+          Sort by Kill
         </button>
       </div>
 
@@ -97,7 +97,7 @@ const Scoreboard = () => {
               <th className="p-2">ProfilePic</th>
               <th className="p-2">Username</th>
               <th className="p-2">Score</th>
-              <th className="p-2">XP</th>
+              <th className="p-2">Kills</th>
             </tr>
           </thead>
 
@@ -127,7 +127,7 @@ const Scoreboard = () => {
                   <td className="p-2"><img src={score.profilePictureUrl} alt="Avatar" title="Avatar"/></td>
                   <td className="p-2">{score.name}</td>
                   <td className="p-2 font-bold">{score.totalScore}</td>
-                  <td className="p-2 font-bold">{score.totalXp}</td>
+                  <td className="p-2 font-bold">{score.totalKills}</td>
                 </tr>
               ))
             )}
