@@ -19,6 +19,8 @@
   border: 3px solid;
   font-weight: 600;
   font-size: 1rem;
+  position: fixed;
+  overflow: hidden;
 }
 
 .shared-toast--success {
@@ -39,6 +41,33 @@
 
 .shared-toast__text .message {
   margin: 0;
+}
+
+.shared-toast__progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 6px;
+  width: 100%;
+  background: linear-gradient(90deg, #584836, #8c7153, #bbaa80);
+  transform-origin: left center;
+  animation: shared-toast-progress 1.8s linear forwards;
+}
+
+.shared-toast__progress--register {
+  height: 3px;
+  width: 60%;
+  left: 20%;
+  opacity: 0.9;
+}
+
+@keyframes shared-toast-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
 }
 
 .shared-toast__btn {

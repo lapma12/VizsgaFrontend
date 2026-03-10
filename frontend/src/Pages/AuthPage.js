@@ -33,11 +33,16 @@ export default function AuthPage({ setshowAdminPanel , setEmailGet }) {
 
   const [isRegistering, setIsRegistering] = useState(false);
 
+  // utolsó művelet: "login" vagy "register"
+  const [lastAction, setLastAction] = useState(null);
+
   const doPasswordsMatch = password === confirmPassword;
 
   //LOGIN
   async function handleLogin(e) {
     e.preventDefault();
+
+    setLastAction("login");
 
     const data = {
       userName: userInput,
@@ -86,6 +91,7 @@ export default function AuthPage({ setshowAdminPanel , setEmailGet }) {
 
     if (isRegistering) return;
     setIsRegistering(true);
+    setLastAction("register");
 
     // Példa: password confirm ellenőrzés
     const doPasswordsMatch = password === confirmPassword;
@@ -297,8 +303,20 @@ export default function AuthPage({ setshowAdminPanel , setEmailGet }) {
 
   return (
     <div className="register-page">
-      <Toast type="success" message={successMessage} onClose={() => setSuccessMessage("")} html />
-      <Toast type="error" message={errorMessage} onClose={() => setErrorMessage("")} html />
+      <Toast
+        type="success"
+        message={successMessage}
+        onClose={() => setSuccessMessage("")}
+        html
+        variant={lastAction === "login" ? "login" : lastAction === "register" ? "register" : undefined}
+      />
+      <Toast
+        type="error"
+        message={errorMessage}
+        onClose={() => setErrorMessage("")}
+        html
+        variant={lastAction === "login" ? "login" : lastAction === "register" ? "register" : undefined}
+      />
 
       <motion.div
         className="auth-card"
