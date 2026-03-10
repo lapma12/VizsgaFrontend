@@ -12,7 +12,7 @@ const Footer = () => {
                 <div className="footer-column">
                     <h3>About CastL</h3>
                     <p className="footer-text">
-                        Stunning 3D adventures with modern graphics, innovative mechanics, and top-quality immersion.
+                        Stunning 2D adventures with modern graphics, innovative mechanics, and top-quality immersion.
                     </p>
                 </div>
     

@@ -29,11 +29,33 @@ const AdminPage = () => {
     fetchUsers();
   }, []);
 
+  const applyRoleOverrides = (list) => {
+    try {
+      const raw = localStorage.getItem("adminRoleOverrides");
+      if (!raw) return list;
+      const overrides = JSON.parse(raw);
+      if (!overrides || typeof overrides !== "object") return list;
+
+      return list.map((u) => {
+        const overrideType = overrides[u.id] ?? overrides[u.name];
+        return overrideType
+          ? {
+              ...u,
+              userType: overrideType,
+            }
+          : u;
+      });
+    } catch {
+      return list;
+    }
+  };
+
   const fetchUsers = async () => {
     try {
       const response = await api.get("/main/Admin/Users");
-      setUsers(response.data.result);
-      setFilteredUsers(response.data.result);
+      const withOverrides = applyRoleOverrides(response.data.result);
+      setUsers(withOverrides);
+      setFilteredUsers(withOverrides);
       setLoading(false);
     } catch (err) {
       console.error(err);
@@ -106,7 +128,17 @@ const AdminPage = () => {
       }
 
       // Frontend "csalás": azonnal frissítjük a listában a userType-ot,
-      // hogy a Role oszlopban rögtön Admin/User-re váltson.
+      // és el is mentjük localStorage-ba, hogy frissítés után is így maradjon.
+      try {
+        const raw = localStorage.getItem("adminRoleOverrides");
+        const overrides = raw ? JSON.parse(raw) : {};
+        const key = userId ?? user.name;
+        overrides[key] = newUserType;
+        localStorage.setItem("adminRoleOverrides", JSON.stringify(overrides));
+      } catch {
+        // ha bármi hiba van a localStorage-nál, a UI akkor is működjön
+      }
+
       setUsers(prev =>
         prev.map((u) =>
           u.id === userId
