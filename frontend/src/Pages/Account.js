@@ -226,7 +226,7 @@ const Account = ({ setloginIn, setuserDataState }) => {
           </h1>
 
           <p className="account-subtitle">
-            Details : {successResult ? resultData.bio : "" || null}
+            Bio : {successResult ? resultData.bio : "" || null}
           </p>
           <p className="account-subtitle">
             Account is created at :{" "}
@@ -267,7 +267,14 @@ const Account = ({ setloginIn, setuserDataState }) => {
           <Results resultData={resultData} successResult={successResult} />
         )}
         {activeTab === "settings" && (
-          <Settings resultData={resultData} />
+          <Settings
+            resultData={resultData}
+            onProfileUpdated={(updater) =>
+              setresultData((prev) =>
+                typeof updater === "function" ? updater(prev) : updater
+              )
+            }
+          />
         )}
       </div>
 
@@ -303,7 +310,7 @@ const Results = ({ resultData, successResult }) => (
   </div>
 );
 
-const Settings = ({ resultData }) => {
+const Settings = ({ resultData, onProfileUpdated }) => {
   const [username, setUsername] = useState("");
   const [newpassword, setNewPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
@@ -417,6 +424,12 @@ const Settings = ({ resultData }) => {
 
         if (response.data.success) {
           successMessages.push("Bio updated successfully");
+          if (onProfileUpdated) {
+            onProfileUpdated((prev) => ({
+              ...prev,
+              bio,
+            }));
+          }
         } else {
           hasError = true;
           setErrorMessage(response.data.message);
@@ -437,6 +450,12 @@ const Settings = ({ resultData }) => {
 
         if (response.data.success) {
           successMessages.push("Username updated successfully");
+          if (onProfileUpdated) {
+            onProfileUpdated((prev) => ({
+              ...prev,
+              name: username,
+            }));
+          }
         } else {
           hasError = true;
           setErrorMessage(response.data.message);
@@ -536,7 +555,7 @@ const Settings = ({ resultData }) => {
               placeholder="Enter new username"
               onChange={(e) => setUsername(e.target.value)}
             />
-            <label>Change your details:</label>
+            <label>Change your bio:</label>
             <textarea
               className="textBoxforDetils"
               value={bio}
