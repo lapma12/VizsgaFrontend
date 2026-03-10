@@ -213,6 +213,39 @@ const AdminPage = () => {
     }));
   };
 
+  const [Title, setTitle] = useState("")
+  const [Image, setImage] = useState(null)
+  const [Content, setContent] = useState("");
+
+  const HandleNewsPost = async (e) => {
+    e.preventDefault();
+
+    if (!Title || !Content || !Image) {
+      setErrorMessage("Please fill all fields and choose an image.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("Title", Title);
+    formData.append("Content", Content);
+    formData.append("Image", Image);
+
+    try {
+      await api.post(`main/News`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      setSuccessMessage("Successfully uploaded!");
+      setErrorMessage("");
+      setTitle("");
+      setContent("");
+      setImage(null);
+    } catch (err) {
+      console.error("Something went wrong:", err);
+      setErrorMessage(err.response?.data?.message || "Something went wrong");
+      setSuccessMessage("");
+    }
+  };
+
 
   const displayUsers = filteredUsers.slice(0, visibleCount);
 
@@ -496,13 +529,15 @@ const AdminPage = () => {
             <p className="admin-newcontent-subtitle">
               Here you will be able to upload things to the new page.
             </p>
-            <form className="admin-newcontent-form">
+            <form className="admin-newcontent-form" onSubmit={HandleNewsPost}>
               <div className="admin-form-row">
                 <label className="admin-form-label">Title</label>
                 <input
                   type="text"
                   className="admin-form-input"
                   placeholder="Enter title..."
+                  value={Title}
+                  onChange={(e) => setTitle(e.target.value)}
                 />
               </div>
               <div className="admin-form-row">
@@ -511,22 +546,39 @@ const AdminPage = () => {
                   className="admin-form-input admin-form-textarea"
                   placeholder="Short description..."
                   rows={4}
+                  value={Content}
+                  onChange={(e) => setContent(e.target.value)}
                 />
               </div>
               <div className="admin-form-row">
-                <label className="admin-form-label">Image / file URL</label>
-                <input
-                  type="text"
-                  className="admin-form-input"
-                  placeholder="https://..."
-                />
+                <label className="admin-form-label">Image upload</label>
+                <div className="admin-image-upload">
+                  <label className="admin-image-upload__dropzone">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="admin-image-upload__input"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) setImage(file);
+                      }}
+                    />
+                    <span className="admin-image-upload__icon">📁</span>
+                    <span className="admin-image-upload__text">
+                      {Image ? "Image selected" : "Click to choose an image or drag & drop here"}
+                    </span>
+                  </label>
+                  <p className="admin-image-upload__hint">
+                    Recommended: JPG or PNG, max. 5MB.
+                  </p>
+                </div>
               </div>
               <div className="admin-form-row admin-form-row--actions">
                 <button
-                  type="button"
+                  type="submit"
                   className="save-btn btn-pill admin-form-submit"
                 >
-                  Save (coming soon)
+                  Save
                 </button>
               </div>
             </form>

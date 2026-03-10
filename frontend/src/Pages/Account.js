@@ -124,6 +124,7 @@ const Account = ({ setloginIn, setuserDataState }) => {
         const res = await api.get("/main/Users/me/result");
         setSuccesssResult(true);
         setresultData(res.data.result);
+        
       } catch {
         navigate("/login");
       }

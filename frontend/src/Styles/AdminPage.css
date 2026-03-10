@@ -553,6 +553,52 @@
   min-width: 190px;
 }
 
+/* Image upload blokk – modern dropzone stílus */
+.admin-image-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.admin-image-upload__dropzone {
+  position: relative;
+  border-radius: 14px;
+  border: 2px dashed rgba(88, 72, 54, 0.5);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 1.25rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease,
+    transform 0.1s ease;
+}
+
+.admin-image-upload__dropzone:hover {
+  border-color: #8c7153;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  background: #fff7ea;
+  transform: translateY(-1px);
+}
+
+.admin-image-upload__input {
+  display: none;
+}
+
+.admin-image-upload__icon {
+  font-size: 1.6rem;
+}
+
+.admin-image-upload__text {
+  font-size: 0.9rem;
+  color: #4b3621;
+}
+
+.admin-image-upload__hint {
+  font-size: 0.8rem;
+  color: #6b5a44;
+}
+
 
 @media screen and (max-width: 768px) {
   .admin-container {

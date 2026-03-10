@@ -1,45 +1,33 @@
 import { useLocation } from "react-router-dom";
 import "../Styles/News.css";
+import { useEffect, useState } from "react";
+import api from "../api/api";
 
 const NewsPage = () => {
   const location = useLocation();
+
+  const [newsItems, setNewsItems] = useState([])
 
   if (location.pathname === "/news") {
     document.title = "News";
   }
 
-  const newsItems = [
-    {
-      id: 1,
-      cim: "Ranked mode – first season",
-      title: "Season 1 is live",
-      image:
-        "https://images.pexels.com/photos/7862591/pexels-photo-7862591.jpeg?auto=compress&cs=tinysrgb&w=1200",
-      datum: "2026-02-20",
-      content:
-        "The very first ranked season has started. Climb the ladder, unlock unique cosmetics and show everyone who rules the castle.",
-    },
-    {
-      id: 2,
-      cim: "New arena & visual update",
-      title: "Castle courtyard rework",
-      image:
-        "https://images.pexels.com/photos/235986/pexels-photo-235986.jpeg?auto=compress&cs=tinysrgb&w=1200",
-      datum: "2026-02-10",
-      content:
-        "We rebuilt the main courtyard with better lighting, clearer silhouettes and more readable combat spaces for competitive play.",
-    },
-    {
-      id: 3,
-      cim: "Quality of life patch",
-      title: "Smarter UI & faster matches",
-      image:
-        "https://images.pexels.com/photos/9071736/pexels-photo-9071736.jpeg?auto=compress&cs=tinysrgb&w=1200",
-      datum: "2026-01-28",
-      content:
-        "Shorter queue times, clearer damage numbers and improved keyboard / controller hints for a smoother first‑time experience.",
-    },
-  ];
+  useEffect(() => {
+    async function GetNews() {
+      try {
+        const res = await api.get("main/News");
+        setNewsItems(res.data.result)
+        console.log(res.data.result);
+      }
+      catch (err) {
+        console.log(err);
+      }
+    }
+    GetNews();
+  }, [])
+
+
+
 
   return (
     <div className="news-page">
@@ -58,17 +46,20 @@ const NewsPage = () => {
               <header className="news-card-header">
                 <div className="news-avatar-circle">C</div>
                 <div className="news-header-text">
-                  <h2 className="news-main-title">{item.cim}</h2>
-                  <p className="news-subtitle">{item.title}</p>
+                  <p className="news-main-title">{item.title}</p>
                   <span className="news-date">
-                    {new Date(item.datum).toLocaleDateString()}
+                    {new Date(item.date).toLocaleDateString("hu-HU")}
                   </span>
                 </div>
               </header>
 
               {item.image && (
                 <div className="news-image-wrapper">
-                  <img src={item.image} alt={item.cim} className="news-image" />
+                  <img
+                    src={item.image}
+                    alt={item.cim}
+                    className="news-image"
+                  />
                 </div>
               )}
 
