@@ -54,13 +54,6 @@
   animation: shared-toast-progress 1.8s linear forwards;
 }
 
-.shared-toast__progress--register {
-  height: 3px;
-  width: 60%;
-  left: 20%;
-  opacity: 0.9;
-}
-
 @keyframes shared-toast-progress {
   from {
     transform: scaleX(0);
@@ -107,6 +100,8 @@
   max-width: 420px;
   width: 100%;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  position: relative;
+  overflow: hidden;
 }
 
 .shared-modal__message {
@@ -170,6 +165,17 @@
 .shared-modal__btn--danger:hover {
   background: #a78b68;
   transform: translateY(-2px);
+}
+
+.shared-modal__progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg, #584836, #8c7153, #bbaa80);
+  transform-origin: left center;
+  animation: shared-toast-progress 1.8s linear forwards;
 }
 
 /* --- Responsive tweaks for small screens --- */

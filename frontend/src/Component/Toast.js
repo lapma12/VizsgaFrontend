@@ -6,20 +6,17 @@ export default function Toast({
   message,
   onClose,
   html,
-  variant,
 }) {
-  // Automatikus bezárás: ha van progress csík (variant),
-  // a csík animációjának végén hívjuk az onClose-ot.
+  // Automatikus bezárás minden toastnál – szinkronban az animációval
   useEffect(() => {
-    if (!message || !onClose || !variant) return;
+    if (!message || !onClose) return;
 
-    // időzítés szinkronban a CSS animációval (1.8s)
     const timeout = setTimeout(() => {
       onClose();
     }, 1800);
 
     return () => clearTimeout(timeout);
-  }, [message, onClose, variant]);
+  }, [message, onClose]);
 
   if (!message) return null;
 
@@ -44,11 +41,7 @@ export default function Toast({
         OK
       </button>
 
-      {variant && (
-        <div
-          className={`shared-toast__progress shared-toast__progress--${variant}`}
-        />
-      )}
+      <div className="shared-toast__progress" />
     </div>
   );
 }

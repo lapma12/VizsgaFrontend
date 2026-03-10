@@ -14,6 +14,9 @@ export default function ConfirmModal({
   cancelLabel = "Cancel",
   confirmDanger = false,
   children,
+  // alapból minden confirm modalon legyen csík,
+  // kivéve ahol külön kikapcsoljuk (pl. logout)
+  showProgress = true,
 }) {
   if (!open) return null;
 
@@ -38,6 +41,7 @@ export default function ConfirmModal({
             {confirmLabel}
           </button>
         </div>
+        {showProgress && <div className="shared-modal__progress" />}
       </div>
     </div>
   );

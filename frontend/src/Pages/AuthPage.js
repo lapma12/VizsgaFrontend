@@ -8,7 +8,7 @@ import Toast from "../Component/Toast";
 import { jwtDecode } from "jwt-decode";
 
 
-export default function AuthPage({ setshowAdminPanel , setEmailGet }) {
+export default function AuthPage({ setshowAdminPanel }) {
   const navigate = useNavigate();
   const [mode, setMode] = useState("login");
 
@@ -33,16 +33,11 @@ export default function AuthPage({ setshowAdminPanel , setEmailGet }) {
 
   const [isRegistering, setIsRegistering] = useState(false);
 
-  // utolsó művelet: "login" vagy "register"
-  const [lastAction, setLastAction] = useState(null);
-
   const doPasswordsMatch = password === confirmPassword;
 
   //LOGIN
   async function handleLogin(e) {
     e.preventDefault();
-
-    setLastAction("login");
 
     const data = {
       userName: userInput,
@@ -91,7 +86,6 @@ export default function AuthPage({ setshowAdminPanel , setEmailGet }) {
 
     if (isRegistering) return;
     setIsRegistering(true);
-    setLastAction("register");
 
     // Példa: password confirm ellenőrzés
     const doPasswordsMatch = password === confirmPassword;
@@ -109,7 +103,6 @@ export default function AuthPage({ setshowAdminPanel , setEmailGet }) {
       email: email,
       fullName: username,
     };
-    setEmailGet(email);
 
     const emailData = {
       to: email,
@@ -308,14 +301,12 @@ export default function AuthPage({ setshowAdminPanel , setEmailGet }) {
         message={successMessage}
         onClose={() => setSuccessMessage("")}
         html
-        variant={lastAction === "login" ? "login" : lastAction === "register" ? "register" : undefined}
       />
       <Toast
         type="error"
         message={errorMessage}
         onClose={() => setErrorMessage("")}
         html
-        variant={lastAction === "login" ? "login" : lastAction === "register" ? "register" : undefined}
       />
 
       <motion.div

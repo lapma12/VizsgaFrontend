@@ -142,6 +142,7 @@ function Navbar({ loginIn, setloginIn, userDataState, showAdminpanel, setshowAdm
         message="Do you want to log out?"
         confirmLabel="Log out"
         cancelLabel="Cancel"
+        showProgress={false}
         onConfirm={handleLogout}
         onCancel={() => setLogoutConfirm(false)}
       />

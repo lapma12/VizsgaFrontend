@@ -62,8 +62,9 @@ const AdminPage = () => {
       email: user.email,
       bio: user.bio,
       profilePictureUrl: user.profilePictureUrl,
-      userType: user.type,
-      isAdmin: user.type === "Admin",
+      // backend: user.userType tartalmazza a szerepet
+      userType: user.userType,
+      isAdmin: user.userType === "Admin",
     });
   };
 
@@ -78,13 +79,15 @@ const AdminPage = () => {
   const saveEdit = async (user) => {
     try {
       const userId = user.id;
-      const originalIsAdmin = user.type === "Admin";
+      const originalIsAdmin = user.userType === "Admin";
+      const newUserType = editValues.isAdmin ? "Admin" : "User";
 
       const formData = new FormData();
       formData.append("Name", editValues.name);
       formData.append("Email", editValues.email);
       formData.append("Bio", editValues.bio);
-      formData.append("UserType", editValues.userType);
+      // Role "Yes" esetén az Admin típust küldjük fel
+      formData.append("UserType", newUserType);
 
       if (editValues.profilePictureFile) {
         formData.append("ProfilePicture", editValues.profilePictureFile);
@@ -102,7 +105,38 @@ const AdminPage = () => {
         });
       }
 
-      fetchUsers();
+      // Frontend "csalás": azonnal frissítjük a listában a userType-ot,
+      // hogy a Role oszlopban rögtön Admin/User-re váltson.
+      setUsers(prev =>
+        prev.map((u) =>
+          u.id === userId
+            ? {
+                ...u,
+                name: editValues.name,
+                email: editValues.email,
+                bio: editValues.bio,
+                profilePictureUrl: editValues.previewUrl || editValues.profilePictureUrl,
+                userType: newUserType,
+              }
+            : u
+        )
+      );
+
+      setFilteredUsers(prev =>
+        prev.map((u) =>
+          u.id === userId
+            ? {
+                ...u,
+                name: editValues.name,
+                email: editValues.email,
+                bio: editValues.bio,
+                profilePictureUrl: editValues.previewUrl || editValues.profilePictureUrl,
+                userType: newUserType,
+              }
+            : u
+        )
+      );
+
       setEditingUser(null);
       setSuccessMessage("User saved successfully!");
       setErrorMessage("");
@@ -357,12 +391,12 @@ const AdminPage = () => {
                                 ) : (
                                   <span
                                     className={
-                                      user.type === "Admin"
+                                      user.userType === "Admin"
                                         ? "admin-badge admin-badge--admin"
                                         : "admin-badge admin-badge--user"
                                     }
                                   >
-                                    {user.type === "Admin" ? "Admin" : "User"}
+                                    {user.userType === "Admin" ? "Admin" : "User"}
                                   </span>
                                 )}
                               </td>

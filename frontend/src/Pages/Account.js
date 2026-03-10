@@ -14,7 +14,7 @@ import Toast from "../Component/Toast";
 import ConfirmModal from "../Component/ConfirmModal";
 import axios from "axios";
 
-const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
+const Account = ({ setloginIn, setuserDataState }) => {
   const location = useLocation();
 
   const [activeTab, setActiveTab] = useState("results");
@@ -151,6 +151,7 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
         message="Do you want to log out?"
         confirmLabel="Log out"
         cancelLabel="Cancel"
+        showProgress={false}
         onConfirm={handleLogout}
         onCancel={() => setLogoutConfirm(false)}
       />
@@ -161,6 +162,7 @@ const Account = ({ setloginIn, setuserDataState, showAdminpanel }) => {
         confirmLabel="Delete Account"
         cancelLabel="Cancel"
         confirmDanger
+        showProgress={false}
         onConfirm={handleDeleteAccount}
         onCancel={() => {
           setDeleteConfirm(false);
