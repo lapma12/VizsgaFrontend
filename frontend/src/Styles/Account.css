@@ -7,9 +7,23 @@
   --highlight: #e1c373;
   --textDark: #2d1b0f;
 }
+html, body {
+  margin: 0;
+  min-height: 100%;
+}
 
 body {
-  background-color: var(--accentLight) !important;
+  min-height: 100vh;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("../Img/ProfilePage.png") no-repeat center center;
+  background-size: cover;
+  z-index: -1;
 }
 .account-page {
   max-width: 900px;

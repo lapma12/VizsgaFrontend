@@ -15,7 +15,9 @@
   align-items: center;
   min-height: 100vh;
   padding: 3rem 1rem;
-  background: radial-gradient(circle at top, #f3e3c3 0, var(--bgColor) 45%, #c6ac7a 100%);
+  background: url("../Img/loginpage.png");
+  background-repeat: no-repeat;
+  background-size: cover;
   position: relative;
   overflow: hidden;
   font-family: "Poppins", sans-serif;
