@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import "../../Styles/AdminPage.css";
 import { useLocation } from "react-router-dom";
@@ -25,9 +25,7 @@ const AdminPage = () => {
   const [confirmModal, setConfirmModal] = useState({ open: false, message: "", onConfirm: null });
   const [activeTab, setActiveTab] = useState("users"); // "users" | "newContent"
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+
 
   const applyRoleOverrides = (list) => {
     try {
@@ -40,17 +38,16 @@ const AdminPage = () => {
         const overrideType = overrides[u.id] ?? overrides[u.name];
         return overrideType
           ? {
-              ...u,
-              userType: overrideType,
-            }
+            ...u,
+            userType: overrideType,
+          }
           : u;
       });
     } catch {
       return list;
     }
   };
-
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     try {
       const response = await api.get("/main/Admin/Users");
       const withOverrides = applyRoleOverrides(response.data.result);
@@ -62,8 +59,11 @@ const AdminPage = () => {
       setError(true);
       setLoading(false);
     }
-  };
+  }, []);
 
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
   const handleSearch = () => {
     const filtered = users.filter((user) =>
       user.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -126,9 +126,6 @@ const AdminPage = () => {
           userName: user.name,
         });
       }
-
-      // Frontend "csalás": azonnal frissítjük a listában a userType-ot,
-      // és el is mentjük localStorage-ba, hogy frissítés után is így maradjon.
       try {
         const raw = localStorage.getItem("adminRoleOverrides");
         const overrides = raw ? JSON.parse(raw) : {};
@@ -136,20 +133,19 @@ const AdminPage = () => {
         overrides[key] = newUserType;
         localStorage.setItem("adminRoleOverrides", JSON.stringify(overrides));
       } catch {
-        // ha bármi hiba van a localStorage-nál, a UI akkor is működjön
       }
 
       setUsers(prev =>
         prev.map((u) =>
           u.id === userId
             ? {
-                ...u,
-                name: editValues.name,
-                email: editValues.email,
-                bio: editValues.bio,
-                profilePictureUrl: editValues.previewUrl || editValues.profilePictureUrl,
-                userType: newUserType,
-              }
+              ...u,
+              name: editValues.name,
+              email: editValues.email,
+              bio: editValues.bio,
+              profilePictureUrl: editValues.previewUrl || editValues.profilePictureUrl,
+              userType: newUserType,
+            }
             : u
         )
       );
@@ -158,13 +154,13 @@ const AdminPage = () => {
         prev.map((u) =>
           u.id === userId
             ? {
-                ...u,
-                name: editValues.name,
-                email: editValues.email,
-                bio: editValues.bio,
-                profilePictureUrl: editValues.previewUrl || editValues.profilePictureUrl,
-                userType: newUserType,
-              }
+              ...u,
+              name: editValues.name,
+              email: editValues.email,
+              bio: editValues.bio,
+              profilePictureUrl: editValues.previewUrl || editValues.profilePictureUrl,
+              userType: newUserType,
+            }
             : u
         )
       );
@@ -441,8 +437,8 @@ const AdminPage = () => {
                                   <button
                                     type="button"
                                     className={`admin-toggle-btn ${editValues.isAdmin
-                                        ? "admin-toggle-btn--yes"
-                                        : "admin-toggle-btn--no"
+                                      ? "admin-toggle-btn--yes"
+                                      : "admin-toggle-btn--no"
                                       }`}
                                     onClick={() =>
                                       setEditValues((prev) => ({
