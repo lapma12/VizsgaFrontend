@@ -312,6 +312,7 @@ const Results = ({ resultData, successResult }) => (
 );
 
 const Settings = ({ resultData, onProfileUpdated }) => {
+  const MAX_BIO_LENGTH = 100;
   const [username, setUsername] = useState("");
   const [newpassword, setNewPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
@@ -560,8 +561,12 @@ const Settings = ({ resultData, onProfileUpdated }) => {
             <textarea
               className="textBoxforDetils"
               value={bio}
+              maxLength={MAX_BIO_LENGTH}
               onChange={(e) => setBio(e.target.value)}
             />
+            <p className="bio-length-info">
+              {bio.length} / {MAX_BIO_LENGTH} characters
+            </p>
           </div>
 
           {/* RIGHT COLUMN – PASSWORDS */}

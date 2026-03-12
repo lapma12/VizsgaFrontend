@@ -259,6 +259,13 @@ body::before {
   outline: none;
   box-shadow: 0 0 8px rgba(225, 195, 115, 0.4);
 }
+
+.bio-length-info {
+  font-size: 0.8rem;
+  color: #6b5a44;
+  margin-top: 0.25rem;
+  text-align: right;
+}
 .account-content input:focus {
   border-color: var(--highlight);
   outline: none;
