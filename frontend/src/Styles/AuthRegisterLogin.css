@@ -646,6 +646,42 @@
   text-decoration: underline;
   cursor: pointer;
 }
+
+/* Terms of Use row */
+.terms-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.terms-row input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  margin: 0;
+}
+
+.terms-row label {
+  font-size: 0.9rem;
+  color: var(--textDark);
+  cursor: pointer;
+  text-align: left;
+  margin: 0;
+}
+
+.terms-link {
+  color: var(--accentLight);
+  text-decoration: underline;
+}
+
+.terms-error {
+  font-size: 0.8rem;
+  color: #b71c1c;
+  margin-top: 0.25rem;
+  text-align: center;
+}
 /* === MOBILE & TABLET === */
 @media (max-width: 992px) {
   .auth-card {

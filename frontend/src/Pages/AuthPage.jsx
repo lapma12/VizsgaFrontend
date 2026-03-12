@@ -32,6 +32,7 @@ export default function AuthPage({ setshowAdminPanel }) {
   const [errorMessage, setErrorMessage] = useState("");
 
   const [isRegistering, setIsRegistering] = useState(false);
+  const [acceptTerms, setAcceptTerms] = useState(false);
 
   const doPasswordsMatch = password === confirmPassword;
 
@@ -86,6 +87,13 @@ export default function AuthPage({ setshowAdminPanel }) {
 
     if (isRegistering) return;
     setIsRegistering(true);
+
+    if (!acceptTerms) {
+      setErrorMessage("You must accept the Terms of Use before registering.");
+      setSuccessMessage("");
+      setIsRegistering(false);
+      return;
+    }
 
     // Példa: password confirm ellenőrzés
     const doPasswordsMatch = password === confirmPassword;
@@ -461,10 +469,27 @@ export default function AuthPage({ setshowAdminPanel }) {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
 
+                <div className="terms-row">
+                  <input
+                    id="acceptTerms"
+                    type="checkbox"
+                    checked={acceptTerms}
+                    onChange={(e) => setAcceptTerms(e.target.checked)}
+                  />
+                  <label htmlFor="acceptTerms">
+                    I accept the{" "}
+                    <a href="/terms" className="terms-link">
+                      Terms of Use
+                    </a>
+                  </label>
+                </div>
+                <p className="terms-error">
+                  You must accept the Terms of Use to create an account.
+                </p>
 
                 <button
                   type="submit"
-                  disabled={!doPasswordsMatch || isRegistering}
+                  disabled={!doPasswordsMatch || isRegistering || !acceptTerms}
                   className="btn-pill btn-pill--primary"
                 >
                   {isRegistering ? (
