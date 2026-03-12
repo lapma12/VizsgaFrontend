@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import "../Styles/Game.css";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import tutorialvideo  from "../assets/CastLTutorial.mp4"
+import tutorialvideo from "../assets/CastLTutorial.mp4";
 
 function GamePage() {
   const location = useLocation();
@@ -46,14 +46,11 @@ function GamePage() {
         {/* ===== Download Section ===== */}
         <div className="download-section">
           <p className="game-description">
-            Ready to start your adventure?
+            Ready to start your adventure? Download the game archive, extract it,
+            then run the <strong>.exe</strong> file inside the folder.
           </p>
 
-          <a
-            href="/assets/your-game.zip"
-            className="download-button"
-            download
-          >
+          <a href="/src/assets/Castlv1.rar" className="download-button" download="CastL_Game.rar">
             🎮 Download the Game
           </a>
         </div>

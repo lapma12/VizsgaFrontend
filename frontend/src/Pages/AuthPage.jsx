@@ -228,7 +228,7 @@ export default function AuthPage({ setshowAdminPanel }) {
 
             <div class="cta-wrapper">
               <a
-                href="http://localhost:3000/login"
+                href="dongesz.com/login"
                 class="cta-button"
                 target="_blank"
                 rel="noopener noreferrer"
