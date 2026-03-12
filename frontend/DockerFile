@@ -1,0 +1,25 @@
+# 1. build stage – bun-nel buildeljük a React appot
+FROM oven/bun:1.1 AS build
+WORKDIR /app
+
+# Ha van bun.lockb, érdemes azt is másolni
+COPY package.json bun.lockb* ./
+RUN bun install --frozen-lockfile
+
+COPY . .
+# Vite: bun run build -> dist mappa
+RUN bun run build
+
+# 2. runtime stage – Nginx szolgálja ki a statikus fájlokat
+FROM nginx:alpine
+
+# Töröljük az alapértelmezett configot, hogy biztosan a sajátunk menjen
+RUN rm /etc/nginx/conf.d/default.conf
+
+# Egyszerű nginx config a frontendnek
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Buildelt static fájlok bemásolása
+COPY --from=build /app/dist /usr/share/nginx/html
+
+EXPOSE 80
