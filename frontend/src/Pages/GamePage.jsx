@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import "../Styles/Game.css";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import tutorialvideo from "../assets/CastLTutorial.mp4";
 import gameArchive from "../assets/Castlv1.rar";
 
 function GamePage() {
@@ -22,40 +21,32 @@ function GamePage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <h1 className="game-title">Welcome to the World of the Game!</h1>
+        <h1 className="game-title">CastL Game</h1>
 
-        <p className="game-description">
-          Are you ready to enter an exciting universe full of challenges?
-          In this game, you write your own story. Fight, explore, and
-          experience the adventure in a completely new way!
-        </p>
-
-        {/* ===== Tutorial Section ===== */}
         <div className="tutorial-section">
-          <h2 className="tutorial-title">🎥 Watch the Tutorial</h2>
+          <h2 className="tutorial-title">🎥 How to play</h2>
           <p className="tutorial-description">
-            Learn the basics before you jump into the action!
+            Watch the short tutorial, then download and start the game.
           </p>
           <div className="video-wrapper">
-            <video controls>
-              <source src={tutorialvideo} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            <iframe
+              src="https://www.youtube.com/embed/mPzMe115FKU"
+              title="CastL Tutorial"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
           </div>
         </div>
 
-        {/* ===== Download Section ===== */}
         <div className="download-section">
           <p className="game-description">
-            Ready to start your adventure? Download the game archive, extract it,
-            then run the <strong>.exe</strong> file inside the folder.
+            Download the game, extract the archive, then run the <strong>.exe</strong> file.
           </p>
 
           <a href={gameArchive} className="download-button" download="CastL_Game.rar">
             🎮 Download the Game
           </a>
         </div>
-
       </motion.div>
     </div>
   );

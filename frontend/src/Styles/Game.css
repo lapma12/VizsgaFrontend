@@ -9,6 +9,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
+  box-sizing: border-box;
 }
 
 /* ===== Main Container ===== */
@@ -17,12 +18,13 @@
   padding: 3rem;
   border-radius: 1.5rem;
   box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
-  max-width: 1000px;
+  max-width: 900px;
   width: 100%;
   text-align: center;
   color: var(--textDark);
   backdrop-filter: blur(8px);
   border: 3px solid var(--accentDark);
+  margin: 0 auto;
 }
 
 /* ===== Title ===== */
@@ -44,30 +46,21 @@
 
 /* ===== Tutorial Section ===== */
 .tutorial-section {
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem;
-  background: radial-gradient(circle at 0% 0%, rgba(225, 195, 115, 0.3), transparent 55%),
-    rgba(140, 113, 83, 0.95);
-  border-radius: 1.25rem;
-  padding: 2.2rem 2rem 2.4rem;
-  border: 1px solid rgba(75, 54, 33, 0.9);
-  box-shadow:
-    0 12px 32px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(0, 0, 0, 0.1);
-  color: #fff;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .tutorial-title {
   font-family: "MedievalSharp", cursive;
   font-size: 2rem;
-  color: #ffebc0;
-  margin-bottom: 1rem;
+  color: var(--accentDark);
+  margin-bottom: 0.75rem;
 }
 
 .tutorial-description {
   font-size: 0.98rem;
-  margin-bottom: 1.5rem;
-  color: #fdf7eb;
+  margin-bottom: 1rem;
+  color: #3c2b16;
 }
 
 .video-wrapper {
@@ -123,6 +116,11 @@
 
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
+  .game-page {
+    justify-content: center;
+    padding: 3rem 1.5rem 4rem;
+  }
+
   .game-title {
     font-size: 2.5rem;
   }

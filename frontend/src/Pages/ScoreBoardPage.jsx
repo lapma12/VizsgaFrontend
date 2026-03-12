@@ -37,9 +37,10 @@ const Scoreboard = () => {
     fetchScoreboardPlayer();
   }, []);
 
-  const handleSearch = () => {
+  const handleSearch = (value) => {
+    const term = (value ?? searchTerm).toLowerCase();
     const filtered = scores.filter((score) =>
-      score.name.toLowerCase().includes(searchTerm.toLowerCase())
+      score.name.toLowerCase().includes(term)
     );
     setFilteredScores(filtered);
   };
@@ -82,7 +83,17 @@ const Scoreboard = () => {
           className="search"
           placeholder="Type player name..."
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(e) => {
+            const value = e.target.value;
+            setSearchTerm(value);
+            handleSearch(value);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              handleSearch();
+            }
+          }}
         />
         <button className="filter-btn mb-4" onClick={handleSearch}>
           Search

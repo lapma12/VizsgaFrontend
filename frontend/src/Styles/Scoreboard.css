@@ -2,6 +2,7 @@
 .scoreboard-container {
   background: url("../Img/ScoreboardBackground.png") no-repeat center center;
   background-size: cover;
+  background-attachment: fixed;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -27,7 +28,6 @@
   margin-bottom: 1.5rem;
   flex-wrap: wrap;
   gap: 0.5rem;
-  
 }
 
 .search {
@@ -35,11 +35,34 @@
   background-color: #bbaa80;
   border: 2px solid #584836;
   width: 30rem;
-  max-width: 90%;
+  max-width: 100%;
   border-radius: 10px;
   font-size: 1rem;
   color: #fff;
   transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .searchBar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search {
+    width: 100%;
+  }
+
+  /* csak a kereső gomb legyen teljes szélességű mobilon */
+  .searchBar .filter-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* a felső filter gombok maradjanak kompaktak */
+  .filter-buttons .filter-btn {
+    width: auto;
+  }
 }
 
 .search::placeholder {
