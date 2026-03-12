@@ -22,7 +22,10 @@ const AdminPage = () => {
   const [visibleCount, setVisibleCount] = useState(10);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [confirmModal, setConfirmModal] = useState({ open: false, message: "", onConfirm: null });
+  const [confirmModal, setConfirmModal] = useState({ open: false, message: "" });
+  const [userToDelete, setUserToDelete] = useState(null);
+  const [deleteReason, setDeleteReason] = useState("");
+  const [deleteLog, setDeleteLog] = useState([]);
   const [activeTab, setActiveTab] = useState("users"); // "users" | "newContent"
 
 
@@ -54,6 +57,19 @@ const AdminPage = () => {
       setUsers(withOverrides);
       setFilteredUsers(withOverrides);
       setLoading(false);
+
+      // load local delete/bann log for admin view
+      try {
+        const raw = localStorage.getItem("adminDeleteLog");
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) {
+            setDeleteLog(parsed);
+          }
+        }
+      } catch {
+        // ignore log errors
+      }
     } catch (err) {
       console.error(err);
       setError(true);
@@ -175,28 +191,163 @@ const AdminPage = () => {
     }
   };
 
-  const openConfirm = (message, onConfirm) => {
-    setConfirmModal({ open: true, message, onConfirm });
+  const openConfirm = (message) => {
+    setConfirmModal({ open: true, message });
   };
 
   const closeConfirm = () => {
-    setConfirmModal({ open: false, message: "", onConfirm: null });
+    setConfirmModal({ open: false, message: "" });
+    setUserToDelete(null);
+    setDeleteReason("");
   };
 
-  const deleteUser = async (userId) => {
-    openConfirm("Are you sure you want to delete this user?", async () => {
-      closeConfirm();
-      try {
-        await api.delete(`main/Admin/Users/${userId}`);
-        fetchUsers();
-        setSuccessMessage("User deleted successfully!");
-        setErrorMessage("");
-      } catch (err) {
-        console.error("Error deleting user:", err);
-        setErrorMessage(err.response?.data?.message || "Failed to delete user.");
-        setSuccessMessage("");
+  const handleConfirmDelete = async () => {
+    if (!userToDelete || !userToDelete.email) {
+      setErrorMessage("User data is missing, cannot delete.");
+      return;
+    }
+
+    if (!deleteReason.trim()) {
+      setErrorMessage("Please provide a reason for the deletion.");
+      return;
+    }
+
+    closeConfirm();
+
+    try {
+      await api.delete(`main/Admin/Users/${userToDelete.id}`);
+
+      const emailData = {
+        to: userToDelete.email,
+        subject: "Your CastL account has been deleted",
+        body: `
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account deleted</title>
+    <style>
+      body, html {
+        margin: 0;
+        padding: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #e8d8b4;
+        color: #2d1b0f;
       }
-    });
+      .email-root {
+        padding: 24px 12px;
+      }
+      .email-card {
+        max-width: 560px;
+        margin: 0 auto;
+        background: #f8ecd0;
+        border-radius: 16px;
+        border: 1px solid rgba(75, 54, 33, 0.35);
+        box-shadow: 0 16px 40px rgba(75, 54, 33, 0.35);
+        overflow: hidden;
+      }
+      .email-header {
+        padding: 20px 22px 10px;
+        border-bottom: 1px solid rgba(75, 54, 33, 0.15);
+      }
+      .email-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: #3a2414;
+      }
+      .email-body {
+        padding: 18px 22px;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+      .email-footer {
+        padding: 10px 22px 16px;
+        border-top: 1px solid rgba(75, 54, 33, 0.18);
+        font-size: 11px;
+        color: #7b6347;
+        background: #e0cfa4;
+      }
+      .reason-box {
+        margin-top: 12px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(140, 113, 83, 0.5);
+        font-size: 13px;
+        color: #5c4630;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-root">
+      <div class="email-card">
+        <div class="email-header">
+          <div class="email-title">Your CastL account has been deleted</div>
+        </div>
+        <div class="email-body">
+          <p>Hi ${userToDelete.name || "Player"},</p>
+          <p>
+            We would like to let you know that your CastL account associated with
+            <strong>${userToDelete.email}</strong> has been deleted by an administrator.
+          </p>
+          <div class="reason-box">
+            <strong>Reason provided by the administrator:</strong><br/>
+            ${deleteReason.trim().replace(/\n/g, "<br/>")}
+          </div>
+          <p>
+            If you believe this action was taken in error or you have any questions,
+            please contact our support team.
+          </p>
+        </div>
+        <div class="email-footer">
+          Automatic message about your CastL account deletion. Please do not reply.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+        `,
+      };
+
+      await api.post("/main/Email", emailData);
+
+      // log ban/delete locally for admin overview
+      try {
+        const entry = {
+          id: userToDelete.id,
+          name: userToDelete.name,
+          email: userToDelete.email,
+          reason: deleteReason.trim(),
+          deletedAt: new Date().toISOString(),
+        };
+        setDeleteLog((prev) => {
+          const next = [entry, ...prev];
+          try {
+            localStorage.setItem("adminDeleteLog", JSON.stringify(next));
+          } catch {
+            // ignore storage errors
+          }
+          return next;
+        });
+      } catch {
+        // ignore log errors
+      }
+
+      fetchUsers();
+      setSuccessMessage("User deleted, logged and notification email sent.");
+      setErrorMessage("");
+    } catch (err) {
+      console.error("Error deleting user:", err);
+      setErrorMessage(err.response?.data?.message || "Failed to delete user or send email.");
+      setSuccessMessage("");
+    }
+  };
+
+  const deleteUser = (user) => {
+    setUserToDelete(user);
+    setDeleteReason("");
+    openConfirm("Please provide a reason for deleting this account.");
   };
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -256,11 +407,23 @@ const AdminPage = () => {
         confirmLabel="Delete"
         cancelLabel="Cancel"
         confirmDanger
-        onConfirm={() => {
-          if (confirmModal.onConfirm) confirmModal.onConfirm();
-        }}
+        showProgress={false}
+        onConfirm={handleConfirmDelete}
         onCancel={closeConfirm}
-      />
+      >
+        {userToDelete && (
+          <div className="admin-delete-reason">
+            <label className="admin-form-label">Reason for deletion</label>
+            <textarea
+              className="admin-form-input admin-form-textarea"
+              placeholder="Describe why this account is being deleted..."
+              rows={4}
+              value={deleteReason}
+              onChange={(e) => setDeleteReason(e.target.value)}
+            />
+          </div>
+        )}
+      </ConfirmModal>
 
       <div className="admin-panel-card">
         <div className="admin-header">
@@ -488,10 +651,10 @@ const AdminPage = () => {
                                     </button>
                                     <button
                                       className="delete-btn btn-pill btn-pill--danger"
-                                      onClick={() => deleteUser(user.id)}
+                                      onClick={() => deleteUser(user)}
                                       title="Delete user"
                                     >
-                                      🗑️ Delete
+                                      🗑️ Ban
                                     </button>
                                   </>
                                 )}
@@ -511,6 +674,34 @@ const AdminPage = () => {
                       >
                         Load More (+10 users)
                       </button>
+                    </div>
+                  )}
+
+                  {deleteLog.length > 0 && (
+                    <div className="admin-delete-log">
+                      <h3 className="admin-delete-log__title">Deleted / banned accounts</h3>
+                      <table className="admin-table admin-delete-log__table">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Reason</th>
+                            <th>Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {deleteLog.map((entry, index) => (
+                            <tr key={`${entry.id}-${entry.deletedAt}-${index}`}>
+                              <td>{index + 1}</td>
+                              <td>{entry.name}</td>
+                              <td>{entry.email}</td>
+                              <td>{entry.reason}</td>
+                              <td>{new Date(entry.deletedAt).toISOString().split("T")[0]}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
                     </div>
                   )}
                 </>

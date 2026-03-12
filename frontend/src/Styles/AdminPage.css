@@ -553,6 +553,38 @@
   min-width: 190px;
 }
 
+/* Delete reason textarea inside confirm modal */
+.admin-delete-reason {
+  margin-top: 0.75rem;
+}
+
+.admin-delete-reason textarea {
+  width: 100%;
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Deleted / banned accounts log */
+.admin-delete-log {
+  margin-top: 2rem;
+  padding: 1.25rem 1rem 1.5rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.85);
+  border: 2px solid #8c7153;
+}
+
+.admin-delete-log__title {
+  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #4b3621;
+}
+
+.admin-delete-log__table {
+  width: 100%;
+  font-size: 0.9rem;
+}
+
 /* Image upload blokk – modern dropzone stílus */
 .admin-image-upload {
   display: flex;
