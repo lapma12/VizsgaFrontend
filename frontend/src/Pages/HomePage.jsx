@@ -3,6 +3,7 @@ import "../Styles/Main.css";
 import { useEffect, useState } from "react";
 import Logo from "../Img/CastLLogo.png";
 import axios from "axios";
+import gameArchive from "../assets/Castlv1.rar";
 
 const Homepage = () => {
   const location = useLocation();
@@ -46,9 +47,9 @@ const Homepage = () => {
 
           <nav className="homepage-buttons" aria-label="Primary actions">
             <a
-              href="/assets/your-game.zip"
+              href={gameArchive}
               className="homepage-btn download-btn"
-              download
+              download="CastL_Game.rar"
             >
               🎮 Download the Game
             </a>

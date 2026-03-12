@@ -3,6 +3,7 @@ import "../Styles/Game.css";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import tutorialvideo from "../assets/CastLTutorial.mp4";
+import gameArchive from "../assets/Castlv1.rar";
 
 function GamePage() {
   const location = useLocation();
@@ -50,7 +51,7 @@ function GamePage() {
             then run the <strong>.exe</strong> file inside the folder.
           </p>
 
-          <a href="/src/assets/Castlv1.rar" className="download-button" download="CastL_Game.rar">
+          <a href={gameArchive} className="download-button" download="CastL_Game.rar">
             🎮 Download the Game
           </a>
         </div>
