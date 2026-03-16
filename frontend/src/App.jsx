@@ -1,13 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./Component/Navbar";
-import Footer from "./Component/Footer";
+import Navbar from "./Components/Navbar";
+import Footer from "./Components/Footer";
 import Home from "./Pages/HomePage";
 import About from "./Pages/AboutPage";
 import NewsPage from "./Pages/NewsPage";
 import Scoreboard from "./Pages/ScoreBoardPage";
 import NotFound from "./Pages/NotFound";
 import Game from "./Pages/GamePage";
-import ForgotPasswordPage from "./Component/ForgotPasswordPage";
+import ForgotPasswordPage from "./Components/ForgotPasswordPage";
 import Account from "./Pages/Account";
 import { useState } from "react";
 import PrivacyPolicy from "./Pages/Services/Privacypolicy";
@@ -15,7 +15,7 @@ import Terms from "./Pages/Services/Terms";
 import FAQ from "./Pages/Services/FAQ";
 import AuthPage from "./Pages/AuthPage";
 import AdminPage from "./Pages/Services/AdminPage";
-import AdminRoute from "./Component/AdminRoute";
+import AdminRoute from "./Components/AdminRoute";
 
 function App() {
   const [loginIn, setloginIn] = useState(false);

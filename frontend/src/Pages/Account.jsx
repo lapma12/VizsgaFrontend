@@ -10,8 +10,8 @@ import {
 } from "lucide-react";
 import { MdAccountCircle } from "react-icons/md";
 import api from "../api/api";
-import Toast from "../Component/Toast";
-import ConfirmModal from "../Component/ConfirmModal";
+import Toast from "../Components/Toast";
+import ConfirmModal from "../Components/ConfirmModal";
 import axios from "axios";
 
 const Account = ({ setloginIn, setuserDataState }) => {

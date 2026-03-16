@@ -1,10 +1,10 @@
-import { useState } from "react";
+import React,{ useState } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
 import "../Styles/AuthRegisterLogin.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import PasswordInput from "../Component/PasswordInput";
-import Toast from "../Component/Toast";
+import PasswordInput from "../Components/PasswordInput";
+import Toast from "../Components/Toast";
 import { jwtDecode } from "jwt-decode";
 
 
@@ -262,7 +262,7 @@ export default function AuthPage({ setshowAdminPanel }) {
       );
 
       if (res.data.success) {
-        
+
         const emailSender = await axios.post(
           "https://dongesz.com/api/main/Email",
           emailData

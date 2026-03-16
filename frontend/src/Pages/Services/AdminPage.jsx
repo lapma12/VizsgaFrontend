@@ -3,8 +3,8 @@ import ClipLoader from "react-spinners/ClipLoader";
 import "../../Styles/AdminPage.css";
 import { useLocation } from "react-router-dom";
 import api from "../../api/api";
-import Toast from "../../Component/Toast";
-import ConfirmModal from "../../Component/ConfirmModal";
+import Toast from "../../Components/Toast";
+import ConfirmModal from "../../Components/ConfirmModal";
 
 const AdminPage = () => {
   const location = useLocation();
