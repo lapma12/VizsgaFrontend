@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import "../Styles/Game.css";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import gameArchive from "../assets/Castlv1.rar";
+import gameArchive from "../assets/castlv1.rar";
 
 function GamePage() {
   const location = useLocation();
@@ -43,7 +43,7 @@ function GamePage() {
             Download the game, extract the archive, then run the <strong>.exe</strong> file.
           </p>
 
-          <a href={gameArchive} className="download-button" download="CastL_Game.rar">
+          <a href={gameArchive} className="download-button" download="castlv1.rar">
             🎮 Download the Game
           </a>
         </div>
