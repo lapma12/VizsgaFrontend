@@ -33,20 +33,8 @@ describe("Ranglista oldal tesztelése", () => {
     axios.get.mockResolvedValueOnce({
       data: {
         result: [
-          {
-            id: 1,
-            name: "Admin",
-            totalScore: 7750,
-            totalKills: 406,
-            profilePictureUrl: "/avatar1.png",
-          },
-          {
-            id: 2,
-            name: "Dongesz",
-            totalScore: 625,
-            totalKills: 61,
-            profilePictureUrl: "/avatar2.png",
-          },
+          { id: 1, name: "Admin", totalScore: 7750, totalKills: 406, profilePictureUrl: "/avatar1.png", },
+          { id: 2, name: "Dongesz", totalScore: 625, totalKills: 61, profilePictureUrl: "/avatar2.png", },
         ],
       },
     });
@@ -57,7 +45,6 @@ describe("Ranglista oldal tesztelése", () => {
     );
     expect(await screen.findByText("Admin")).toBeInTheDocument();
     expect(screen.getByText("7750")).toBeInTheDocument();
-
     expect(await screen.findByText("Dongesz")).toBeInTheDocument();
     expect(screen.getByText("625")).toBeInTheDocument();
   });
