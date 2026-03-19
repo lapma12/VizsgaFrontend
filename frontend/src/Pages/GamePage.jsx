@@ -30,7 +30,7 @@ function GamePage() {
           </p>
           <div className="video-wrapper">
             <iframe
-              src="https://www.youtube.com/embed/mPzMe115FKU"
+              src="https://www.youtube.com/embed/HaPgS6m8yGY"
               title="CastL Tutorial"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
