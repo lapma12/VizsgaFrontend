@@ -27,7 +27,7 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Statikus build bemásolása
 COPY --from=build /app/dist /usr/share/nginx/html
 # Archívum fájl biztos másolása (ne SPA fallback legyen belőle).
-COPY --from=build /app/public/Castlv1.rar /usr/share/nginx/html/Castlv1.rar
+COPY --from=build /app/src/assets/Castlv1.rar /usr/share/nginx/html/Castlv1.rar
 
 EXPOSE 80
 
