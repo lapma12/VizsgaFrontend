@@ -1,7 +1,7 @@
 # Vizsga Frontend
 
 Rövid mappastruktúra:
-    - `src/Pages` - oldal komponensek \n
+    - `src/Pages` - oldal komponensek <br/>
     - `src/Pages/Services` - szolgáltatás oldalak 
     - `src/Components` - több oldalon használt közös JSX komponensek 
     - `src/Styles` - CSS fájlok oldalakhoz és közös elemekhez
