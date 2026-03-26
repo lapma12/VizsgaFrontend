@@ -1,15 +1,28 @@
 # Vizsga Frontend
-Rövid mappastruktúra: <br/>
-    - `src/Pages` - oldal komponensek<br/>
-    - `src/Pages/Services` - szolgáltatás oldalak<br/>
-    - `src/Components` - több oldalon használt közös JSX komponensek<br/>
-    - `src/Styles` - CSS fájlok oldalakhoz és közös elemekhez<br/>
-    - `src/Img` - képek (logó, háttérképek, illusztrációk)<br/>
-    - `src/assets` - egyéb statikus fájlok (pl. videó, letölthető játék fájl)<br/>
-    - `src/api` - API kliens<br/>
-    - `src/Tests` + `setupTests.js` - frontend tesztek<br/>
-<br/>
-Belépési pontok:<br/>
-    - `src/main.jsx`<br/>
-    - `src/App.jsx`
+
+## Oldal felépítése
+
+```text
+src/
+├── assets/            # statikus fájlok (pl. videó, letölthető játék fájl)
+├── Components/        # újrafelhasználható UI elemek (Navbar, Footer, Toast, ConfirmModal)
+├── Img/               # képek (logó, háttérképek, illusztrációk)
+├── Pages/             # útvonalakhoz tartozó oldalak
+│   └── Services/      # szolgáltatás oldalak (Terms, PrivacyPolicy, FAQ, Admin)
+├── Styles/            # oldalszintű és közös CSS fájlok
+├── api/               # API kliens (api.js)
+├── Tests/             # frontend tesztek
+├── App.jsx            # fő alkalmazás komponens
+├── main.jsx           # belépési pont (entry point)
+└── setupTests.js      # teszt környezet beállítás
+```
+
+## Futtatás (Bun)
+
+1. Függőségek telepítése:
+   - `bun install`
+2. Fejlesztői szerver indítása:
+   - `bun dev`
+
+Ezután a Vite dev szerver elindul, és lokálban tudod nézni/fejleszteni az oldalt (általában a terminál kiírja a pontos URL-t, pl. `http://localhost:5173`).
 
