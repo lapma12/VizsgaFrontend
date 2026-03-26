@@ -1,5 +1,4 @@
 # Vizsga Frontend
-
 Rövid mappastruktúra: <br/>
     - `src/Pages` - oldal komponensek<br/>
     - `src/Pages/Services` - szolgáltatás oldalak<br/>
@@ -13,3 +12,4 @@ Rövid mappastruktúra: <br/>
 Belépési pontok:<br/>
     - `src/main.jsx`<br/>
     - `src/App.jsx`
+
