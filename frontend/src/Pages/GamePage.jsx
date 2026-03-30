@@ -2,10 +2,11 @@ import { motion } from "framer-motion";
 import "../Styles/Game.css";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import gameArchive from "../assets/Castlv1.rar";
 
 function GamePage() {
   const location = useLocation();
+  const gameArchiveUrl =
+    import.meta.env.VITE_GAME_ARCHIVE_URL?.trim() || "/Castlv1.rar";
 
   useEffect(() => {
     if (location.pathname === "/game") {
@@ -30,7 +31,7 @@ function GamePage() {
           </p>
           <div className="video-wrapper">
             <iframe
-              src="https://www.youtube.com/embed/mPzMe115FKU"
+              src="https://www.youtube.com/embed/HaPgS6m8yGY"
               title="CastL Tutorial"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
@@ -43,7 +44,7 @@ function GamePage() {
             Download the game, extract the archive, then run the <strong>.exe</strong> file.
           </p>
 
-          <a href={gameArchive} className="download-button" download="CastL_Game.rar">
+          <a href={gameArchiveUrl} className="download-button" download="CastL_Game.rar">
             🎮 Download the Game
           </a>
         </div>

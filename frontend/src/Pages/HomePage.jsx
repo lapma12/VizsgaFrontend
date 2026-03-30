@@ -3,10 +3,11 @@ import "../Styles/Main.css";
 import { useEffect, useState } from "react";
 import Logo from "../Img/CastLLogo.png";
 import axios from "axios";
-import gameArchive from "../assets/Castlv1.rar";
 
 const Homepage = () => {
   const location = useLocation();
+  const gameArchiveUrl =
+    import.meta.env.VITE_GAME_ARCHIVE_URL?.trim() || "/Castlv1.rar";
 
   const [count, setCount] = useState(null);
 
@@ -47,7 +48,7 @@ const Homepage = () => {
 
           <nav className="homepage-buttons" aria-label="Primary actions">
             <a
-              href={gameArchive}
+              href={gameArchiveUrl}
               className="homepage-btn download-btn"
               download="CastL_Game.rar"
             >

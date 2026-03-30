@@ -24,8 +24,13 @@ const Scoreboard = () => {
         const response = await axios.get(
           "https://dongesz.com/api/main/Users/leaderboard"
         );
-        setScores(response.data.result);
-        setFilteredScores(response.data.result);
+
+        const sortedScores = [...response.data.result].sort(
+          (a, b) => b.totalScore - a.totalScore
+        );
+
+        setScores(sortedScores);
+        setFilteredScores(sortedScores);
         setLoading(false);
       } catch (err) {
         console.error(err);
@@ -52,8 +57,8 @@ const Scoreboard = () => {
       sorted.sort((a, b) => a.name.localeCompare(b.name));
     } else if (filterType === "wins") {
       sorted.sort((a, b) => b.totalScore - a.totalScore);
-    } else if (filterType === "xp") {
-      sorted.sort((a, b) => b.totalXp - a.totalXp);
+    } else if (filterType === "kills") {
+      sorted.sort((a, b) => b.totalKills - a.totalKills);
     }
 
     setFilteredScores(sorted);
@@ -73,7 +78,7 @@ const Scoreboard = () => {
         <button className="filter-btn" onClick={() => applyFilter("username")}>
           Sort by Username
         </button>
-        <button className="filter-btn" onClick={() => applyFilter("xp")}>
+        <button className="filter-btn" onClick={() => applyFilter("kills")}>
           Sort by Kill
         </button>
       </div>
@@ -136,6 +141,7 @@ const Scoreboard = () => {
               filteredScores.slice(0, 10).map((score, index) => (
                 <tr key={score.id || score.name}>
                   <td className="p-2">{index + 1}</td>
+<<<<<<< HEAD
                   <td className="p-2">
                     <img
                       src={score.profilePictureUrl}
@@ -143,6 +149,9 @@ const Scoreboard = () => {
                       title="Avatar"
                     />
                   </td>
+=======
+                  <td className="p-2"><img src={score.profilePictureUrl} alt="Avatar" title="Avatar" /></td>
+>>>>>>> 74835269e636f7558dc4318350882f7e83593036
                   <td className="p-2">{score.name}</td>
                   <td className="p-2 font-bold">{score.totalScore}</td>
                   <td className="p-2 font-bold">{score.totalKills}</td>
