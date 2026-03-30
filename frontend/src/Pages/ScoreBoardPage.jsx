@@ -60,11 +60,12 @@ const Scoreboard = () => {
   };
 
   return (
-    <div className="p-6 min-h-screen flex flex-col items-center scoreboard-container">
-      <div className="scoreboard-header mb-4">
-        <h1>Top Scores</h1>
-      </div>
+  <div className="p-6 min-h-screen flex flex-col items-center scoreboard-container">
+    <div className="scoreboard-header mb-4">
+      <h1>Top Scores</h1>
+    </div>
 
+    <div className="scoreboard-card">
       <div className="filter-buttons mb-4">
         <button className="filter-btn" onClick={() => applyFilter("wins")}>
           Sort by Score
@@ -100,7 +101,7 @@ const Scoreboard = () => {
         </button>
       </div>
 
-      <div className="table">
+      <div className="table-wrapper">
         <table className="scoreboard-table w-full max-w-4xl">
           <thead>
             <tr className="border-b">
@@ -135,7 +136,13 @@ const Scoreboard = () => {
               filteredScores.slice(0, 10).map((score, index) => (
                 <tr key={score.id || score.name}>
                   <td className="p-2">{index + 1}</td>
-                  <td className="p-2"><img src={score.profilePictureUrl} alt="Avatar" title="Avatar"/></td>
+                  <td className="p-2">
+                    <img
+                      src={score.profilePictureUrl}
+                      alt="Avatar"
+                      title="Avatar"
+                    />
+                  </td>
                   <td className="p-2">{score.name}</td>
                   <td className="p-2 font-bold">{score.totalScore}</td>
                   <td className="p-2 font-bold">{score.totalKills}</td>
@@ -146,7 +153,8 @@ const Scoreboard = () => {
         </table>
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default Scoreboard;

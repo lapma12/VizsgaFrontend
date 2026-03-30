@@ -1,4 +1,3 @@
-/* ===== Alap konténer ===== */
 .scoreboard-container {
   background: url("../Img/ScoreboardBackground.png") no-repeat center center;
   background-size: cover;
@@ -10,17 +9,17 @@
   padding: 2rem;
 }
 
-/* ===== Címsor ===== */
 .scoreboard-header h1 {
   font-family: "MedievalSharp", cursive;
-  font-size: 4rem;
+  font-size: 5rem;
+  padding: 15px;
+  border-radius: 30px;
   margin-bottom: 2rem;
   color: var(--accentDark);
   text-shadow: 2px 2px 0 var(--highlight);
   text-align: center;
 }
 
-/* ===== Keresősáv ===== */
 .searchBar {
   display: flex;
   justify-content: center;
@@ -53,13 +52,11 @@
     width: 100%;
   }
 
-  /* csak a kereső gomb legyen teljes szélességű mobilon */
   .searchBar .filter-btn {
     width: 100%;
     text-align: center;
   }
 
-  /* a felső filter gombok maradjanak kompaktak */
   .filter-buttons .filter-btn {
     width: auto;
   }
@@ -76,7 +73,6 @@
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
-/* ===== Szűrőgombok ===== */
 .filter-buttons {
   display: flex;
   gap: 1rem;
@@ -104,23 +100,23 @@
   background-color: #a78b68;
   transform: translateY(-2px);
 }
-.filter-btn:active{
+
+.filter-btn:active {
   background-color: #705a3a;
   transform: translateY(0);
 }
 
-/* ===== Táblázat ===== */
 .scoreboard-table {
-  width: 120vh; 
+  width: 120vh;
   max-width: 1500px;
-  min-width: 320px; 
+  min-width: 320px;
   background: #bbaa80;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   border-left: 10px solid #8c7153;
   border-right: 10px solid #8c7153;
   border-collapse: separate;
   border-spacing: 0;
-  transition: width 0.3s ease; 
+  transition: width 0.3s ease;
 }
 
 .table {
@@ -144,7 +140,6 @@
   font-weight: 500;
 }
 
-/* Zebra mintás sorok */
 .scoreboard-table tbody tr:nth-child(odd) {
   background-color: #c9bb93;
 }
@@ -160,14 +155,15 @@
   transition: all 0.2s ease-in-out;
   cursor: pointer;
 }
-.scoreboard-table tbody td img{
+
+.scoreboard-table tbody td img {
   width: 50px;
   height: 50px;
   border-radius: 50%;
   border: 3px solid #8c7153;
   background-color: #fff;
   object-fit: cover;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 
 }
 

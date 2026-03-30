@@ -73,7 +73,7 @@ export default function FAQ() {
                     <h2>Contact</h2>
                     <p>
                         If you have additional questions, feel free to contact us at{' '}
-                        <a href="mailto:support@castl.com">support@castl.com</a>.
+                        <a href="irodacastl@gmail.com">irodacastl@gmail.com</a>.
                     </p>
                 </div>
             </div>

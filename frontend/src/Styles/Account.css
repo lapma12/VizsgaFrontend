@@ -52,7 +52,6 @@ body::before {
   animation: floatGlow 12s ease-in-out infinite alternate;
 }
 
-/* === Header === */
 .account-header {
   display: flex;
   align-items: center;
@@ -124,7 +123,6 @@ body::before {
   color: var(--textDark);
 }
 
-/* === Tab Menu === */
 .account-menu {
   display: flex;
   justify-content: center;
@@ -176,7 +174,6 @@ body::before {
   animation: tabUnderlineIn 0.35s ease-out forwards;
 }
 
-/* === Content === */
 .account-content {
   background: rgba(255, 255, 255, 0.5);
   padding: 2rem;
@@ -186,7 +183,6 @@ body::before {
   animation: fadeInUp 0.5s ease-out;
 }
 
-/* === Results === */
 .results-section h2,
 .settings-section h2 {
   text-align: center;
@@ -217,7 +213,6 @@ body::before {
   background-color: rgba(140, 113, 83, 0.22);
 }
 
-/* === Settings Form === */
 .account-content form {
   display: flex;
   flex-direction: column;
@@ -246,12 +241,12 @@ body::before {
   border-radius: 8px;
   border: 2px solid var(--accentLight);
   font-size: 1rem;
-  width: 20rem;       /* alap szélesség */
-  height: 6rem;      /* alap magasság */
+  width: 20rem;       
+  height: 6rem;      
   background-color: #fff;
   color: var(--textDark);
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  resize: both;       /* lehet átméretezni szélességben és magasságban */
+  resize: both;       
 }
 
 .textBoxforDetils:focus {
@@ -289,7 +284,6 @@ body::before {
   transform: translateY(-2px);
 }
 
-/* === Footer === */
 .account-footer {
   margin-top: 2rem;
   display: flex;
@@ -351,7 +345,6 @@ body::before {
   min-width: 320px;
 }
 
-/* Spinner */
 .spinner {
   width: 50px;
   height: 50px;
@@ -368,7 +361,6 @@ body::before {
   }
 }
 
-/* Message */
 .message {
   margin-bottom: 1.5rem;
 }
@@ -406,12 +398,11 @@ body::before {
   min-width: 320px;
 }
 
-/* üzenet */
 .error-alert .message {
   margin-bottom: 1.5rem;
 }
 
-/* gomb */
+
 .error-confirm-btn {
   background: #fff;
   color: #b71c1c;
@@ -428,7 +419,7 @@ body::before {
   background: #ffebee;
   transform: scale(1.05);
 }
-/* === Popup Animation === */
+
 @keyframes successPop {
   0% {
     opacity: 0;
@@ -558,7 +549,6 @@ body::before {
   border: 2px solid rgba(75, 54, 33, 0.25);
 }
 
-/* GOMB KÖZÉPEN */
 .settings-form button {
   align-self: center;
   min-width: 200px;
@@ -590,7 +580,6 @@ body::before {
   align-items: center;
 }
 
-/* === Popup Animation === */
 @keyframes successPop {
   0% {
     opacity: 0;
@@ -603,7 +592,7 @@ body::before {
   }
 }
 
-/* === Animation === */
+
 @keyframes fadeInDown {
   from {
     opacity: 0;
@@ -649,7 +638,6 @@ body::before {
   }
 }
 
-/* === Responsive (mobile) === */
 @media only screen and (max-width: 768px) {
   .account-page {
     margin: 1rem;
@@ -696,7 +684,6 @@ body::before {
     margin-bottom: 1.25rem;
   }
 
-  /* Settings form – mobil: egy oszlop, teljes szélesség */
   .settings-columns {
     grid-template-columns: 1fr;
     gap: 1.5rem;

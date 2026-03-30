@@ -8,14 +8,13 @@
   --textDark: #2d1b0f;
 }
 
-/* === PAGE LAYOUT === */
 .register-page {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   padding: 3rem 1rem;
-  background: url("../Img/loginpage.png");
+  background: url("../Img/AuthPage.png");
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
@@ -30,7 +29,6 @@
   background: rgba(75, 54, 33, 0.5);
 }
 
-/* === CONTAINER === */
 .register-container {
   display: flex;
   flex-direction: row;
@@ -47,7 +45,6 @@
 }
 
 
-/* === FORM PANEL === */
 .register-form {
   flex: 1;
   background: linear-gradient(135deg, #f3e3c3, #e8d8b4);
@@ -65,10 +62,6 @@
   text-align: center;
   text-shadow: 2px 2px 0 var(--highlight);
 }
-
-/* =============================== */
-/* ===== LOGIN / REGISTER TAB ==== */
-/* =============================== */
 
 .auth-header {
   position: relative;
@@ -121,7 +114,6 @@
   transform: translateX(80%);
 }
 
-/* === INPUTS === */
 .register-form input {
   width: 100%;
   padding: 1rem;
@@ -140,7 +132,6 @@
   box-shadow: 0 0 10px rgba(225, 195, 115, 0.6);
 }
 
-/* === BUTTON === */
 .register-form button {
   width: 100%;
   padding: 1rem;
@@ -191,14 +182,12 @@
   }
 }
 
-/* === CAPTCHA === */
 .recapStyle {
   display: flex;
   justify-content: center;
   margin: 10px 0;
 }
 
-/* === ALERTS === */
 .success-alert,
 .error-alert {
   position: fixed;
@@ -235,7 +224,7 @@
   font-weight: bold;
   margin-top: 12px;
 }
-/* === CONFIRM ALERT === */
+
 .confirm-alert {
   position: fixed;
   top: 30%;
@@ -272,7 +261,6 @@
   transition: 0.2s ease;
 }
 
-/* OK gomb (pl logout) */
 .confirm-ok-btn {
   color: #b71c1c;
 }
@@ -281,7 +269,6 @@
   background: #ffe5e5;
 }
 
-/* Mégse gomb */
 .confirm-cancel-btn {
   color: #333;
 }
@@ -289,7 +276,7 @@
 .confirm-cancel-btn:hover {
   background: #eee;
 }
-/* ===== CONFIRM OVERLAY ===== */
+
 .confirm-overlay {
   position: fixed;
   inset: 0;
@@ -301,7 +288,6 @@
   z-index: 2000;
 }
 
-/* ===== CONFIRM MODAL ===== */
 .confirm-alert {
   background: linear-gradient(145deg, #2c2c2c, #3a3a3a);
   color: #fff;
@@ -315,7 +301,6 @@
   animation: popIn 0.25s ease-out;
 }
 
-/* anim */
 @keyframes popIn {
   from {
     transform: scale(0.9);
@@ -327,7 +312,6 @@
   }
 }
 
-/* ===== INPUT ===== */
 .confirm-alert input {
   width: 100%;
   padding: 0.9rem 1rem;
@@ -344,7 +328,6 @@
   box-shadow: 0 0 8px rgba(198, 40, 40, 0.4);
 }
 
-/* ===== BUTTON ROW ===== */
 .confirm-buttons {
   margin-top: 25px;
   display: flex;
@@ -353,7 +336,6 @@
   flex-wrap: wrap;
 }
 
-/* ===== OK (DELETE) BUTTON ===== */
 .confirm-ok-btn {
   background: linear-gradient(135deg, #b71c1c, #e53935);
   color: white;
@@ -371,7 +353,6 @@
   box-shadow: 0 8px 20px rgba(229, 57, 53, 0.5);
 }
 
-/* ===== CANCEL BUTTON ===== */
 .confirm-cancel-btn {
   background: #e0e0e0;
   color: #333;
@@ -384,7 +365,6 @@
   transition: 0.2s ease;
 }
 
-/* SPLIT AUTH CARD (KEEP THEME) */
 .auth-card {
   display: flex;
   width: 100%;
@@ -397,7 +377,6 @@
   background: linear-gradient(0deg, var(--accentDark), var(--bgColor));
 }
 
-/* LEFT PANEL */
 .auth-left {
   flex: 1;
   background: linear-gradient(0deg, var(--accentDark), var(--bgColor));
@@ -510,7 +489,7 @@
   line-height: 1.6;
   margin: 1.5rem 0;
   opacity: 0.95;
-  color: #fff; /* törzsszöveg a téma színével */
+  color: #fff;
 }
 
 .left-switch {
@@ -530,7 +509,6 @@
   transform: translateY(-2px);
 }
 
-/* RIGHT PANEL */
 .auth-right {
   flex: 1;
   padding: 3rem 2rem;
@@ -538,7 +516,7 @@
   position: relative;
   overflow: hidden;
 }
-/* SWITCH BAR KEEP STYLE */
+
 .auth-header {
   display: flex;
   position: relative;
@@ -636,7 +614,6 @@
   text-decoration: underline;
 }
 
-/* HIDDEN FORM */
 .hidden {
   display: none;
   opacity: 0;
@@ -647,7 +624,6 @@
   cursor: pointer;
 }
 
-/* Terms of Use row */
 .terms-row {
   display: flex;
   align-items: center;
@@ -682,7 +658,7 @@
   margin-top: 0.25rem;
   text-align: center;
 }
-/* === MOBILE & TABLET === */
+
 @media (max-width: 992px) {
   .auth-card {
     flex-direction: column;
@@ -720,7 +696,6 @@
   }
 }
 
-/* === ANIMATION === */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: translateY(0); }

@@ -7,7 +7,6 @@ export default function Toast({
   onClose,
   html,
 }) {
-  // Automatikus bezárás minden toastnál – szinkronban az animációval
   useEffect(() => {
     if (!message || !onClose) return;
 

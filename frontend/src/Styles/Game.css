@@ -5,14 +5,13 @@
   min-height: 100vh;
   width: 100%;
   padding: 4rem 2rem 5rem;
-  background: url("../Img/GameBackground.png");
+  background: url("../Img/GamePage.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
   box-sizing: border-box;
 }
 
-/* ===== Main Container ===== */
 .game-container {
   background: linear-gradient(135deg, #f3e3c3, #e8d8b4);
   padding: 3rem;
@@ -27,7 +26,6 @@
   margin: 0 auto;
 }
 
-/* ===== Title ===== */
 .game-title {
   font-family: "MedievalSharp", cursive;
   font-size: 4rem;
@@ -36,7 +34,6 @@
   margin-bottom: 1rem;
 }
 
-/* ===== Text ===== */
 .game-description {
   font-size: 1rem;
   margin-bottom: 2rem;
@@ -44,7 +41,6 @@
   line-height: 1.6;
 }
 
-/* ===== Tutorial Section ===== */
 .tutorial-section {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
@@ -66,7 +62,6 @@
 .video-wrapper {
   position: relative;
   padding-bottom: 56.25%;
-  /* 16:9 */
   height: 0;
   overflow: hidden;
   border-radius: 1rem;
@@ -84,7 +79,6 @@
   border: none;
 }
 
-/* ===== Download Section ===== */
 .download-section {
   margin-top: 1.5rem;
 }
@@ -114,7 +108,6 @@
   transform: translateY(0);
 }
 
-/* ===== Responsive ===== */
 @media (max-width: 768px) {
   .game-page {
     justify-content: center;

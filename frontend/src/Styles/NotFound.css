@@ -6,7 +6,6 @@
   --textDark: #2d1b0f;
 }
 
-/* === Alapstílusok a háttérhez és központozáshoz === */
 .not-found-container {
   display: flex;
   justify-content: center;
@@ -19,7 +18,6 @@
   font-family: "Poppins", sans-serif;
 }
 
-/* === A hiba tartalom === */
 .error-content {
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(6px);
@@ -32,7 +30,6 @@
   animation: fadeIn 0.6s ease-in-out;
 }
 
-/* === 404 kód === */
 .error-code {
   font-size: 120px;
   font-weight: bold;
@@ -42,7 +39,6 @@
   margin-bottom: 20px;
 }
 
-/* === Cím === */
 .error-title {
   font-size: 28px;
   font-weight: 700;
@@ -51,7 +47,6 @@
   text-shadow: 1px 1px 0 var(--highlight);
 }
 
-/* === Üzenet === */
 .error-message {
   font-size: 18px;
   color: var(--textDark);
@@ -59,7 +54,6 @@
   opacity: 0.9;
 }
 
-/* === Gomb === */
 .home-button {
   background-color: var(--accentLight);
   color: #fff;
@@ -82,7 +76,6 @@
   transform: translateY(1px);
 }
 
-/* === Reszponzív === */
 @media only screen and (max-width: 768px) {
   .error-content {
     padding: 30px 40px;
@@ -106,7 +99,6 @@
   }
 }
 
-/* === Animáció === */
 @keyframes fadeIn {
   from {
     opacity: 0;

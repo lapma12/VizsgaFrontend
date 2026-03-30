@@ -27,8 +27,6 @@
     margin-top: 2rem;
 }
 
-
-/* Cím */
 .footer-title {
     font-size: 24px;
     font-weight: bold;
@@ -89,7 +87,6 @@
     margin-bottom: 3rem;
 }
 
-/* Decorative golden glow line like navbar, but inverted */
 .footer::before {
     content: "";
     position: absolute;
@@ -110,7 +107,6 @@
     animation: footerGlowSweep 3200ms linear infinite;
 }
 
-/* Subtle hover lift on footer columns */
 .footer-column {
     flex: 1;
     margin-bottom: 1.5rem;
@@ -160,7 +156,6 @@
     }
 }
 
-/* Animations */
 @keyframes footerFadeUp {
     from {
         opacity: 0;

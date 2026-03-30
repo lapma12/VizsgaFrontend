@@ -60,7 +60,6 @@ function Navbar({ loginIn, setloginIn, userDataState, showAdminpanel, setshowAdm
 
   const [, setuserDataState2] = useState(null);
 
-  /* Mobil: menü nyitva → ne lehessen a háttérben görgetni (body + html pl. iOS) */
   useEffect(() => {
     const html = document.documentElement;
     const body = document.body;
@@ -80,7 +79,6 @@ function Navbar({ loginIn, setloginIn, userDataState, showAdminpanel, setshowAdm
     };
   }, [menuOpen]);
 
-  /* Lapváltáskor (új oldal) mindig zárja be a mobilmenüt */
   useEffect(() => {
     closeNavbar();
   }, [location.pathname, closeNavbar]);
@@ -94,7 +92,6 @@ function Navbar({ loginIn, setloginIn, userDataState, showAdminpanel, setshowAdm
         return;
       }
 
-      // Decode role from JWT to determine admin status
       try {
         const decoded = jwtDecode(token);
         const role =
@@ -109,7 +106,6 @@ function Navbar({ loginIn, setloginIn, userDataState, showAdminpanel, setshowAdm
 
         setshowAdminPanel(isAdmin);
       } catch {
-        // If token is invalid, reset state and redirect to login
         setloginIn(false);
         setshowAdminPanel(false);
         navigate("/login");
@@ -146,7 +142,6 @@ function Navbar({ loginIn, setloginIn, userDataState, showAdminpanel, setshowAdm
         onConfirm={handleLogout}
         onCancel={() => setLogoutConfirm(false)}
       />
-      {/* Mobil: overlay, ha a menü nyitva */}
       {menuOpen && (
         <div
           className="navbar-backdrop"

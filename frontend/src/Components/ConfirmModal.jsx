@@ -1,10 +1,6 @@
 import React from "react";
 import "../Styles/SharedMessages.css";
 
-/**
- * Egységes confirm modal – téma színekkel.
- * open, message, onConfirm, onCancel, confirmLabel, cancelLabel, children (opcionális, pl. jelszó mező)
- */
 export default function ConfirmModal({
   open,
   message,
@@ -14,8 +10,6 @@ export default function ConfirmModal({
   cancelLabel = "Cancel",
   confirmDanger = false,
   children,
-  // alapból minden confirm modalon legyen csík,
-  // kivéve ahol külön kikapcsoljuk (pl. logout)
   showProgress = true,
 }) {
   if (!open) return null;

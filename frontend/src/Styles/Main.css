@@ -21,13 +21,12 @@
   align-items: center;
   padding: 2rem;
   width: 100%;
-  background: url("../Img/main.png");
+  background: url("../Img/MainPage.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
 }
 
-/* ===== Card ===== */
 .homepage-card {
   padding: 3rem 1.75rem 2.5rem;
   text-align: center;
@@ -39,7 +38,6 @@
   overflow: hidden;
 }
 
-/* ===== Logo ===== */
 .homepage-logo {
   width: clamp(11rem, 30vw, 17rem);
   margin-bottom: 0.75rem;
@@ -48,7 +46,6 @@
   animation: logoFloat 4600ms ease-in-out infinite;
 }
 
-/* ===== Title ===== */
 .homepage-title {
   font-family: "MedievalSharp", cursive;
   font-size: 8rem;
@@ -61,7 +58,6 @@
   color: #3c2b16;
 }
 
-/* ===== Description ===== */
 .homepage-description {
   font-size: 1.2rem;
   margin-bottom: 1.5rem;
@@ -71,7 +67,6 @@
   margin-inline: auto;
 }
 
-/* ===== Divider ===== */
 .homepage-divider {
   border: none;
   height: 2px;
@@ -81,7 +76,6 @@
   opacity: 0.3;
 }
 
-/* ===== Buttons ===== */
 .homepage-buttons {
   display: flex;
   gap: 1rem;
@@ -141,7 +135,6 @@
   animation: buttonShine 1200ms ease-out;
 }
 
-/* ===== Player count ===== */
 .player-count {
   margin-top: 2rem;
   font-size: 1rem;
@@ -190,7 +183,6 @@
   align-items: center;
 }
 
-/* ===== Animation ===== */
 @keyframes homepageEnter {
   from {
     opacity: 0;
@@ -249,7 +241,6 @@
   }
 }
 
-/* ===== Responsive ===== */
 @media (max-width: 600px) {
   .homepage-card {
     padding: 2rem 1.25rem 2.25rem;

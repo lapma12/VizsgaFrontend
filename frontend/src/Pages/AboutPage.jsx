@@ -89,6 +89,7 @@ const AboutPage = () => {
                 )}
                 <h3 className="team-member-name">{member.name}</h3>
                 <p className="team-member-role">{member.role}</p>
+                <hr className="team-member-hr" />
                 <p className="team-member-bio">{member.bio}</p>
               </article>
             ))}

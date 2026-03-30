@@ -78,7 +78,7 @@ export default function PrivacyPolicy() {
           <p>
             If you have any questions about this Privacy Policy or your data,
             please contact us at{' '}
-            <a href="mailto:support@castl.com">support@castl.com</a>.
+            <a href="irodacastl@gmail.com">irodacastl@gmail.com</a>.
           </p>
         </section>
       </div>

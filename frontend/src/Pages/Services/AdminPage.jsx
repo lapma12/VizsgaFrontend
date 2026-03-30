@@ -58,7 +58,6 @@ const AdminPage = () => {
       setFilteredUsers(withOverrides);
       setLoading(false);
 
-      // load local delete/bann log for admin view
       try {
         const raw = localStorage.getItem("adminDeleteLog");
         if (raw) {
@@ -67,8 +66,8 @@ const AdminPage = () => {
             setDeleteLog(parsed);
           }
         }
-      } catch {
-        // ignore log errors
+      } catch(err) {
+        console.log(err);
       }
     } catch (err) {
       console.error(err);
@@ -312,7 +311,6 @@ const AdminPage = () => {
 
       await api.post("/main/Email", emailData);
 
-      // log ban/delete locally for admin overview
       try {
         const entry = {
           id: userToDelete.id,
@@ -325,13 +323,13 @@ const AdminPage = () => {
           const next = [entry, ...prev];
           try {
             localStorage.setItem("adminDeleteLog", JSON.stringify(next));
-          } catch {
-            // ignore storage errors
+          } catch(err) {
+            console.log(err);
           }
           return next;
         });
-      } catch {
-        // ignore log errors
+      } catch(err) {
+        console.log(err);
       }
 
       fetchUsers();

@@ -58,7 +58,6 @@ header.navbar {
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
 }
 
-/* --- CENTER NAV LINKS --- */
 .navbar-center {
   display: flex;
   align-items: center;
@@ -119,7 +118,6 @@ header.navbar {
   box-shadow: 0 6px 0 rgba(75, 54, 33, 0.4);
 }
 
-/* animated golden underline on hover / active */
 .navbar-center a::after {
   content: "";
   position: absolute;
@@ -157,7 +155,6 @@ header.navbar {
   color: #fff;
 }
 
-/* --- KEYFRAME ANIMATIONS --- */
 @keyframes navbarFadeDown {
   from {
     opacity: 0;
@@ -169,7 +166,6 @@ header.navbar {
   }
 }
 
-/* --- RIGHT SIDE --- */
 .navbar-right {
   display: flex;
   align-items: center;
@@ -294,7 +290,6 @@ header.navbar {
   box-shadow: 0 4px 0 rgba(75, 54, 33, 0.4);
 }
 
-/* --- TOGGLE (hamburger) --- */
 .nav-toggle-btn {
   background: none;
   border: none;
@@ -313,12 +308,10 @@ header.navbar {
   display: none;
 }
 
-/* Hide desktop-only search on small screens */
 .desktop-only {
   display: block;
 }
 
-/* --- RESPONSIVE: mobil, modernebb --- */
 @media (max-width: 1000px) {
   .navbar-backdrop {
     position: fixed;
@@ -358,7 +351,6 @@ header.navbar {
     box-shadow: -12px 0 40px rgba(0, 0, 0, 0.18);
   }
 
-  /* Mobil linkek: kártyaszerű, nagy tap target */
   .navbar-center > a,
   .nav-search-mobile .loginIn-btn {
     width: 100%;
@@ -387,12 +379,10 @@ header.navbar {
     opacity: 0.9;
   }
 
-  /* Underline animáció kikapcsolva mobilra */
   .navbar-center > a::after {
     display: none;
   }
 
-  /* Account / Sign in gomb a menü alján, kiemelten */
   .nav-search-mobile {
     width: 100%;
     display: flex;
@@ -413,7 +403,6 @@ header.navbar {
     background: linear-gradient(135deg, #a78b68, #bbaa80);
   }
 
-  /* Hamburger gomb: kerek, modernebb */
   .nav-toggle-btn {
     display: flex;
     align-items: center;
@@ -437,12 +426,10 @@ header.navbar {
     margin-left: 0;
   }
 
-  /* Drawer belsejében ne legyen dupla hamburger, csak a fejlécben */
   .navbar-center .nav-toggle-btn {
     display: none;
   }
 
-  /* === DESKTOP ELEMENTS HIDE === */
   .desktop-only {
     display: none;
   }

@@ -26,9 +26,6 @@ const NewsPage = () => {
     GetNews();
   }, [])
 
-
-
-
   return (
     <div className="news-page">
       <main className="news-inner">

@@ -1,6 +1,3 @@
-/* Közös message box stílusok – téma színek: #bbaa80, #8c7153, #584836, #2d1b14 */
-
-/* ---- Toast (success / error) ---- */
 .shared-toast {
   position: fixed;
   top: 1.5rem;
@@ -80,7 +77,6 @@
   transform: translateY(-1px);
 }
 
-/* ---- Confirm modal ---- */
 .shared-modal-overlay {
   position: fixed;
   inset: 0;
@@ -178,7 +174,6 @@
   animation: shared-toast-progress 1.8s linear forwards;
 }
 
-/* --- Responsive tweaks for small screens --- */
 @media (max-width: 600px) {
   .shared-toast {
     top: 1rem;

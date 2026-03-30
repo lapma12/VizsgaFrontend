@@ -1,5 +1,5 @@
 import '../Styles/Footer.css';
-import footerImg from "../Img/footerImg.png"
+import footerImg from "../Img/FooterImg.png"
 
 const Footer = () => {
     return (
